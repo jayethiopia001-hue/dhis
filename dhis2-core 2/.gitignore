@@ -1,0 +1,2 @@
+# AI backend secrets — never commit real credentials
+dhis2-ai-backend/.env
