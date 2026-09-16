@@ -9,7 +9,8 @@ RUN chmod 0555 /opt/dhis2/start-dhis.sh
 
 EXPOSE 8080
 
+ADD https://repo1.maven.org/maven2/com/google/cloud/sql/postgres-socket-factory/1.28.1/postgres-socket-factory-1.28.1-jar-with-dependencies.jar \
+    /usr/local/tomcat/lib/
+
 ENTRYPOINT ["/opt/dhis2/start-dhis.sh"]
 CMD ["catalina.sh", "run"]
-ADD https://repo1.maven.org/maven2/com/google/cloud/sql/postgres-socket-factory/1.21.0/postgres-socket-factory-1.21.0-jar-with-dependencies.jar \
-    /usr/local/tomcat/lib/
