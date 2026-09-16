@@ -11,3 +11,5 @@ EXPOSE 8080
 
 ENTRYPOINT ["/opt/dhis2/start-dhis.sh"]
 CMD ["catalina.sh", "run"]
+ADD https://repo1.maven.org/maven2/com/google/cloud/sql/postgres-socket-factory/1.21.0/postgres-socket-factory-1.21.0-jar-with-dependencies.jar \
+    /usr/local/tomcat/lib/
