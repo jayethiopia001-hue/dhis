@@ -1,0 +1,7 @@
+**
+!Dockerfile
+!docker/
+!docker/dhis.conf
+!dhis2-ai-backend/
+!dhis2-ai-backend/dhis2-app/
+!dhis2-ai-backend/dhis2-app/**

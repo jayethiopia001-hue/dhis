@@ -51,10 +51,15 @@ x-db-base: &db-base
 services:
   web:
     <<: *web-base
+    image: "${DHIS2_CUSTOM_IMAGE:-dhis2/core-dev:local-nextgen}"
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DHIS2_IMAGE: "${DHIS2_IMAGE:-dhis2/core-dev:latest}"
     volumes:
       - ./docker/log4j2.xml:/opt/dhis2/log4j2.xml
       - ./docker/dhis.conf:/opt/dhis2/dhis.conf
-      - dhis2-files:/opt/dhis2/files
     ports:
       - "127.0.0.1:8080:8080" # DHIS2
       - "127.0.0.1:8081:8081" # Debugger: connect using commandline flag -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8081
@@ -62,16 +67,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-      app-installer:
-        condition: service_completed_successfully
-
-  # Copies the NextGen Planning app into the shared dhis2-files volume before DHIS2 starts
-  app-installer:
-    image: busybox
-    command: sh -c "mkdir -p /files/apps/nextgen-planning && cp -r /app/. /files/apps/nextgen-planning/ && chmod -R 777 /files/apps"
-    volumes:
-      - ./dhis2-ai-backend/dhis2-app:/app:ro
-      - dhis2-files:/files
 
   db:
     <<: *db-base
@@ -113,6 +108,7 @@ services:
     env_file:
       - ./dhis2-ai-backend/.env
     environment:
+      PORT: "8000"
       DHIS2_BASE_URL: "http://web:8080"
       GOOGLE_APPLICATION_CREDENTIALS: /root/.config/gcloud/application_default_credentials.json
       SSL_CERT_FILE: /usr/local/lib/python3.12/site-packages/certifi/cacert.pem
@@ -135,4 +131,3 @@ services:
 volumes:
   db-dump: {}
   db-data: {}
-  dhis2-files: {}
