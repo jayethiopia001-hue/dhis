@@ -1,2 +1,33 @@
-# AI backend secrets — never commit real credentials
-dhis2-ai-backend/.env
+# Operating-system files
+.DS_Store
+Thumbs.db
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# Python virtual environments and generated files
+.venv/
+venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Java, Maven, and frontend build output
+**/target/
+node_modules/
+coverage/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.iml
+
+# Logs and local runtime files
+*.log
+*.pid
