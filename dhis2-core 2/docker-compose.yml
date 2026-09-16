@@ -110,7 +110,7 @@ services:
       - ./dhis2-ai-backend/.env
     environment:
       PORT: "8000"
-      DHIS2_BASE_URL: "http://web:8080"
+      DHIS2_BASE_URL: "https://dhis-frontend-v3-zliwpijjgq-bq.a.run.app"
       GOOGLE_APPLICATION_CREDENTIALS: /root/.config/gcloud/application_default_credentials.json
       SSL_CERT_FILE: /usr/local/lib/python3.12/site-packages/certifi/cacert.pem
     volumes:
