@@ -1,0 +1,78 @@
+/*
+ * Copyright (c) 2004-2022, University of Oslo
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors 
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.hisp.dhis.period;
+
+import javax.annotation.Nonnull;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public enum PeriodTypeEnum {
+  BI_MONTHLY("BiMonthly"),
+  BI_WEEKLY("BiWeekly"),
+  DAILY("Daily"),
+  FINANCIAL_FEB("FinancialFeb"),
+  FINANCIAL_APRIL("FinancialApril"),
+  FINANCIAL_JULY("FinancialJuly"),
+  FINANCIAL_AUG("FinancialAug"),
+  FINANCIAL_SEP("FinancialSep"),
+  FINANCIAL_OCT("FinancialOct"),
+  FINANCIAL_NOV("FinancialNov"),
+  MONTHLY("Monthly"),
+  QUARTERLY("Quarterly"),
+  QUARTERLY_NOV("QuarterlyNov"),
+  SIX_MONTHLY_APRIL("SixMonthlyApril"),
+  SIX_MONTHLY_NOV("SixMonthlyNov"),
+  SIX_MONTHLY("SixMonthly"),
+  TWO_YEARLY("TwoYearly"),
+  WEEKLY("Weekly"),
+  WEEKLY_SATURDAY("WeeklySaturday"),
+  WEEKLY_SUNDAY("WeeklySunday"),
+  WEEKLY_THURSDAY("WeeklyThursday"),
+  WEEKLY_FRIDAY("WeeklyFriday"),
+  WEEKLY_WEDNESDAY("WeeklyWednesday"),
+  YEARLY("Yearly");
+
+  @Getter private final String name;
+
+  /**
+   * Parses an ISO period to extract its type.
+   *
+   * @param isoPeriod a ISO period (any format)
+   * @return the type of the period
+   * @throws IllegalArgumentException if the given ISO period is formally invalid. This does not
+   *     detect semantically invalid periods, like for example a quarterly period for a 5th quarter,
+   *     but it would detect a two digit quarter.
+   */
+  @Nonnull
+  public static PeriodTypeEnum ofIsoPeriod(String isoPeriod) {
+    return Period.Input.of(isoPeriod).type();
+  }
+}

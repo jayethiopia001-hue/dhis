@@ -1,0 +1,176 @@
+{
+  "dataSets": [
+    {
+      "id": "C11WC1lXDMl",
+      "name": "Immunisation Services - Synthetic Demo",
+      "shortName": "Imm Synthetic Demo",
+      "periodType": "FinancialJuly",
+      "dataSetElements": [
+        {
+          "dataElement": {
+            "id": "gUTDQGm7wQ4"
+          }
+        },
+        {
+          "dataElement": {
+            "id": "eBLFFQCHD6R"
+          }
+        },
+        {
+          "dataElement": {
+            "id": "WG81RqwkVHW"
+          }
+        },
+        {
+          "dataElement": {
+            "id": "q53mBzytPAn"
+          }
+        },
+        {
+          "dataElement": {
+            "id": "vNMWVmoyXmE"
+          }
+        },
+        {
+          "dataElement": {
+            "id": "tW3jSOi27n7"
+          }
+        },
+        {
+          "dataElement": {
+            "id": "UbbrqQ7B697"
+          }
+        },
+        {
+          "dataElement": {
+            "id": "z2kPnR9zAwf"
+          }
+        },
+        {
+          "dataElement": {
+            "id": "xegDuD9La4v"
+          }
+        },
+        {
+          "dataElement": {
+            "id": "xbIBbuMFd9W"
+          }
+        },
+        {
+          "dataElement": {
+            "id": "PfO4WUDlWuX"
+          }
+        },
+        {
+          "dataElement": {
+            "id": "gfq4lUY0P6z"
+          }
+        },
+        {
+          "dataElement": {
+            "id": "Uyy6Skhj4Yj"
+          }
+        },
+        {
+          "dataElement": {
+            "id": "I4JRfdQAe6N"
+          }
+        },
+        {
+          "dataElement": {
+            "id": "M8OvIia8OG5"
+          }
+        },
+        {
+          "dataElement": {
+            "id": "ZqLnqha9z4M"
+          }
+        },
+        {
+          "dataElement": {
+            "id": "B9m2bnFVuHZ"
+          }
+        },
+        {
+          "dataElement": {
+            "id": "cGogkdmtsVr"
+          }
+        },
+        {
+          "dataElement": {
+            "id": "d4vCK4A4FGG"
+          }
+        },
+        {
+          "dataElement": {
+            "id": "GPqX9cbF8Fp"
+          }
+        },
+        {
+          "dataElement": {
+            "id": "b2WLWjiMhdQ"
+          }
+        },
+        {
+          "dataElement": {
+            "id": "CgYAEZyFQ8v"
+          }
+        },
+        {
+          "dataElement": {
+            "id": "HIWgIprVFIV"
+          }
+        },
+        {
+          "dataElement": {
+            "id": "TTi98ZaM2Ad"
+          }
+        }
+      ],
+      "organisationUnits": [
+        {
+          "id": "u6ycYfK4nfz"
+        },
+        {
+          "id": "pfAZhnM6Jy8"
+        },
+        {
+          "id": "cIizHJIQgJl"
+        },
+        {
+          "id": "gHddmQAtKCs"
+        },
+        {
+          "id": "YlWfsEvBLeF"
+        },
+        {
+          "id": "kUjEcPVJ2tR"
+        },
+        {
+          "id": "MEXefqReTtJ"
+        },
+        {
+          "id": "RYrxPbCkhdV"
+        },
+        {
+          "id": "iTy4EkyriAI"
+        },
+        {
+          "id": "Tzw27jkooEK"
+        },
+        {
+          "id": "qrjHLth16OT"
+        },
+        {
+          "id": "D3W2XyygNde"
+        },
+        {
+          "id": "nBgLgJH6Mem"
+        },
+        {
+          "id": "yjpvwh09CDf"
+        }
+      ]
+    }
+  ]
+}

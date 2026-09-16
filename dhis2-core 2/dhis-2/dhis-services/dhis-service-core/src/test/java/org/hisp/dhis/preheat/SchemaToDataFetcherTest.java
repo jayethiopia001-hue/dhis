@@ -1,0 +1,351 @@
+/*
+ * Copyright (c) 2004-2022, University of Oslo
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors 
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.hisp.dhis.preheat;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import com.google.common.collect.Lists;
+import jakarta.persistence.EntityManager;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Stream;
+import org.hamcrest.collection.IsIterableContainingInAnyOrder;
+import org.hibernate.query.Query;
+import org.hisp.dhis.common.IdentifiableObject;
+import org.hisp.dhis.dataelement.DataElement;
+import org.hisp.dhis.schema.Property;
+import org.hisp.dhis.schema.Schema;
+import org.hisp.dhis.sms.command.SMSCommand;
+import org.hisp.dhis.test.TestBase;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
+
+/**
+ * @author Luciano Fiandesio
+ */
+@SuppressWarnings("unchecked")
+@MockitoSettings(strictness = Strictness.LENIENT)
+@ExtendWith(MockitoExtension.class)
+class SchemaToDataFetcherTest extends TestBase {
+
+  private SchemaToDataFetcher subject;
+
+  @Mock private EntityManager entityManager;
+
+  @Mock private Query query;
+
+  @BeforeEach
+  public void setUp() {
+    subject = new SchemaToDataFetcher(entityManager);
+  }
+
+  @Test
+  void verifyNullSchemaReturnsEmpty() {
+    assertThat(subject.fetch(null, List.of()), hasSize(0));
+  }
+
+  @Test
+  void verifyEmptyImportReturnsEmpty() {
+    Schema schema =
+        createSchema(
+            DataElement.class,
+            "dataElement",
+            Stream.of(createUniqueProperty(String.class, "code", true, true)).toList());
+
+    assertThat(subject.fetch(schema, List.of()), hasSize(0));
+    verify(entityManager, times(0)).createQuery(anyString());
+  }
+
+  @Test
+  void verifyUniqueFieldsAreMappedToHibernateObject() {
+    Schema schema =
+        createSchema(
+            DataElement.class,
+            "dataElement",
+            Stream.of(
+                    createUniqueProperty(Integer.class, "id", true, true),
+                    createProperty(String.class, "name", true, true),
+                    createUniqueProperty(String.class, "code", true, true),
+                    createProperty(Date.class, "created", true, true),
+                    createProperty(Date.class, "lastUpdated", true, true),
+                    createProperty(Integer.class, "int", true, true))
+                .toList());
+
+    mockSession();
+
+    List<Object[]> l = new ArrayList<>();
+    l.add(new Object[] {"abc", 123456});
+    l.add(new Object[] {"bce", 123888});
+    l.add(new Object[] {"def", 123999});
+
+    when(query.getResultList()).thenReturn(l);
+
+    DataElement de1 = new DataElement("de1");
+    de1.setCode("abc");
+    DataElement de2 = new DataElement("de2");
+    de2.setCode("bce");
+    DataElement de3 = new DataElement("de3");
+    de3.setCode("def");
+
+    List<DataElement> result = (List<DataElement>) subject.fetch(schema, List.of(de1, de2, de3));
+
+    assertThat(result, hasSize(3));
+
+    assertThat(
+        result,
+        IsIterableContainingInAnyOrder.containsInAnyOrder(
+            allOf(hasProperty("code", is("abc")), hasProperty("id", is(123456L))),
+            allOf(hasProperty("code", is("bce")), hasProperty("id", is(123888L))),
+            allOf(hasProperty("code", is("def")), hasProperty("id", is(123999L)))));
+  }
+
+  @Test
+  void verifyUniqueFieldsAreSkippedOnReflectionError() {
+    Schema schema =
+        createSchema(
+            DummyDataElement.class,
+            "dummyDataElement",
+            Stream.of(
+                    createUniqueProperty(String.class, "url", true, true),
+                    createUniqueProperty(String.class, "code", true, true))
+                .toList());
+
+    mockSession();
+
+    List<Object[]> l = new ArrayList<>();
+    l.add(new Object[] {"abc", "http://ok"});
+    l.add(new Object[] {"bce", "http://-exception"});
+    l.add(new Object[] {"def", "http://also-ok"});
+
+    when(query.getResultList()).thenReturn(l);
+
+    DummyDataElement d1 = new DummyDataElement();
+    d1.setCode("abc");
+    DummyDataElement d2 = new DummyDataElement();
+    d2.setCode("bce");
+    DummyDataElement d3 = new DummyDataElement();
+    d3.setCode("def");
+
+    List<DataElement> result = (List<DataElement>) subject.fetch(schema, List.of(d1, d2, d3));
+
+    assertThat(result, hasSize(2));
+
+    assertThat(
+        result,
+        IsIterableContainingInAnyOrder.containsInAnyOrder(
+            allOf(hasProperty("code", is("def")), hasProperty("url", is("http://also-ok"))),
+            allOf(hasProperty("code", is("abc")), hasProperty("url", is("http://ok")))));
+  }
+
+  @Test
+  void verifyUniqueFieldsAre() {
+    Schema schema =
+        createSchema(
+            DummyDataElement.class,
+            "dummyDataElement",
+            Stream.of(
+                    createProperty(String.class, "name", true, true),
+                    createUniqueProperty(String.class, "url", true, true),
+                    createProperty(String.class, "code", true, true))
+                .toList());
+
+    mockSession();
+
+    List<Object> l = new ArrayList<>();
+    l.add("http://ok");
+    l.add("http://is-ok");
+    l.add("http://also-ok");
+
+    when(query.getResultList()).thenReturn(l);
+
+    DummyDataElement d1 = new DummyDataElement();
+    d1.setUrl("http://ok");
+    DummyDataElement d2 = new DummyDataElement();
+    d2.setUrl("http://is-ok");
+    DummyDataElement d3 = new DummyDataElement();
+    d3.setUrl("http://also-ok");
+
+    List<DataElement> result = (List<DataElement>) subject.fetch(schema, List.of(d1, d2, d3));
+
+    assertThat(result, hasSize(3));
+
+    assertThat(
+        result,
+        IsIterableContainingInAnyOrder.containsInAnyOrder(
+            allOf(hasProperty("url", is("http://also-ok"))),
+            allOf(hasProperty("url", is("http://ok"))),
+            allOf(hasProperty("url", is("http://is-ok")))));
+  }
+
+  @Test
+  void verifyLargeImportSetIsBatchedToStayUnderPostgresParameterLimit() {
+    Schema schema =
+        createSchema(
+            DummyDataElement.class,
+            "dummyDataElement",
+            Stream.of(
+                    createProperty(String.class, "name", true, true),
+                    createUniqueProperty(String.class, "url", true, true),
+                    createProperty(String.class, "code", true, true))
+                .toList());
+
+    mockSession();
+    when(query.getResultList()).thenReturn(List.of("http://found"));
+
+    // 25_000 exceeds the internal 20_000 batch size so batching is triggered (25_000 / 20_000 = 2
+    // batches)
+    List<DummyDataElement> toImport = new ArrayList<>(25_000);
+    for (int i = 0; i < 25_000; i++) {
+      DummyDataElement d = new DummyDataElement();
+      d.setUrl("http://example.com/" + i);
+      toImport.add(d);
+    }
+
+    List<? extends IdentifiableObject> result = subject.fetch(schema, toImport);
+
+    verify(entityManager, times(2)).createQuery(anyString());
+    // the same value returned by both batches is deduplicated to one result
+    assertThat(result, hasSize(1));
+  }
+
+  @Test
+  void verifyBatchedPathDeduplicatesMultiColumnRowsAcrossPerPropertyQueries() {
+    Schema schema =
+        createSchema(
+            DummyDataElement.class,
+            "dummyDataElement",
+            Stream.of(
+                    createUniqueProperty(String.class, "url", true, true),
+                    createUniqueProperty(String.class, "code", true, true))
+                .toList());
+
+    mockSession();
+    // Every per-property query returns the same row. Without dedup we'd see 4 copies (one per
+    // createQuery call); the LinkedHashSet<List<Object>> in runBatchedQueries collapses it to 1.
+    // Column order matches the alphabetical iteration of unique properties: code, url.
+    List<Object[]> sharedRow = new ArrayList<>();
+    sharedRow.add(new Object[] {"cx", "http://x"});
+    when(query.getResultList()).thenReturn(sharedRow);
+
+    // 25_000 distinct urls AND 25_000 distinct codes -> each property partitioned into
+    // 20_000 + 5_000 batches -> 2 properties * 2 batches = 4 createQuery calls.
+    List<DummyDataElement> toImport = new ArrayList<>(25_000);
+    for (int i = 0; i < 25_000; i++) {
+      DummyDataElement d = new DummyDataElement();
+      d.setUrl("http://example.com/" + i);
+      d.setCode("c" + i);
+      toImport.add(d);
+    }
+
+    List<? extends IdentifiableObject> result = subject.fetch(schema, toImport);
+
+    verify(entityManager, times(4)).createQuery(anyString());
+    assertThat(result, hasSize(1));
+    assertThat(
+        result,
+        IsIterableContainingInAnyOrder.containsInAnyOrder(
+            allOf(hasProperty("url", is("http://x")), hasProperty("code", is("cx")))));
+  }
+
+  @Test
+  void verifyNoSqlWhenUniquePropertiesListIsEmpty() {
+    Schema schema = createSchema(SMSCommand.class, "smsCommand", Lists.newArrayList());
+
+    subject.fetch(schema, List.of());
+
+    verify(entityManager, times(0)).createQuery(anyString());
+  }
+
+  @Test
+  void verifyNoSqlWhenNoUniquePropertyExist() {
+    Schema schema =
+        createSchema(
+            SMSCommand.class,
+            "smsCommand",
+            Stream.of(
+                    createProperty(String.class, "name", true, true),
+                    createProperty(String.class, "id", true, true))
+                .toList());
+
+    subject.fetch(schema, List.of());
+
+    verify(entityManager, times(0)).createQuery(anyString());
+  }
+
+  private void mockSession() {
+    when(entityManager.createQuery(anyString())).thenReturn(query);
+    when(query.setHint(any(), any())).thenReturn(query);
+    when(query.setParameter(anyString(), any())).thenReturn(query);
+  }
+
+  private Schema createSchema(
+      Class<? extends IdentifiableObject> klass, String singularName, List<Property> properties) {
+    Schema schema = new Schema(klass, singularName, singularName + "s");
+
+    for (Property property : properties) {
+      schema.addProperty(property);
+    }
+
+    return schema;
+  }
+
+  private Property createProperty(Class<?> klazz, String name, boolean simple, boolean persisted) {
+    Property property = new Property(klazz);
+    property.setName(name);
+    property.setFieldName(name);
+    property.setSimple(simple);
+    property.setOwner(true);
+    property.setPersisted(persisted);
+
+    return property;
+  }
+
+  public Property createUniqueProperty(
+      Class<?> klazz, String name, boolean simple, boolean persisted) {
+    Property property = createProperty(klazz, name, simple, persisted);
+    property.setUnique(true);
+    return property;
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "NextGen Planning (Prototype)",
+  "description": "Fake/prototype planning app. Step 1: a single button pushes sample plan data through the FastAPI ingest endpoint into Postgres.",
+  "version": "0.11.3",
+  "activities": {
+    "dhis": {
+      "href": "*"
+    }
+  },
+  "default_locale": "en",
+  "launch_path": "index.html"
+}

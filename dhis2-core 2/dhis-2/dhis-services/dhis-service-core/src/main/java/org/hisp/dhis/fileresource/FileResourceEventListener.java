@@ -1,0 +1,161 @@
+/*
+ * Copyright (c) 2004-2022, University of Oslo
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors 
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.hisp.dhis.fileresource;
+
+import java.io.File;
+import java.util.Map;
+import java.util.stream.Stream;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.hisp.dhis.fileresource.events.BinaryFileSavedEvent;
+import org.hisp.dhis.fileresource.events.FileDeletedEvent;
+import org.hisp.dhis.fileresource.events.FileSavedEvent;
+import org.hisp.dhis.fileresource.events.ImageFileSavedEvent;
+import org.hisp.dhis.storage.BlobKey;
+import org.joda.time.DateTime;
+import org.joda.time.Period;
+import org.joda.time.format.PeriodFormat;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionalEventListener;
+
+/**
+ * @Author Zubair Asghar.
+ */
+@Slf4j
+@Component("org.hisp.dhis.fileresource.FileResourceEventListener")
+@RequiredArgsConstructor
+public class FileResourceEventListener {
+  private final FileResourceService fileResourceService;
+
+  private final FileResourceContentStore fileResourceContentStore;
+
+  private final ImageProcessingService imageProcessingService;
+
+  @TransactionalEventListener
+  @Async
+  public void save(FileSavedEvent fileSavedEvent) {
+    DateTime startTime = DateTime.now();
+
+    File file = fileSavedEvent.getFile();
+
+    FileResource fileResource =
+        fileResourceService.getFileResource(fileSavedEvent.getFileResource());
+
+    String storageId = fileResourceContentStore.saveFileResourceContent(fileResource, file);
+
+    Period timeDiff = new Period(startTime, DateTime.now());
+
+    logMessage(storageId, fileResource, timeDiff);
+  }
+
+  /**
+   * Listens for an {@link ImageFileSavedEvent}. When triggered, it will create all {@link
+   * ImageFileDimension} files and save them to storage. If the {@link FileResource} cannot be found
+   * then the operation is skipped with a warning log.
+   *
+   * <p>The process occurs on a separate thread from that which published the event.
+   *
+   * @param imageFileSavedEvent image file saved event
+   */
+  @Async
+  @TransactionalEventListener
+  public void saveImageFile(ImageFileSavedEvent imageFileSavedEvent) {
+    DateTime startTime = DateTime.now();
+
+    FileResource fileResource =
+        fileResourceService.getFileResource(imageFileSavedEvent.fileResource().getValue());
+
+    if (fileResource == null) {
+      log.warn(
+          "Could not find file resource for {}, skip saving image files",
+          imageFileSavedEvent.fileResource());
+      return;
+    }
+
+    Map<ImageFileDimension, File> imageFiles =
+        imageProcessingService.createImages(fileResource, imageFileSavedEvent.file());
+    String storageId = fileResourceContentStore.saveFileResourceContent(fileResource, imageFiles);
+    Period timeDiff = new Period(startTime, DateTime.now());
+    logMessage(storageId, fileResource, timeDiff);
+  }
+
+  @TransactionalEventListener
+  @Async
+  public void saveBinaryFile(BinaryFileSavedEvent binaryFileSavedEvent) {
+    DateTime startTime = DateTime.now();
+
+    byte[] bytes = binaryFileSavedEvent.getBytes();
+
+    FileResource fileResource =
+        fileResourceService.getFileResource(binaryFileSavedEvent.getFileResource());
+
+    String storageId = fileResourceContentStore.saveFileResourceContent(fileResource, bytes);
+
+    Period timeDiff = new Period(startTime, DateTime.now());
+
+    logMessage(storageId, fileResource, timeDiff);
+  }
+
+  @TransactionalEventListener
+  @Async
+  public void deleteFile(FileDeletedEvent deleteFileEvent) {
+    if (!fileResourceContentStore.fileResourceContentExists(deleteFileEvent.storageKey())) {
+      log.error(String.format("No file exist for key: %s", deleteFileEvent.storageKey()));
+      return;
+    }
+
+    if (FileResource.isImage(deleteFileEvent.contentType())
+        && FileResourceDomain.isDomainForMultipleImages(deleteFileEvent.domain())) {
+      String baseKey = deleteFileEvent.storageKey().value();
+
+      Stream.of(ImageFileDimension.values())
+          .forEach(
+              d ->
+                  fileResourceContentStore.deleteFileResourceContent(
+                      new BlobKey(baseKey + d.getDimension())));
+    } else {
+      fileResourceContentStore.deleteFileResourceContent(deleteFileEvent.storageKey());
+    }
+  }
+
+  private void logMessage(String storageId, FileResource fileResource, Period timeDiff) {
+    if (storageId == null) {
+      log.error(
+          String.format("Saving content for file resource failed: %s", fileResource.getUid()));
+      return;
+    }
+
+    log.info(
+        String.format(
+            "File stored with key: %s'. Upload finished in %s",
+            storageId, timeDiff.toString(PeriodFormat.getDefault())));
+  }
+}

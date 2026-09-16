@@ -1,0 +1,285 @@
+/*
+ * Copyright (c) 2004-2024, University of Oslo
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors 
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.hisp.dhis.analytics.tracker;
+
+import static lombok.AccessLevel.PRIVATE;
+import static org.apache.commons.lang3.StringUtils.joinWith;
+import static org.hisp.dhis.analytics.AnalyticsMetaDataKey.PAGER;
+
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import lombok.NoArgsConstructor;
+import org.hisp.dhis.analytics.common.ColumnHeader;
+import org.hisp.dhis.analytics.event.EventQueryParams;
+import org.hisp.dhis.common.DimensionItemKeywords.Keyword;
+import org.hisp.dhis.common.DimensionalObject;
+import org.hisp.dhis.common.DisplayProperty;
+import org.hisp.dhis.common.Grid;
+import org.hisp.dhis.common.GridHeader;
+import org.hisp.dhis.common.Pager;
+import org.hisp.dhis.common.QueryItem;
+import org.hisp.dhis.common.SlimPager;
+import org.hisp.dhis.common.ValueStatus;
+
+@NoArgsConstructor(access = PRIVATE)
+public class ResponseHelper {
+
+  public static final int UNLIMITED_PAGING = 0;
+
+  /**
+   * Applies the headers to the given if the given query specifies headers.
+   *
+   * @param grid the {@link Grid}.
+   * @param params the {@link EventQueryParams}.
+   */
+  public static void applyHeaders(Grid grid, EventQueryParams params) {
+    if (params.hasHeaders()) {
+      Set<String> normalizedHeaders = new LinkedHashSet<>();
+      for (String header : params.getHeaders()) {
+        normalizedHeaders.add(normalizeHeaderForGrid(header, grid));
+      }
+      grid.retainColumns(normalizedHeaders);
+    }
+  }
+
+  /**
+   * Resolves a user-supplied {@code headers=} value to a canonical column name on the {@link Grid},
+   * trying in order:
+   *
+   * <ol>
+   *   <li>case-insensitive match against an existing grid header name;
+   *   <li>case-insensitive match against a {@link ColumnHeader} enum name or item;
+   *   <li>if the input contains an interior dot (e.g. {@code {stageUid}.eventDate}), the suffix
+   *       after the last dot is retried against steps 1 and 2. When this fallback succeeds, the
+   *       matching grid header is renamed to {@code {stagePrefix}.{canonicalItem}} so the response
+   *       echoes the stage-prefixed form the client requested — mirroring the header naming used
+   *       when a stage-prefixed dimension materialises the column.
+   * </ol>
+   *
+   * <p>If nothing resolves, the input is returned unchanged, which lets {@link
+   * Grid#retainColumns(Set)} surface the usual {@code E7230} for truly unknown headers.
+   *
+   * @param header the raw {@code headers=} value.
+   * @param grid the grid whose headers are the resolution target.
+   * @return the canonical name to retain, or the original input if no match was found.
+   */
+  private static String normalizeHeaderForGrid(String header, Grid grid) {
+    String direct = resolveHeader(header, grid);
+    if (direct != null) return direct;
+
+    String viaStagePrefix = resolveAfterStagePrefix(header, grid);
+    if (viaStagePrefix != null) return viaStagePrefix;
+
+    return header;
+  }
+
+  /**
+   * Handles the {@code {stageUid}.suffix} alias case: if the input contains an interior dot, try
+   * resolving the substring after the last dot against the grid and {@link ColumnHeader} enum. On a
+   * successful match, the matching grid header is renamed in place to {@code
+   * {stagePrefix}.{canonicalItem}} so the response preserves the stage-prefixed alias the client
+   * asked for.
+   *
+   * @param header the raw header value.
+   * @param grid the grid whose headers are the resolution target.
+   * @return the stage-prefixed name to return and retain, or {@code null} if the input has no
+   *     interior dot or the suffix does not resolve.
+   */
+  private static String resolveAfterStagePrefix(String header, Grid grid) {
+    int dot = header.lastIndexOf('.');
+    if (dot <= 0 || dot >= header.length() - 1) return null;
+    String resolvedSuffix = resolveHeader(header.substring(dot + 1), grid);
+    if (resolvedSuffix == null) return null;
+    String stagePrefixed = header.substring(0, dot + 1) + resolvedSuffix;
+    renameGridHeader(grid, resolvedSuffix, stagePrefixed);
+    return stagePrefixed;
+  }
+
+  /**
+   * Renames the first grid header whose name equals {@code from} (case-insensitive) to {@code to}.
+   * No-op if no header matches.
+   */
+  private static void renameGridHeader(Grid grid, String from, String to) {
+    for (GridHeader h : grid.getHeaders()) {
+      if (h.getName().equalsIgnoreCase(from)) {
+        h.setName(to);
+        return;
+      }
+    }
+  }
+
+  /**
+   * Attempts to resolve a header token against the grid headers and then against the {@link
+   * ColumnHeader} enum.
+   *
+   * @param header the token to resolve.
+   * @param grid the grid whose headers take precedence.
+   * @return the canonical name if resolved, otherwise {@code null}.
+   */
+  private static String resolveHeader(String header, Grid grid) {
+    for (GridHeader gridHeader : grid.getHeaders()) {
+      if (gridHeader.getName().equalsIgnoreCase(header)) {
+        return gridHeader.getName();
+      }
+    }
+
+    for (ColumnHeader candidate : ColumnHeader.values()) {
+      if (candidate.name().equalsIgnoreCase(header)
+          || candidate.getItem().equalsIgnoreCase(header)) {
+        return candidate.getItem();
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Extracts a list of {@link Keyword} from the dimensions present in the given params.
+   *
+   * @param params where to extract the dimensions from.
+   * @return the list of keywords.
+   */
+  public static List<Keyword> getDimensionsKeywords(EventQueryParams params) {
+    return params.getDimensions().stream()
+        .map(DimensionalObject::getDimensionItemKeywords)
+        .filter(
+            dimensionItemKeywords ->
+                dimensionItemKeywords != null && !dimensionItemKeywords.isEmpty())
+        .flatMap(dk -> dk.getKeywords().stream())
+        .toList();
+  }
+
+  /**
+   * Add information about row context. The row context is based on the origin of the repeatable
+   * stage value. Please see the {@link ValueStatus}.
+   *
+   * @param grid the {@link Grid}.
+   */
+  public static void setRowContextColumns(Grid grid) {
+    Map<Integer, Map<String, Object>> oldRowContext = grid.getRowContext();
+    Map<Integer, Map<String, Object>> newRowContext = new TreeMap<>();
+
+    oldRowContext
+        .keySet()
+        .forEach(
+            rowKey -> {
+              Map<String, Object> newCols = new HashMap<>();
+              Map<String, Object> cols = oldRowContext.get(rowKey);
+              cols.keySet()
+                  .forEach(
+                      colKey ->
+                          newCols.put(
+                              Integer.toString(grid.getIndexOfHeader(colKey)), cols.get(colKey)));
+              newRowContext.put(rowKey, newCols);
+            });
+
+    grid.setRowContext(newRowContext);
+  }
+
+  /**
+   * Applies paging to the given grid if the given query specifies paging.
+   *
+   * @param params the {@link EventQueryParams}.
+   * @param totalCount the total count.
+   * @param grid the {@link Grid}.
+   */
+  public static void addPaging(EventQueryParams params, long totalCount, Grid grid) {
+    if (params.isPaging()) {
+      Pager pager =
+          params.isTotalPages()
+              ? new Pager(params.getPageWithDefault(), totalCount, params.getPageSizeWithDefault())
+              : new SlimPager(
+                  params.getPageWithDefault(),
+                  params.getPageSizeWithDefault(),
+                  grid.hasLastDataRow());
+
+      grid.getMetaData().put(PAGER.getKey(), pager);
+    }
+  }
+
+  /**
+   * Based on the given item this method returns the correct UID based on internal rules.
+   *
+   * @param item the current QueryItem.
+   * @return the correct UID based on the item type.
+   */
+  public static String getItemUid(QueryItem item) {
+    if (item.hasCustomHeader()) {
+      return item.getCustomHeader().headerKey(item.getCustomHeader().key());
+    }
+
+    String uid = item.getItem().getUid();
+
+    if (item.hasProgramStage()) {
+      uid = joinWith(".", item.getProgramStage().getUid(), uid);
+    }
+
+    return uid;
+  }
+
+  /**
+   * Based on the given item this method returns the correct UID based on internal rules.
+   *
+   * @param item the current QueryItem.
+   * @param includeProgramStage whether to include the program stage UID as prefix.
+   * @return the correct UID based on the item type.
+   */
+  public static String getItemUid(QueryItem item, boolean includeProgramStage) {
+    if (item.hasCustomHeader()) {
+      return item.getCustomHeader().headerKey(item.getCustomHeader().key());
+    }
+
+    String uid = item.getItem().getUid();
+
+    if (includeProgramStage && item.hasProgramStage()) {
+      uid = joinWith(".", item.getProgramStage().getUid(), uid);
+    }
+
+    return uid;
+  }
+
+  /**
+   * Based on the given item this method returns the display property label.
+   *
+   * @param item the current QueryItem.
+   * @param displayProperty the display property setting.
+   * @return the display property label.
+   */
+  public static String getItemDisplayProperty(QueryItem item, DisplayProperty displayProperty) {
+    if (item.hasCustomHeader()) {
+      return item.getCustomHeader().label();
+    }
+    return item.getItem().getDisplayProperty(displayProperty);
+  }
+}

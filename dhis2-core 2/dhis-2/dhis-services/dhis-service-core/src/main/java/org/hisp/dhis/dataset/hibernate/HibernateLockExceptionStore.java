@@ -1,0 +1,214 @@
+/*
+ * Copyright (c) 2004-2022, University of Oslo
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors 
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.hisp.dhis.dataset.hibernate;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.annotation.Nonnull;
+import org.hisp.dhis.dataelement.DataElement;
+import org.hisp.dhis.dataset.DataSet;
+import org.hisp.dhis.dataset.DataSetStore;
+import org.hisp.dhis.dataset.LockException;
+import org.hisp.dhis.dataset.LockExceptionStore;
+import org.hisp.dhis.hibernate.HibernateGenericStore;
+import org.hisp.dhis.organisationunit.OrganisationUnit;
+import org.hisp.dhis.period.Period;
+import org.hisp.dhis.period.PeriodService;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowCallbackHandler;
+import org.springframework.stereotype.Repository;
+
+/**
+ * @author Morten Olav Hansen <mortenoh@gmail.com>
+ */
+@Repository("org.hisp.dhis.dataset.LockExceptionStore")
+public class HibernateLockExceptionStore extends HibernateGenericStore<LockException>
+    implements LockExceptionStore {
+  private static final String AT_PERIOD = "period";
+
+  private static final String AT_ORG_UNIT = "organisationUnit";
+
+  private static final String AT_DATA_SET = "dataSet";
+
+  // -------------------------------------------------------------------------
+  // Dependencies
+  // -------------------------------------------------------------------------
+
+  private final DataSetStore dataSetStore;
+
+  private final PeriodService periodService;
+
+  public HibernateLockExceptionStore(
+      EntityManager entityManager,
+      JdbcTemplate jdbcTemplate,
+      ApplicationEventPublisher publisher,
+      DataSetStore dataSetStore,
+      PeriodService periodService) {
+    super(entityManager, jdbcTemplate, publisher, LockException.class, false);
+
+    checkNotNull(dataSetStore);
+    checkNotNull(periodService);
+
+    this.dataSetStore = dataSetStore;
+    this.periodService = periodService;
+  }
+
+  // -------------------------------------------------------------------------
+  // LockExceptionStore Implementation
+  // -------------------------------------------------------------------------
+
+  @Override
+  public void save(@Nonnull LockException lockException) {
+    lockException.setPeriod(periodService.reloadPeriod(lockException.getPeriod()));
+    lockException.setAutoFields();
+
+    super.save(lockException);
+  }
+
+  @Override
+  public void update(@Nonnull LockException lockException) {
+    lockException.setPeriod(periodService.reloadPeriod(lockException.getPeriod()));
+    lockException.setAutoFields();
+
+    super.update(lockException);
+  }
+
+  @Override
+  public List<LockException> getLockExceptions(List<DataSet> dataSets) {
+    return getList(
+        getCriteriaBuilder(),
+        newJpaParameters().addPredicate(root -> root.get(AT_DATA_SET).in(dataSets)));
+  }
+
+  @Override
+  public List<LockException> getLockExceptionCombinations() {
+    final String sql = "select distinct datasetid, periodid from lockexception";
+
+    final List<LockException> lockExceptions = new ArrayList<>();
+
+    jdbcTemplate.query(
+        sql,
+        new RowCallbackHandler() {
+          @Override
+          public void processRow(ResultSet rs) throws SQLException {
+            int dataSetId = rs.getInt(1);
+            int periodId = rs.getInt(2);
+
+            LockException lockException = new LockException();
+            Period period = periodService.getPeriod(periodId);
+            DataSet dataSet = dataSetStore.get(dataSetId);
+
+            lockException.setDataSet(dataSet);
+            lockException.setPeriod(period);
+
+            lockExceptions.add(lockException);
+          }
+        });
+
+    return lockExceptions;
+  }
+
+  @Override
+  public void deleteLockExceptions(DataSet dataSet, Period period) {
+    final String hql = "delete from LockException where dataSet=:dataSet and period=:period";
+
+    getQuery(hql)
+        .setParameter(AT_DATA_SET, dataSet)
+        .setParameter(AT_PERIOD, period)
+        .executeUpdate();
+  }
+
+  @Override
+  public void deleteLockExceptions(
+      DataSet dataSet, Period period, OrganisationUnit organisationUnit) {
+    final String hql =
+        "delete from LockException where dataSet=:dataSet and period=:period and organisationUnit=:organisationUnit";
+
+    getQuery(hql)
+        .setParameter(AT_DATA_SET, dataSet)
+        .setParameter(AT_PERIOD, period)
+        .setParameter(AT_ORG_UNIT, organisationUnit)
+        .executeUpdate();
+  }
+
+  @Override
+  public void deleteLockExceptions(OrganisationUnit organisationUnit) {
+    final String hql = "delete from LockException where organisationUnit=:organisationUnit";
+
+    getQuery(hql).setParameter("organisationUnit", organisationUnit).executeUpdate();
+  }
+
+  @Override
+  public int deleteExpiredLockExceptions(Date createdBefore) {
+    String sql = "delete from lockexception where created < :date";
+    return nativeSynchronizedQuery(sql).setParameter("date", createdBefore).executeUpdate();
+  }
+
+  @Override
+  public long getCount(DataElement dataElement, Period period, OrganisationUnit organisationUnit) {
+    CriteriaBuilder builder = getCriteriaBuilder();
+
+    return getCount(
+        builder,
+        newJpaParameters()
+            .addPredicate(
+                root -> builder.equal(root.get(AT_PERIOD), periodService.reloadPeriod(period)))
+            .addPredicate(root -> builder.equal(root.get(AT_ORG_UNIT), organisationUnit))
+            .addPredicate(root -> root.get(AT_DATA_SET).in(dataElement.getDataSets())));
+  }
+
+  @Override
+  public long getCount(DataSet dataSet, Period period, OrganisationUnit organisationUnit) {
+    CriteriaBuilder builder = getCriteriaBuilder();
+
+    return getCount(
+        builder,
+        newJpaParameters()
+            .addPredicate(
+                root -> builder.equal(root.get(AT_PERIOD), periodService.reloadPeriod(period)))
+            .addPredicate(root -> builder.equal(root.get(AT_ORG_UNIT), organisationUnit))
+            .addPredicate(root -> builder.equal(root.get(AT_DATA_SET), dataSet)));
+  }
+
+  @Override
+  public boolean anyExists() {
+    String hql = "from LockException";
+
+    return getQuery(hql).setMaxResults(1).list().size() > 0;
+  }
+}

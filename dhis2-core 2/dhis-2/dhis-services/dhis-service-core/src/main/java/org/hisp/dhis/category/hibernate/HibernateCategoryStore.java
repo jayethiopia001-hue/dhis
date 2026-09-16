@@ -1,0 +1,127 @@
+/*
+ * Copyright (c) 2004-2022, University of Oslo
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors 
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.hisp.dhis.category.hibernate;
+
+import static org.hibernate.LockMode.PESSIMISTIC_WRITE;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+import javax.annotation.Nonnull;
+import org.hibernate.LockOptions;
+import org.hisp.dhis.category.Category;
+import org.hisp.dhis.category.CategoryStore;
+import org.hisp.dhis.common.DataDimensionType;
+import org.hisp.dhis.common.hibernate.HibernateIdentifiableObjectStore;
+import org.hisp.dhis.security.acl.AclService;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+
+/**
+ * @author Lars Helge Overland
+ */
+@Repository("org.hisp.dhis.category.CategoryStore")
+public class HibernateCategoryStore extends HibernateIdentifiableObjectStore<Category>
+    implements CategoryStore {
+  public HibernateCategoryStore(
+      EntityManager entityManager,
+      JdbcTemplate jdbcTemplate,
+      ApplicationEventPublisher publisher,
+      AclService aclService) {
+    super(entityManager, jdbcTemplate, publisher, Category.class, aclService, true);
+  }
+
+  @Override
+  public List<Category> getCategoriesByDimensionType(DataDimensionType dataDimensionType) {
+    CriteriaBuilder builder = getCriteriaBuilder();
+
+    return getList(
+        builder,
+        newJpaParameters()
+            .addPredicates(getSharingPredicates(builder))
+            .addPredicate(root -> builder.equal(root.get("dataDimensionType"), dataDimensionType)));
+  }
+
+  @Override
+  public List<Category> getCategories(DataDimensionType dataDimensionType, boolean dataDimension) {
+    CriteriaBuilder builder = getCriteriaBuilder();
+
+    return getList(
+        builder,
+        newJpaParameters()
+            .addPredicates(getSharingPredicates(builder))
+            .addPredicate(root -> builder.equal(root.get("dataDimensionType"), dataDimensionType))
+            .addPredicate(root -> builder.equal(root.get("dataDimension"), dataDimension)));
+  }
+
+  @Override
+  public List<Category> getCategoriesNoAcl(
+      DataDimensionType dataDimensionType, boolean dataDimension) {
+    CriteriaBuilder builder = getCriteriaBuilder();
+
+    return getList(
+        builder,
+        newJpaParameters()
+            .addPredicate(root -> builder.equal(root.get("dataDimensionType"), dataDimensionType))
+            .addPredicate(root -> builder.equal(root.get("dataDimension"), dataDimension)));
+  }
+
+  @Override
+  public List<Category> getCategoriesByCategoryOption(@Nonnull Collection<String> categoryOptions) {
+    if (categoryOptions.isEmpty()) return List.of();
+    return getQuery(
+            """
+            select distinct c from Category c \
+            join c.categoryOptions co \
+            where co.uid in :categoryOptions
+            """,
+            Category.class)
+        .setParameter("categoryOptions", categoryOptions)
+        .getResultList();
+  }
+
+  @Override
+  public int removeCatOptionCategoryRefs(Set<Long> sourceCategoryIds) {
+    if (sourceCategoryIds == null || sourceCategoryIds.isEmpty()) return 0;
+    String sql =
+        """
+              delete from categories_categoryoptions c_co
+              where c_co.categoryid in :sourceCategoryIds
+              """;
+    return getSession()
+        .createNativeQuery(sql)
+        .setParameter("sourceCategoryIds", sourceCategoryIds)
+        .setLockOptions(new LockOptions(PESSIMISTIC_WRITE).setTimeOut(5000))
+        .executeUpdate();
+  }
+}

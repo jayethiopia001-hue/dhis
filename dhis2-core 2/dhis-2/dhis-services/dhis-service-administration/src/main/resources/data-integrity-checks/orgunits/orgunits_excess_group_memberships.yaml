@@ -1,0 +1,114 @@
+# Copyright (c) 2004-2022, University of Oslo
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+# Redistributions of source code must retain the above copyright notice, this
+# list of conditions and the following disclaimer.
+#
+# Redistributions in binary form must reproduce the above copyright notice,
+# this list of conditions and the following disclaimer in the documentation
+# and/or other materials provided with the distribution.
+# Neither the name of the HISP project nor the names of its contributors may
+# be used to endorse or promote products derived from this software without
+# specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+# ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+# ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+---
+name: organisation_units_violating_exclusive_group_sets
+description: Organisation units which belong to multiple groups in a group set
+section: Organisation units
+section_order: 10
+summary_sql: >-
+  WITH ougs_multiple_groups as (
+  SELECT ou_uid,ou_name,ougs_name,
+  array_agg(oug_name) as ougs_groups
+  FROM (
+  SELECT  ougm.organisationunitid, 
+  ougm.orgunitgroupid,
+  ougsm.orgunitgroupsetid,
+  ou.uid as ou_uid,
+  ou.name as ou_name,
+  oug.name as oug_name,
+  ougs.name as ougs_name
+  FROM orgunitgroupmembers ougm
+  INNER JOIN orgunitgroupsetmembers ougsm USING(orgunitgroupid)
+  INNER JOIN orgunitgroup oug USING(orgunitgroupid)
+  INNER JOIN orgunitgroupset ougs USING(orgunitgroupsetid)
+  INNER JOIN organisationunit ou USING(organisationunitid) ) a
+  GROUP BY ou_uid,ou_name, ougs_name )
+  SELECT COUNT(*),
+  (100 * (SELECT COUNT(*) from ougs_multiple_groups WHERE array_length(ougs_groups,1) > 1) / 
+  NULLIF((SELECT COUNT(*) from ougs_multiple_groups),0)) as percent
+  from ougs_multiple_groups
+  WHERE array_length(ougs_groups, 1) > 1;
+details_sql: >-
+  WITH ougs_grouped AS (
+    SELECT 
+      ou.uid AS ou_uid,
+      ou.name AS ou_name,
+      ougs.uid AS ougs_id,
+      ougs.name AS ougs_name,
+      array_agg(
+        'oug_uid: ' || oug.uid || '; oug_name: ' || oug.name
+      ) AS group_refs
+    FROM orgunitgroupmembers ougm
+    INNER JOIN orgunitgroupsetmembers ougsm USING(orgunitgroupid)
+    INNER JOIN orgunitgroup oug USING(orgunitgroupid)
+    INNER JOIN orgunitgroupset ougs USING(orgunitgroupsetid)
+    INNER JOIN organisationunit ou USING(organisationunitid)
+    GROUP BY ou.uid, ou.name, ougs.uid, ougs.name
+  ),
+  violating_group_sets AS (
+    SELECT 
+      ou_uid,
+      ou_name,
+      ougs_id,
+      ougs_name,
+      group_refs
+    FROM ougs_grouped
+    WHERE array_length(group_refs, 1) > 1
+  ),
+  flat_refs AS (
+    SELECT
+      ou_uid,
+      ou_name,
+      'ougs_name: ' || ougs_name ||
+      '; ougs_id: ' || ougs_id ||
+      '; groups: [' || string_agg(group_ref, ', ') || ']' AS ref
+    FROM violating_group_sets, unnest(group_refs) AS group_ref
+    GROUP BY ou_uid, ou_name, ougs_id, ougs_name
+  ),
+  final_output AS (
+    SELECT
+      ou_uid,
+      ou_name,
+      array_agg(ref) AS refs
+    FROM flat_refs
+    GROUP BY ou_uid, ou_name
+  )
+  SELECT
+    ou_uid AS uid,
+    ou_name AS name,
+    NULL AS comment,
+    refs
+  FROM final_output;
+details_id_type: organisationUnits
+severity: SEVERE
+introduction: >
+  Organisation units should belong to exactly one group within each organisation
+  unit group set of which they are a member. If the organisation unit belongs to
+  multiple groups, this will lead to unpredictable results in analysis.
+recommendation: >
+  Using the maintenance app, assign the organisation units in the details list
+  to exactly one group within each group set membership.

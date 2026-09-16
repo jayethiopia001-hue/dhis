@@ -1,0 +1,673 @@
+indicator_id,indicator_name,region,zone,woreda,fiscal_year,count_value,eligible_pop,share,source
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2011,180460,248941,0.35,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2012,190275,255165,0.35,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2013,181673,261544,0.35,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2014,239651,268083,0.35,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2015,254250,274785,0.35,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2016,130644,281654,0.35,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2017,281654,281654,0.35,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2011,163484,230022,0.35,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2012,178093,235772,0.35,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2013,169734,241667,0.35,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2014,221224,247708,0.35,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2015,231986,253901,0.35,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2016,121294,260249,0.35,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2017,255044,260249,0.35,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2011,162157,230022,0.35,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2012,171714,235772,0.35,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2013,173696,241667,0.35,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2014,207935,247708,0.35,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2015,236404,253901,0.35,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2016,122169,260249,0.35,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2017,260249,260249,0.35,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2011,179999,230022,0.35,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2012,191442,235772,0.35,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2013,194198,241667,0.35,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2014,226092,247708,0.35,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2015,241815,253901,0.35,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2016,124383,260249,0.35,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2017,260249,260249,0.35,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2011,135585,230022,0.35,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2012,146526,235772,0.35,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2013,155705,241667,0.35,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2014,187220,247708,0.35,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2015,207928,253901,0.35,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2016,116370,260249,0.35,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2017,249839,260249,0.35,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2011,131823,230022,0.35,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2012,144804,235772,0.35,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2013,145617,241667,0.35,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2014,177695,247708,0.35,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2015,198896,253901,0.35,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2016,107359,260249,0.35,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2017,234224,260249,0.35,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2011,180790,230022,0.35,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2012,192487,235772,0.35,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2013,177973,241667,0.35,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2014,217565,247708,0.35,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2015,235877,253901,0.35,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2016,124059,260249,0.35,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2017,260249,260249,0.35,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2011,143468,230022,0.35,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2012,152711,235772,0.35,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2013,167996,241667,0.35,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2014,194084,247708,0.35,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2015,215054,253901,0.35,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2016,113800,260249,0.35,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2017,244634,260249,0.35,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2011,156154,230022,0.35,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2012,181244,235772,0.35,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2013,172636,241667,0.35,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2014,207691,247708,0.35,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2015,230830,253901,0.35,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2016,122032,260249,0.35,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2017,260249,260249,0.35,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2011,171216,248941,0.35,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2012,189708,255165,0.35,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2013,189158,261544,0.35,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2014,226749,268083,0.35,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2015,247029,274785,0.35,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2016,124332,281654,0.35,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2017,281654,281654,0.35,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2011,0,89752,0.35,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2012,0,91996,0.35,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2013,0,94296,0.35,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2014,14,96653,0.35,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2015,44,99069,0.35,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2016,49,101546,0.35,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2017,6093,101546,0.35,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2011,2628,169280,0.35,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2012,2416,173512,0.35,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2013,2376,177850,0.35,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2014,1955,182296,0.35,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2015,1704,186854,0.35,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2016,603,191525,0.35,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 1 (synthetic demo),EFY2017,1149,191525,0.35,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2011,103120,142252,0.2,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2012,108729,145809,0.2,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2013,103813,149454,0.2,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2014,136943,153190,0.2,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2015,145286,157020,0.2,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2016,74654,160945,0.2,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2017,160945,160945,0.2,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2011,93420,131441,0.2,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2012,101767,134727,0.2,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2013,96991,138095,0.2,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2014,126414,141548,0.2,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2015,132563,145086,0.2,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2016,69311,148714,0.2,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2017,145739,148714,0.2,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2011,92661,131441,0.2,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2012,98122,134727,0.2,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2013,99255,138095,0.2,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2014,118820,141548,0.2,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2015,135088,145086,0.2,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2016,69811,148714,0.2,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2017,148714,148714,0.2,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2011,102856,131441,0.2,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2012,109395,134727,0.2,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2013,110970,138095,0.2,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2014,129196,141548,0.2,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2015,138180,145086,0.2,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2016,71076,148714,0.2,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2017,148714,148714,0.2,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2011,77477,131441,0.2,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2012,83729,134727,0.2,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2013,88974,138095,0.2,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2014,106983,141548,0.2,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2015,118816,145086,0.2,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2016,66497,148714,0.2,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2017,142765,148714,0.2,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2011,75327,131441,0.2,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2012,82745,134727,0.2,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2013,83210,138095,0.2,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2014,101540,141548,0.2,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2015,113655,145086,0.2,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2016,61348,148714,0.2,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2017,133842,148714,0.2,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2011,103308,131441,0.2,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2012,109993,134727,0.2,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2013,101699,138095,0.2,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2014,124323,141548,0.2,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2015,134787,145086,0.2,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2016,70891,148714,0.2,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2017,148714,148714,0.2,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2011,81982,131441,0.2,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2012,87263,134727,0.2,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2013,95998,138095,0.2,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2014,110905,141548,0.2,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2015,122888,145086,0.2,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2016,65029,148714,0.2,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2017,139791,148714,0.2,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2011,89231,131441,0.2,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2012,103568,134727,0.2,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2013,98649,138095,0.2,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2014,118681,141548,0.2,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2015,131903,145086,0.2,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2016,69733,148714,0.2,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2017,148714,148714,0.2,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2011,97838,142252,0.2,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2012,108404,145809,0.2,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2013,108090,149454,0.2,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2014,129571,153190,0.2,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2015,141159,157020,0.2,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2016,71047,160945,0.2,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2017,160945,160945,0.2,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2011,0,51287,0.2,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2012,0,52569,0.2,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2013,0,53883,0.2,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2014,8,55230,0.2,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2015,25,56611,0.2,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2016,28,58026,0.2,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2017,3482,58026,0.2,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2011,1502,96732,0.2,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2012,1381,99150,0.2,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2013,1358,101629,0.2,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2014,1117,104169,0.2,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2015,974,106774,0.2,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2016,345,109443,0.2,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 1 (synthetic demo),Amhara Z1 Woreda 2 (synthetic demo),EFY2017,657,109443,0.2,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2011,154680,213378,0.3,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2012,163093,218713,0.3,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2013,155720,224181,0.3,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2014,205415,229785,0.3,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2015,217929,235530,0.3,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2016,111981,241418,0.3,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2017,241418,241418,0.3,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2011,140129,197162,0.3,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2012,152651,202091,0.3,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2013,145486,207143,0.3,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2014,189620,212322,0.3,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2015,198845,217630,0.3,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2016,103966,223070,0.3,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2017,218609,223070,0.3,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2011,138992,197162,0.3,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2012,147184,202091,0.3,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2013,148882,207143,0.3,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2014,178230,212322,0.3,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2015,202632,217630,0.3,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2016,104716,223070,0.3,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2017,223070,223070,0.3,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2011,154285,197162,0.3,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2012,164093,202091,0.3,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2013,166455,207143,0.3,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2014,193793,212322,0.3,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2015,207270,217630,0.3,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2016,106614,223070,0.3,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2017,223070,223070,0.3,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2011,116216,197162,0.3,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2012,125594,202091,0.3,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2013,133461,207143,0.3,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2014,160474,212322,0.3,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2015,178224,217630,0.3,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2016,99746,223070,0.3,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2017,214147,223070,0.3,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2011,112991,197162,0.3,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2012,124118,202091,0.3,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2013,124814,207143,0.3,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2014,152310,212322,0.3,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2015,170482,217630,0.3,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2016,92022,223070,0.3,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2017,200763,223070,0.3,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2011,154963,197162,0.3,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2012,164989,202091,0.3,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2013,152548,207143,0.3,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2014,186484,212322,0.3,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2015,202180,217630,0.3,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2016,106336,223070,0.3,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2017,223070,223070,0.3,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2011,122973,197162,0.3,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2012,130895,202091,0.3,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2013,143996,207143,0.3,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2014,166358,212322,0.3,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2015,184332,217630,0.3,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2016,97543,223070,0.3,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2017,209686,223070,0.3,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2011,133846,197162,0.3,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2012,155352,202091,0.3,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2013,147974,207143,0.3,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2014,178021,212322,0.3,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2015,197854,217630,0.3,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2016,104599,223070,0.3,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2017,223070,223070,0.3,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2011,146757,213378,0.3,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2012,162607,218713,0.3,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2013,162135,224181,0.3,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2014,194356,229785,0.3,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2015,211739,235530,0.3,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2016,106570,241418,0.3,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2017,241418,241418,0.3,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2011,0,76930,0.3,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2012,0,78853,0.3,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2013,0,80825,0.3,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2014,12,82845,0.3,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2015,38,84917,0.3,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2016,42,87039,0.3,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2017,5222,87039,0.3,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2011,2253,145097,0.3,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2012,2071,148725,0.3,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2013,2037,152443,0.3,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2014,1676,156254,0.3,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2015,1461,160160,0.3,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2016,517,164164,0.3,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 1 (synthetic demo),EFY2017,985,164164,0.3,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2011,77340,106689,0.15,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2012,81546,109356,0.15,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2013,77860,112090,0.15,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2014,102707,114893,0.15,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2015,108964,117765,0.15,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2016,55990,120709,0.15,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2017,120709,120709,0.15,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2011,70065,98581,0.15,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2012,76326,101045,0.15,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2013,72743,103571,0.15,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2014,94810,106161,0.15,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2015,99423,108815,0.15,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2016,51983,111535,0.15,woreda_split
+2,Proportion of surviving infants who received OPV3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2017,109304,111535,0.15,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2011,69496,98581,0.15,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2012,73592,101045,0.15,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2013,74441,103571,0.15,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2014,89115,106161,0.15,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2015,101316,108815,0.15,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2016,52358,111535,0.15,woreda_split
+3,Proportion of surviving infants who received IPV,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2017,111535,111535,0.15,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2011,77142,98581,0.15,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2012,82047,101045,0.15,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2013,83228,103571,0.15,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2014,96897,106161,0.15,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2015,103635,108815,0.15,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2016,53307,111535,0.15,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2017,111535,111535,0.15,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2011,58108,98581,0.15,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2012,62797,101045,0.15,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2013,66731,103571,0.15,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2014,80237,106161,0.15,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2015,89112,108815,0.15,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2016,49873,111535,0.15,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2017,107074,111535,0.15,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2011,56496,98581,0.15,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2012,62059,101045,0.15,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2013,62407,103571,0.15,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2014,76155,106161,0.15,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2015,85241,108815,0.15,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2016,46011,111535,0.15,woreda_split
+7,Proportion of surviving infants who received MCV2,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2017,100382,111535,0.15,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2011,77481,98581,0.15,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2012,82494,101045,0.15,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2013,76274,103571,0.15,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2014,93242,106161,0.15,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2015,101090,108815,0.15,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2016,53168,111535,0.15,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2017,111535,111535,0.15,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2011,61486,98581,0.15,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2012,65447,101045,0.15,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2013,71998,103571,0.15,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2014,83179,106161,0.15,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2015,92166,108815,0.15,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2016,48772,111535,0.15,woreda_split
+10,Proportion of infants fully immunized,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2017,104843,111535,0.15,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2011,66923,98581,0.15,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2012,77676,101045,0.15,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2013,73987,103571,0.15,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2014,89010,106161,0.15,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2015,98927,108815,0.15,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2016,52299,111535,0.15,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2017,111535,111535,0.15,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2011,73378,106689,0.15,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2012,81303,109356,0.15,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2013,81068,112090,0.15,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2014,97178,114893,0.15,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2015,105870,117765,0.15,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2016,53285,120709,0.15,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2017,120709,120709,0.15,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2011,0,38465,0.15,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2012,0,39427,0.15,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2013,0,40412,0.15,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2014,6,41423,0.15,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2015,19,42458,0.15,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2016,21,43520,0.15,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2017,2611,43520,0.15,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2011,1126,72549,0.15,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2012,1036,74362,0.15,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2013,1018,76221,0.15,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2014,838,78127,0.15,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2015,730,80080,0.15,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2016,259,82082,0.15,woreda_split
+15,Proportion of neonatal death in the institution,Amhara,Amhara Zone 2 (synthetic demo),Amhara Z2 Woreda 2 (synthetic demo),EFY2017,492,82082,0.15,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2011,263978,392787,0.3,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2012,314106,402607,0.3,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2013,340084,412672,0.3,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2014,404201,422989,0.3,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2015,455242,433564,0.3,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2016,221515,444403,0.3,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2017,444403,444403,0.3,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2011,255961,364114,0.3,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2012,277427,373217,0.3,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2013,280166,382547,0.3,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2014,338045,392111,0.3,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2015,369945,401914,0.3,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2016,189617,411961,0.3,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2017,407842,411961,0.3,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2011,230274,364114,0.3,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2012,272709,373217,0.3,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2013,276058,382547,0.3,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2014,350992,392111,0.3,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2015,373702,401914,0.3,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2016,204557,411961,0.3,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2017,411961,411961,0.3,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2011,260007,364114,0.3,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2012,307668,373217,0.3,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2013,300022,382547,0.3,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2014,369268,392111,0.3,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2015,387708,401914,0.3,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2016,208342,411961,0.3,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2017,411961,411961,0.3,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2011,248459,364114,0.3,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2012,284076,373217,0.3,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2013,265658,382547,0.3,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2014,335553,392111,0.3,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2015,378324,401914,0.3,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2016,193520,411961,0.3,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2017,411961,411961,0.3,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2011,213330,364114,0.3,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2012,247311,373217,0.3,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2013,231570,382547,0.3,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2014,301658,392111,0.3,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2015,333265,401914,0.3,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2016,170788,411961,0.3,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2017,379005,411961,0.3,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2011,238721,364114,0.3,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2012,276287,373217,0.3,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2013,275394,382547,0.3,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2014,350183,392111,0.3,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2015,381652,401914,0.3,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2016,207281,411961,0.3,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2017,411961,411961,0.3,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2011,215768,364114,0.3,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2012,258270,373217,0.3,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2013,258326,382547,0.3,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2014,318629,392111,0.3,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2015,343202,401914,0.3,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2016,184091,411961,0.3,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2017,395483,411961,0.3,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2011,298118,364114,0.3,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2012,323759,373217,0.3,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2013,333350,382547,0.3,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2014,374867,392111,0.3,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2015,393874,401914,0.3,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2016,205225,411961,0.3,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2017,411961,411961,0.3,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2011,259063,392787,0.3,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2012,311032,402607,0.3,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2013,307540,412672,0.3,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2014,391761,422989,0.3,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2015,429490,433564,0.3,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2016,208617,444403,0.3,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2017,444403,444403,0.3,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2011,0,138211,0.3,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2012,0,141667,0.3,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2013,0,145208,0.3,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2014,131,148839,0.3,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2015,403,152559,0.3,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2016,439,156373,0.3,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2017,10946,156373,0.3,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2011,2614,298518,0.3,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2012,2419,305981,0.3,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2013,2514,313631,0.3,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2014,1994,321472,0.3,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2015,1763,329508,0.3,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2016,702,337746,0.3,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 1 (synthetic demo),EFY2017,1013,337746,0.3,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2011,219982,327323,0.25,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2012,261755,335506,0.25,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2013,283403,343894,0.25,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2014,336834,352491,0.25,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2015,379368,361303,0.25,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2016,184596,370336,0.25,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2017,370336,370336,0.25,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2011,213301,303428,0.25,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2012,231190,311014,0.25,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2013,233472,318789,0.25,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2014,281704,326759,0.25,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2015,308288,334928,0.25,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2016,158014,343301,0.25,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2017,339868,343301,0.25,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2011,191895,303428,0.25,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2012,227258,311014,0.25,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2013,230049,318789,0.25,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2014,292493,326759,0.25,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2015,311418,334928,0.25,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2016,170464,343301,0.25,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2017,343301,343301,0.25,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2011,216672,303428,0.25,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2012,256390,311014,0.25,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2013,250018,318789,0.25,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2014,307724,326759,0.25,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2015,323090,334928,0.25,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2016,173618,343301,0.25,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2017,343301,343301,0.25,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2011,207050,303428,0.25,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2012,236730,311014,0.25,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2013,221381,318789,0.25,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2014,279628,326759,0.25,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2015,315270,334928,0.25,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2016,161267,343301,0.25,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2017,343301,343301,0.25,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2011,177775,303428,0.25,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2012,206092,311014,0.25,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2013,192975,318789,0.25,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2014,251382,326759,0.25,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2015,277721,334928,0.25,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2016,142323,343301,0.25,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2017,315837,343301,0.25,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2011,198934,303428,0.25,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2012,230239,311014,0.25,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2013,229495,318789,0.25,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2014,291820,326759,0.25,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2015,318043,334928,0.25,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2016,172734,343301,0.25,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2017,343301,343301,0.25,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2011,179806,303428,0.25,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2012,215225,311014,0.25,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2013,215272,318789,0.25,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2014,265524,326759,0.25,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2015,286002,334928,0.25,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2016,153409,343301,0.25,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2017,329569,343301,0.25,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2011,248432,303428,0.25,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2012,269799,311014,0.25,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2013,277791,318789,0.25,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2014,312390,326759,0.25,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2015,328228,334928,0.25,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2016,171021,343301,0.25,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2017,343301,343301,0.25,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2011,215886,327323,0.25,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2012,259194,335506,0.25,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2013,256283,343894,0.25,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2014,326468,352491,0.25,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2015,357909,361303,0.25,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2016,173848,370336,0.25,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2017,370336,370336,0.25,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2011,0,115176,0.25,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2012,0,118056,0.25,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2013,0,121007,0.25,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2014,109,124032,0.25,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2015,336,127133,0.25,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2016,366,130311,0.25,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2017,9122,130311,0.25,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2011,2178,248765,0.25,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2012,2016,254984,0.25,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2013,2095,261359,0.25,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2014,1662,267893,0.25,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2015,1469,274590,0.25,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2016,585,281455,0.25,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 1 (synthetic demo),Oromia Z1 Woreda 2 (synthetic demo),EFY2017,844,281455,0.25,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2011,219982,327323,0.25,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2012,261755,335506,0.25,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2013,283403,343894,0.25,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2014,336834,352491,0.25,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2015,379368,361303,0.25,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2016,184596,370336,0.25,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2017,370336,370336,0.25,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2011,213301,303428,0.25,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2012,231190,311014,0.25,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2013,233472,318789,0.25,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2014,281704,326759,0.25,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2015,308288,334928,0.25,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2016,158014,343301,0.25,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2017,339868,343301,0.25,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2011,191895,303428,0.25,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2012,227258,311014,0.25,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2013,230049,318789,0.25,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2014,292493,326759,0.25,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2015,311418,334928,0.25,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2016,170464,343301,0.25,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2017,343301,343301,0.25,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2011,216672,303428,0.25,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2012,256390,311014,0.25,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2013,250018,318789,0.25,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2014,307724,326759,0.25,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2015,323090,334928,0.25,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2016,173618,343301,0.25,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2017,343301,343301,0.25,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2011,207050,303428,0.25,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2012,236730,311014,0.25,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2013,221381,318789,0.25,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2014,279628,326759,0.25,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2015,315270,334928,0.25,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2016,161267,343301,0.25,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2017,343301,343301,0.25,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2011,177775,303428,0.25,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2012,206092,311014,0.25,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2013,192975,318789,0.25,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2014,251382,326759,0.25,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2015,277721,334928,0.25,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2016,142323,343301,0.25,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2017,315837,343301,0.25,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2011,198934,303428,0.25,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2012,230239,311014,0.25,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2013,229495,318789,0.25,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2014,291820,326759,0.25,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2015,318043,334928,0.25,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2016,172734,343301,0.25,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2017,343301,343301,0.25,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2011,179806,303428,0.25,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2012,215225,311014,0.25,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2013,215272,318789,0.25,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2014,265524,326759,0.25,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2015,286002,334928,0.25,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2016,153409,343301,0.25,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2017,329569,343301,0.25,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2011,248432,303428,0.25,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2012,269799,311014,0.25,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2013,277791,318789,0.25,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2014,312390,326759,0.25,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2015,328228,334928,0.25,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2016,171021,343301,0.25,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2017,343301,343301,0.25,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2011,215886,327323,0.25,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2012,259194,335506,0.25,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2013,256283,343894,0.25,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2014,326468,352491,0.25,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2015,357909,361303,0.25,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2016,173848,370336,0.25,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2017,370336,370336,0.25,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2011,0,115176,0.25,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2012,0,118056,0.25,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2013,0,121007,0.25,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2014,109,124032,0.25,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2015,336,127133,0.25,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2016,366,130311,0.25,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2017,9122,130311,0.25,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2011,2178,248765,0.25,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2012,2016,254984,0.25,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2013,2095,261359,0.25,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2014,1662,267893,0.25,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2015,1469,274590,0.25,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2016,585,281455,0.25,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 1 (synthetic demo),EFY2017,844,281455,0.25,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2011,175985,261858,0.2,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2012,209404,268405,0.2,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2013,226722,275115,0.2,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2014,269467,281993,0.2,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2015,303495,289043,0.2,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2016,147677,296269,0.2,woreda_split
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2017,296269,296269,0.2,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2011,170641,242743,0.2,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2012,184952,248811,0.2,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2013,186777,255031,0.2,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2014,225364,261407,0.2,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2015,246630,267942,0.2,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2016,126411,274641,0.2,woreda_split
+2,Proportion of surviving infants who received OPV3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2017,271895,274641,0.2,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2011,153516,242743,0.2,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2012,181806,248811,0.2,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2013,184039,255031,0.2,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2014,233994,261407,0.2,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2015,249135,267942,0.2,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2016,136372,274641,0.2,woreda_split
+3,Proportion of surviving infants who received IPV,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2017,274641,274641,0.2,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2011,173338,242743,0.2,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2012,205112,248811,0.2,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2013,200015,255031,0.2,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2014,246179,261407,0.2,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2015,258472,267942,0.2,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2016,138894,274641,0.2,woreda_split
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2017,274641,274641,0.2,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2011,165640,242743,0.2,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2012,189384,248811,0.2,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2013,177105,255031,0.2,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2014,223702,261407,0.2,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2015,252216,267942,0.2,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2016,129013,274641,0.2,woreda_split
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2017,274641,274641,0.2,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2011,142220,242743,0.2,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2012,164874,248811,0.2,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2013,154380,255031,0.2,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2014,201106,261407,0.2,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2015,222177,267942,0.2,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2016,113858,274641,0.2,woreda_split
+7,Proportion of surviving infants who received MCV2,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2017,252670,274641,0.2,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2011,159147,242743,0.2,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2012,184191,248811,0.2,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2013,183596,255031,0.2,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2014,233456,261407,0.2,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2015,254434,267942,0.2,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2016,138187,274641,0.2,woreda_split
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2017,274641,274641,0.2,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2011,143845,242743,0.2,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2012,172180,248811,0.2,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2013,172217,255031,0.2,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2014,212419,261407,0.2,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2015,228801,267942,0.2,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2016,122727,274641,0.2,woreda_split
+10,Proportion of infants fully immunized,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2017,263655,274641,0.2,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2011,198746,242743,0.2,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2012,215839,248811,0.2,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2013,222233,255031,0.2,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2014,249912,261407,0.2,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2015,262583,267942,0.2,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2016,136817,274641,0.2,woreda_split
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2017,274641,274641,0.2,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2011,172709,261858,0.2,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2012,207355,268405,0.2,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2013,205026,275115,0.2,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2014,261174,281993,0.2,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2015,286327,289043,0.2,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2016,139078,296269,0.2,woreda_split
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2017,296269,296269,0.2,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2011,0,92141,0.2,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2012,0,94444,0.2,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2013,0,96806,0.2,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2014,87,99226,0.2,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2015,268,101706,0.2,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2016,293,104249,0.2,woreda_split
+14,Proportion of girls (14yo) who received HPV1,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2017,7297,104249,0.2,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2011,1743,199012,0.2,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2012,1612,203988,0.2,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2013,1676,209087,0.2,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2014,1329,214314,0.2,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2015,1175,219672,0.2,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2016,468,225164,0.2,woreda_split
+15,Proportion of neonatal death in the institution,Oromia,Oromia Zone 2 (synthetic demo),Oromia Z2 Woreda 2 (synthetic demo),EFY2017,675,225164,0.2,woreda_split

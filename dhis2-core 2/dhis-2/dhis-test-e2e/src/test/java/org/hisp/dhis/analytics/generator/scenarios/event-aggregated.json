@@ -1,0 +1,207 @@
+{
+  "scenarios": [
+    {
+      "name": "financialYear2023Sep",
+      "query": "/api/analytics/events/aggregate/IpHINAT79UW.json?dimension=ou:ImspTQPwCqd&dimension=pe:2023Sep&dimension=A03MvHHogjR.a3kGcGDCuk6&stage=A03MvHHogjR&displayProperty=NAME&totalPages=false&outputType=EVENT",
+      "version": {
+        "min": 42
+      }
+    },
+    {
+      "name": "valueParamAndStageParam",
+      "query": "/api/analytics/events/aggregate/IpHINAT79UW.json?dimension=ou:USER_ORGUNIT&dimension=pe:LAST_10_YEARS&stage=A03MvHHogjR&displayProperty=NAME&value=a3kGcGDCuk6&aggregationType=AVERAGE&relativePeriodDate=2025-08-01",
+      "version": {
+        "min": 42
+      }
+    },
+    {
+      "name": "valueWithStageParamAndStageParam",
+      "query": "/api/analytics/events/aggregate/IpHINAT79UW.json?dimension=ou:USER_ORGUNIT&dimension=pe:LAST_5_YEARS&stage=A03MvHHogjR&displayProperty=NAME&value=A03MvHHogjR.a3kGcGDCuk6&aggregationType=AVERAGE&relativePeriodDate=2025-08-01",
+      "version": {
+        "min": 42
+      }
+    },
+    {
+      "name": "valueWithStageParam",
+      "query": "/api/analytics/events/aggregate/IpHINAT79UW.json?dimension=ou:USER_ORGUNIT&dimension=pe:LAST_5_YEARS&displayProperty=NAME&value=A03MvHHogjR.a3kGcGDCuk6&aggregationType=AVERAGE&relativePeriodDate=2025-08-01",
+      "version": {
+        "min": 42
+      }
+    },
+    {
+      "name": "valueWithoutStageParam",
+      "query": "/api/analytics/events/aggregate/IpHINAT79UW.json?dimension=ou:USER_ORGUNIT&dimension=pe:LAST_5_YEARS&displayProperty=NAME&value=A03MvHHogjR.a3kGcGDCuk6&aggregationType=AVERAGE&relativePeriodDate=2025-08-01",
+      "version": {
+        "min": 42
+      }
+    },
+    {
+      "name": "dataElementOrgUnitTypeFilterDimensionAndOrgUnitAsFilter",
+      "query": "/api/analytics/events/aggregate/WSGAb5XwJ3Y.json?dimension=PFDfvmGpsR3.n1rtSHYf6O6:IN:g8upMTyEZGZ&filter=pe:202107;202106&stage=PFDfvmGpsR3&displayProperty=NAME&totalPages=false&outputType=EVENT",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndEventDateLastSixMonths",
+      "query": "/api/analytics/events/aggregate/IpHINAT79UW.json?displayProperty=NAME&sortOrder=desc&totalPages=false&outputType=EVENT&dimension=A03MvHHogjR.EVENT_DATE:LAST_6_MONTHS&relativePeriodDate=2021-07-01",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndEventDateSpecificYear",
+      "query": "/api/analytics/events/aggregate/IpHINAT79UW.json?displayProperty=NAME&sortOrder=desc&totalPages=false&outputType=EVENT&dimension=A03MvHHogjR.EVENT_DATE:2021&relativePeriodDate=2023-07-01",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndEventDateRange",
+      "query": "/api/analytics/events/aggregate/IpHINAT79UW.json?displayProperty=NAME&sortOrder=desc&totalPages=false&outputType=EVENT&dimension=A03MvHHogjR.EVENT_DATE:2021-03-01_2021-05-31&relativePeriodDate=2023-07-01",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndEventDateMultipleStages",
+      "query": "/api/analytics/events/aggregate/ur1Edk5Oe2n.json?displayProperty=NAME&sortOrder=desc&totalPages=false&outputType=EVENT&dimension=ZkbAXlQUYJG.EVENT_DATE:THIS_YEAR&dimension=jdRD35YwbRH.EVENT_DATE:2023&relativePeriodDate=2023-07-01",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndSimpleOu",
+      "query": "/api/analytics/events/aggregate/ur1Edk5Oe2n.json?displayProperty=NAME&sortOrder=desc&totalPages=false&outputType=EVENT&dimension=pe:2022&dimension=jdRD35YwbRH.ou:ImspTQPwCqd&relativePeriodDate=2023-07-01",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndOuUserOrgUnit",
+      "query": "/api/analytics/events/aggregate/ur1Edk5Oe2n.json?displayProperty=NAME&sortOrder=desc&totalPages=false&outputType=EVENT&dimension=pe:2022&dimension=ZkbAXlQUYJG.ou:USER_ORGUNIT",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndOuUserLevel",
+      "query": "/api/analytics/events/aggregate/ur1Edk5Oe2n.json?displayProperty=NAME&sortOrder=desc&totalPages=false&outputType=EVENT&dimension=pe:2022&dimension=ZkbAXlQUYJG.ou:LEVEL-3",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndOuMultipleOus",
+      "query": "/api/analytics/events/aggregate/ur1Edk5Oe2n.json?displayProperty=NAME&sortOrder=desc&totalPages=false&outputType=EVENT&dimension=pe:LAST_5_YEARS&dimension=ZkbAXlQUYJG.ou:O6uvpzGd5pu;DiszpKrYNg8&relativePeriodDate=2023-07-01",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndScheduledDate",
+      "query": "/api/analytics/events/aggregate/ur1Edk5Oe2n.json?displayProperty=NAME&sortOrder=desc&totalPages=false&outputType=EVENT&dimension=ZkbAXlQUYJG.SCHEDULED_DATE:202107",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndStatus",
+      "query": "/api/analytics/events/aggregate/ur1Edk5Oe2n.json?displayProperty=NAME&sortOrder=desc&totalPages=false&outputType=EVENT&dimension=ZkbAXlQUYJG.EVENT_STATUS:ACTIVE&&dimension=pe:2022",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndCategory",
+      "query": "/api/analytics/events/aggregate/bMcwwoVnbSR.json?displayProperty=NAME&sortOrder=desc&totalPages=false&outputType=EVENT&dimension=pe:2021,kO3z4Dhc038.C31vHZqu0qU:j3C417uW6J7;ddAo6zmIHOk",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndOuUserOrgUnitAndEvent",
+      "query": "/api/analytics/events/aggregate/ur1Edk5Oe2n.json?displayProperty=NAME&totalPages=false&dimension=ZkbAXlQUYJG.ou:USER_ORGUNIT,ZkbAXlQUYJG.EVENT_DATE:THIS_YEAR&relativePeriodDate=2021-07-01",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "weeklyPeriodFriday",
+      "query": "/api/analytics/events/aggregate/IpHINAT79UW.json?dimension=ou:ImspTQPwCqd&dimension=pe:2022FriW32&stage=A03MvHHogjR&displayProperty=NAME&totalPages=false&outputType=EVENT",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "enrollmentDate",
+      "query": "/api/analytics/events/aggregate/ur1Edk5Oe2n.json?dimension=ENROLLMENT_DATE:2021&displayProperty=NAME&totalPages=false",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "incidentDate",
+      "query": "/api/analytics/events/aggregate/ur1Edk5Oe2n.json?dimension=INCIDENT_DATE:2021&displayProperty=NAME&totalPages=false",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "enrollmentOuWithMultipleOus",
+      "query": "/api/analytics/events/aggregate/IpHINAT79UW.json?dimension=ENROLLMENT_OU:BXd3TqaAxkK;VpYAl8dXs6m;uFp0ztDOFbI,pe:2021&displayProperty=NAME&totalPages=false",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "enrollmentOuWithUserOrgUnit",
+      "query": "/api/analytics/events/aggregate/IpHINAT79UW.json?dimension=ENROLLMENT_OU:USER_ORGUNIT,pe:2021&displayProperty=NAME&totalPages=false",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "eventAggregateWithRelativePeriodTimeField",
+      "query": "/api/analytics/events/aggregate/IpHINAT79UW.json?stage=A03MvHHogjR&displayProperty=NAME&totalPages=false&scheduledDate=LAST_5_FINANCIAL_YEARS&outputType=EVENT&dimension=ou:ImspTQPwCqd,A03MvHHogjR.a3kGcGDCuk6&relativePeriodDate=2025-09-29",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "eventAggregateWithFixedPeriodTimeField_asDimension",
+      "query": "/api/analytics/events/aggregate/IpHINAT79UW.json?stage=A03MvHHogjR&displayProperty=NAME&totalPages=false&outputType=EVENT&dimension=ou:ImspTQPwCqd,A03MvHHogjR.a3kGcGDCuk6,ENROLLMENT_DATE:202301;202402&relativePeriodDate=2025-09-29",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "createdDateAsDimensionWithTimeRange",
+      "query": "/api/analytics/events/aggregate/IpHINAT79UW.json?stage=A03MvHHogjR&displayProperty=NAME&totalPages=false&dimension=ou:ImspTQPwCqd,A03MvHHogjR.a3kGcGDCuk6,CREATED:2016-07-30_2017-08-07&relativePeriodDate=2025-09-29",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "completedDateAsDimensionWithTimeRange",
+      "query": "/api/analytics/events/aggregate/IpHINAT79UW.json?stage=A03MvHHogjR&displayProperty=NAME&totalPages=false&dimension=ou:ImspTQPwCqd,A03MvHHogjR.a3kGcGDCuk6,COMPLETED:2021-07-30_2022-08-07&relativePeriodDate=2025-09-29",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "eventAggregateStagePeriodAndStaticPeriod",
+      "query": "/api/analytics/events/aggregate/IpHINAT79UW.json?displayProperty=NAME&totalPages=false&dimension=ou:ImspTQPwCqd,A03MvHHogjR.a3kGcGDCuk6,SCHEDULED_DATE:LAST_5_FINANCIAL_YEARS,ENROLLMENT_DATE:202302;202302&relativePeriodDate=2025-09-29",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+       "name": "stageValueWithBooleanDataElement",
+       "query": "/api/analytics/events/aggregate/IpHINAT79UW.json?displayProperty=NAME&totalPages=false&dimension=A03MvHHogjR.EVENT_DATE:LAST_6_MONTHS&value=A03MvHHogjR.bx6fsa0t90x&relativePeriodDate=2021-07-01",
+       "version": {
+        "min": 43
+      }
+    }
+  ]
+}

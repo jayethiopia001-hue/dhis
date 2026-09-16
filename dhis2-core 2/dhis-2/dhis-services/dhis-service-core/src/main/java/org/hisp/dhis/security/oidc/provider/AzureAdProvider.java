@@ -1,0 +1,157 @@
+/*
+ * Copyright (c) 2004-2022, University of Oslo
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors 
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.hisp.dhis.security.oidc.provider;
+
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.ImmutableList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Properties;
+import org.apache.commons.lang3.StringUtils;
+import org.hisp.dhis.external.conf.DhisConfigurationProvider;
+import org.hisp.dhis.security.oidc.DhisOidcClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.core.AuthenticationMethod;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
+
+/**
+ * Builds one {@link DhisOidcClientRegistration} per configured Microsoft Entra ID (Azure AD) tenant
+ * from {@code oidc.provider.azure.<n>.*} configuration keys in {@code dhis.conf}, where {@code <n>}
+ * is a small integer index (up to {@link #MAX_AZURE_TENANTS}). Multiple tenants are supported; each
+ * {@code azure.<n>} block becomes its own login-page button on the DHIS2 web login page when {@code
+ * oidc.oauth2.login.enabled=on}. Note: "Azure AD" is the legacy name for Microsoft Entra ID and is
+ * retained only for backwards compatibility in the configuration key.
+ *
+ * <p>The key {@code tenant} holds the Azure directory / tenant ID; it is used both as the Spring
+ * Security registration id and as the base for all endpoint URIs. Endpoints are built against the
+ * modern Microsoft identity platform (v2.0): {@code /oauth2/v2.0/authorize}, {@code
+ * /oauth2/v2.0/token}, {@code /discovery/v2.0/keys}, issuer {@code /v2.0}, and {@code
+ * https://graph.microsoft.com/oidc/userinfo}. The corresponding well-known discovery document lives
+ * at {@code https://login.microsoftonline.com/<tenant>/v2.0/.well-known/openid-configuration}.
+ *
+ * <p>Per-tenant keys read: {@code tenant}, {@code client_id}, {@code client_secret}, {@code
+ * redirect_url}, {@code mapping_claim}, {@code display_alias}, {@code enable_logout}. {@code
+ * enable_logout} defaults to {@code TRUE}; when enabled, the {@code end_session_endpoint} is wired
+ * to {@code /oauth2/v2.0/logout} on the tenant host.
+ *
+ * @author Morten Svanæs <msvanaes@dhis2.org>
+ */
+public class AzureAdProvider extends AbstractOidcProvider {
+  public static final int MAX_AZURE_TENANTS = 10;
+
+  public static final String PROVIDER_PREFIX = "oidc.provider.azure.";
+
+  public static final String AZURE_TENANT = "tenant";
+
+  public static final String PROVIDER_STATIC_ISSUER_URI_START =
+      "https://login.microsoftonline.com/";
+
+  private AzureAdProvider() {
+    throw new IllegalStateException("Utility class");
+  }
+
+  public static List<DhisOidcClientRegistration> parse(Properties config) {
+    Objects.requireNonNull(config, "DhisConfigurationProvider is missing!");
+
+    final ImmutableList.Builder<DhisOidcClientRegistration> clients = ImmutableList.builder();
+
+    for (int i = 0; i < MAX_AZURE_TENANTS; i++) {
+      String propertyPrefix = PROVIDER_PREFIX + i + '.';
+
+      String tenant = config.getProperty(propertyPrefix + AZURE_TENANT, "");
+      if (tenant.isEmpty()) {
+        continue;
+      }
+
+      DhisOidcClientRegistration dhisOidcClientRegistration =
+          DhisOidcClientRegistration.builder()
+              .clientRegistration(buildClientRegistration(config, tenant, propertyPrefix))
+              .mappingClaimKey(
+                  MoreObjects.firstNonNull(
+                      config.getProperty(propertyPrefix + MAPPING_CLAIM), DEFAULT_MAPPING_CLAIM))
+              .loginIcon("/dhis-web-commons/oidc/btn_azure_login.svg")
+              .loginIconPadding("13px 13px")
+              .loginText(config.getProperty(propertyPrefix + DISPLAY_ALIAS, "login_with_azure"))
+              .build();
+
+      clients.add(dhisOidcClientRegistration);
+    }
+
+    return clients.build();
+  }
+
+  private static ClientRegistration buildClientRegistration(
+      Properties properties, String tenant, String propertyPrefix) {
+    String clientId = properties.getProperty(propertyPrefix + CLIENT_ID, "");
+    String clientSecret = properties.getProperty(propertyPrefix + CLIENT_SECRET);
+
+    if (clientId.isEmpty()) {
+      throw new IllegalArgumentException("Azure client id is missing! tenant=" + tenant);
+    }
+
+    if (clientSecret.isEmpty()) {
+      throw new IllegalArgumentException("Azure client secret is missing! tenant=" + tenant);
+    }
+
+    String tenantUriStart = PROVIDER_STATIC_ISSUER_URI_START + tenant;
+
+    ClientRegistration.Builder builder = ClientRegistration.withRegistrationId(tenant);
+    builder.clientName(tenant);
+    builder.clientId(clientId);
+    builder.clientSecret(clientSecret);
+    builder.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC);
+    builder.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE);
+    builder.scope("openid", "profile", DEFAULT_MAPPING_CLAIM);
+    builder.authorizationUri(tenantUriStart + "/oauth2/v2.0/authorize");
+    builder.tokenUri(tenantUriStart + "/oauth2/v2.0/token");
+    builder.jwkSetUri(tenantUriStart + "/discovery/v2.0/keys");
+    builder.issuerUri(tenantUriStart + "/v2.0");
+    builder.userInfoUri("https://graph.microsoft.com/oidc/userinfo");
+    builder.redirectUri(
+        StringUtils.firstNonBlank(
+            properties.getProperty(propertyPrefix + REDIRECT_URL), DEFAULT_REDIRECT_TEMPLATE_URL));
+    builder.userInfoAuthenticationMethod(AuthenticationMethod.HEADER);
+    builder.userNameAttributeName(IdTokenClaimNames.SUB);
+
+    boolean supportLogout =
+        DhisConfigurationProvider.isOn(
+            MoreObjects.firstNonNull(
+                properties.getProperty(propertyPrefix + ENABLE_LOGOUT), "TRUE"));
+    if (supportLogout) {
+      builder.providerConfigurationMetadata(
+          Map.of("end_session_endpoint", tenantUriStart + "/oauth2/v2.0/logout"));
+    }
+
+    return builder.build();
+  }
+}

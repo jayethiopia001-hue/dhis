@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"
+  [<!ENTITY identifiableProperties SYSTEM "classpath://org/hisp/dhis/common/identifiableProperties.hbm">]
+  >
+
+<hibernate-mapping>
+  <class name="org.hisp.dhis.program.ProgramIndicator" table="programindicator">
+
+    <cache usage="read-write" />
+
+    <id name="id" column="programindicatorid">
+      <generator class="native" />
+    </id>
+    &identifiableProperties;
+
+    <property name="name" column="name" not-null="true" unique="true" length="230" />
+
+    <property name="shortName" not-null="true" unique="true" length="50" />
+
+    <property name="description" type="text" />
+
+    <property name="formName" type="text" />
+
+    <property name="orgUnitField" type="text" column="orgunitfield" />
+
+    <property name="style" type="jbObjectStyle" column="style" />
+
+    <property name="translations" type="jblTranslations"/>
+
+    <many-to-one name="program" class="org.hisp.dhis.program.Program"
+      column="programid" foreign-key="fk_programindicator_program" not-null="true" />
+
+    <set name="groups" table="programindicatorgroupmembers" inverse="true">
+      <cache usage="read-write" />
+      <key column="programindicatorid" />
+      <many-to-many class="org.hisp.dhis.program.ProgramIndicatorGroup" column="programindicatorgroupid" />
+    </set>
+
+    <property name="expression" type="text" />
+
+    <property name="filter" type="text" />
+
+    <property name="aggregationType" length="40">
+      <type name="org.hibernate.type.EnumType">
+        <param name="enumClass">org.hisp.dhis.analytics.AggregationType</param>
+        <param name="useNamed">true</param>
+        <param name="type">12</param>
+      </type>
+    </property>
+
+    <property name="decimals" />
+
+    <list name="legendSets" table="programindicatorlegendsets">
+      <cache usage="read-write" />
+      <key column="programindicatorid" />
+      <list-index column="sort_order" base="0" />
+      <many-to-many class="org.hisp.dhis.legend.LegendSet" column="legendsetid" foreign-key="fk_programindicator_legendsetid" />
+    </list>
+
+    <property name="aggregateExportCategoryOptionCombo" column="aggregateexportcategoryoptioncombo" />
+
+    <property name="aggregateExportAttributeOptionCombo" column="aggregateexportattributeoptioncombo" />
+
+    <property name="aggregateExportDataElement" column="aggregateexportdataelement" />
+
+    <many-to-one name="categoryCombo" class="org.hisp.dhis.category.CategoryCombo"
+                 column="categorycomboid" foreign-key="fk_programindicator_categorycomboid" not-null="true" />
+
+    <many-to-one name="attributeCombo" class="org.hisp.dhis.category.CategoryCombo"
+                 column="attributecomboid" foreign-key="fk_programindicator_attributecomboid" not-null="true" />
+
+    <property name="categoryMappingIds" type="jsbString" column="categorymappingids" />
+
+    <property name="displayInForm" />
+
+    <property name="analyticsType" column="analyticstype" length="15" not-null="true">
+      <type name="org.hibernate.type.EnumType">
+        <param name="enumClass">org.hisp.dhis.program.AnalyticsType</param>
+        <param name="useNamed">true</param>
+        <param name="type">12</param>
+      </type>
+    </property>
+    
+    <set name="analyticsPeriodBoundaries" cascade="all-delete-orphan">
+      <cache usage="read-write" />
+      <key column="programindicatorid" />
+      <one-to-many class="org.hisp.dhis.program.AnalyticsPeriodBoundary" />
+    </set>
+
+    <many-to-one name="createdBy" class="org.hisp.dhis.user.User" column="userid" foreign-key="fk_programindicator_userid" />
+
+    <!-- Sharing -->
+    <property name="sharing" type="jsbObjectSharing"/>
+
+    <!-- Dynamic attribute values -->
+    <property name="attributeValues" type="jsbAttributeValues"/>
+
+  </class>
+
+</hibernate-mapping>

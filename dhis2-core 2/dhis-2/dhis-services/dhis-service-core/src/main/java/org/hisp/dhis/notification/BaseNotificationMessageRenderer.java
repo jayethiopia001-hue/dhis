@@ -1,0 +1,370 @@
+/*
+ * Copyright (c) 2004-2022, University of Oslo
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors 
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.hisp.dhis.notification;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import javax.annotation.Nonnull;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.hisp.dhis.common.DeliveryChannel;
+import org.hisp.dhis.common.RegexUtils;
+import org.hisp.dhis.dataelement.DataElement;
+import org.hisp.dhis.eventdatavalue.EventDataValue;
+import org.hisp.dhis.option.Option;
+import org.hisp.dhis.option.OptionSet;
+import org.hisp.dhis.util.DateUtils;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+
+/**
+ * Template formats supported: A{uid-of-attribute} V{name-of-variable}
+ *
+ * <p>The implementing superclass defines how these are resolved.
+ *
+ * @param <T> the type of the root object used for resolving expression values.
+ * @author Halvdan Hoem Grelland
+ */
+@Slf4j
+public abstract class BaseNotificationMessageRenderer<T> implements NotificationMessageRenderer<T> {
+  /** 4 concatenated SMS. */
+  protected static final int SMS_CHAR_LIMIT = 160 * 4;
+
+  protected static final int EMAIL_CHAR_LIMIT = 10000;
+
+  protected static final int SUBJECT_CHAR_LIMIT = 100;
+
+  protected static final String CONFIDENTIAL_VALUE_REPLACEMENT = "[CONFIDENTIAL]";
+
+  // Error placeholders
+  protected static final String MISSING_VALUE_REPLACEMENT = "[N/A]";
+  protected static final String VALUE_ON_ERROR = "[SERVER ERROR]";
+  protected static final String DE_NOT_IN_STAGE = "[DataElement not in Program Stage]";
+  protected static final String OPTION_SET_NOT_FOUND = "[OptionSet not found]";
+
+  /** For Variable. */
+  protected static final Pattern VARIABLE_CONTENT_PATTERN = Pattern.compile("^[A-Za-z0-9_]+$");
+
+  /** ForTrackedEntityAttribute and DataElement. */
+  protected static final Pattern COMBINED_CONTENT_PATTERN =
+      Pattern.compile("[A-Za-z][A-Za-z0-9]{10}");
+
+  /** Matches the variable in group 1. */
+  private static final Pattern VARIABLE_PATTERN = Pattern.compile("V\\{([a-z_]*)}");
+
+  /** Matches the UID in group 1 for ForTrackedEntityAttribute. */
+  private static final Pattern TRACKED_ENTITY_ATTRIBUTE_PATTERN =
+      Pattern.compile("A\\{([A-Za-z][A-Za-z0-9]{10})}");
+
+  /** Matches the UID in group 1 for DataElement. */
+  private static final Pattern DATA_ELEMENT_PATTERN =
+      Pattern.compile("#\\{([A-Za-z][A-Za-z0-9]{10})}");
+
+  private final Map<ExpressionType, BiFunction<T, Set<String>, Map<String, String>>>
+      expressionToValueResolvers =
+          Map.of(
+              ExpressionType.VARIABLE,
+              (entity, keys) -> resolveVariableValues(keys, entity),
+              ExpressionType.TRACKED_ENTITY_ATTRIBUTE,
+              (entity, keys) -> resolveTrackedEntityAttributeValues(keys, entity),
+              ExpressionType.DATA_ELEMENT,
+              (entity, keys) -> resolveDataElementValues(keys, entity));
+
+  protected enum ExpressionType {
+    VARIABLE(VARIABLE_PATTERN, VARIABLE_CONTENT_PATTERN),
+    TRACKED_ENTITY_ATTRIBUTE(TRACKED_ENTITY_ATTRIBUTE_PATTERN, COMBINED_CONTENT_PATTERN),
+    DATA_ELEMENT(DATA_ELEMENT_PATTERN, COMBINED_CONTENT_PATTERN);
+
+    private final Pattern expressionPattern;
+
+    private final Pattern contentPattern;
+
+    ExpressionType(Pattern expressionPattern, Pattern contentPattern) {
+      this.expressionPattern = expressionPattern;
+      this.contentPattern = contentPattern;
+    }
+
+    public Pattern getExpressionPattern() {
+      return expressionPattern;
+    }
+
+    boolean isValidExpressionContent(String content) {
+      return content != null && contentPattern.matcher(content).matches();
+    }
+  }
+
+  // -------------------------------------------------------------------------
+  // Public methods
+  // -------------------------------------------------------------------------
+
+  @Override
+  public NotificationMessage render(T entity, NotificationTemplate template) {
+    final String collatedTemplate =
+        template.getDisplaySubjectTemplate() + " " + template.getDisplayMessageTemplate();
+
+    Map<String, String> expressionToValueMap =
+        extractExpressionsByType(collatedTemplate).entrySet().stream()
+            .map(entry -> resolveValuesFromExpressions(entry.getValue(), entry.getKey(), entity))
+            .collect(HashMap::new, Map::putAll, Map::putAll);
+
+    return createNotificationMessage(template, expressionToValueMap);
+  }
+
+  // -------------------------------------------------------------------------
+  // Override logic
+  // -------------------------------------------------------------------------
+
+  private boolean isValidExpressionContent(String content, ExpressionType type) {
+    return getSupportedExpressionTypes().contains(type) && type.isValidExpressionContent(content);
+  }
+
+  // -------------------------------------------------------------------------
+  // Abstract methods
+  // -------------------------------------------------------------------------
+
+  /**
+   * Gets a Map of variable resolver functions, keyed by the Template Variable. The returned Map
+   * should not be mutable.
+   */
+  protected abstract Map<TemplateVariable, Function<T, String>> getVariableResolvers();
+
+  /**
+   * Resolves values for the given attribute UIDs.
+   *
+   * @param attributeKeys the Set of attribute UIDs.
+   * @param entity the entity to resolve the values from/for.
+   * @return a Map of values, keyed by the corresponding attribute UID.
+   */
+  protected abstract Map<String, String> resolveTrackedEntityAttributeValues(
+      Set<String> attributeKeys, T entity);
+
+  /**
+   * Resolves values for the given data element UIDs.
+   *
+   * @param elementKeys the Set of attribute UIDs.
+   * @param entity the entity to resolve the values from/for.
+   * @return a Map of values, keyed by the corresponding data element UID.
+   */
+  protected abstract Map<String, String> resolveDataElementValues(
+      Set<String> elementKeys, T entity);
+
+  /** Converts a string to the TemplateVariable supported by the implementor. */
+  protected abstract TemplateVariable fromVariableName(String name);
+
+  /** Returns the set of ExpressionTypes supported by the implementor. */
+  protected abstract Set<ExpressionType> getSupportedExpressionTypes();
+
+  /**
+   * Renders the display value for a {@link DataElement} within the context of an event.
+   *
+   * <p>This method performs the following:
+   *
+   * <ul>
+   *   <li>Returns a placeholder if the {@code DataElement} is not part of the program stage.
+   *   <li>Returns a confidential replacement if the underlying value is {@code null}.
+   *   <li>Resolves OptionSet codes to their corresponding display names when applicable.
+   *   <li>Otherwise, returns the raw data value.
+   * </ul>
+   *
+   * @param dv the {@link EventDataValue} containing the stored value
+   * @param dataElement the {@link DataElement} associated with the value
+   * @return a rendered, user-friendly value suitable for notifications or messages
+   */
+  protected String renderDataElementValue(EventDataValue dv, DataElement dataElement) {
+    if (dataElement == null) {
+      return DE_NOT_IN_STAGE;
+    }
+    String value = dv.getValue();
+
+    if (value == null) {
+      return CONFIDENTIAL_VALUE_REPLACEMENT;
+    }
+
+    // If the DV has an OptionSet -> substitute value with the name of the
+    // Option
+
+    return dataElement.hasOptionSet() ? getOptionName(dataElement.getOptionSet(), value) : value;
+  }
+
+  // -------------------------------------------------------------------------
+  // Internal methods
+  // -------------------------------------------------------------------------
+
+  private Map<String, String> resolveValuesFromExpressions(
+      Set<String> expressions, @Nonnull ExpressionType type, T entity) {
+    return expressionToValueResolvers
+        .getOrDefault(type, (e, s) -> Map.of())
+        .apply(entity, expressions);
+  }
+
+  private Map<String, String> resolveVariableValues(Set<String> variables, T entity) {
+    return variables.stream().collect(Collectors.toMap(v -> v, v -> resolveValue(v, entity)));
+  }
+
+  private String resolveValue(String variableName, T entity) {
+    Function<T, String> resolver = getVariableResolvers().get(fromVariableName(variableName));
+
+    if (resolver == null) {
+      log.warn(
+          String.format("Cannot resolve value for expression '%s': no resolver", variableName));
+
+      return StringUtils.EMPTY;
+    }
+
+    if (entity == null) {
+      log.warn(
+          String.format("Cannot resolve value for expression '%s': entity is null", variableName));
+
+      return StringUtils.EMPTY;
+    }
+
+    String value;
+
+    try {
+      value = resolver.apply(entity);
+    } catch (Exception ex) {
+      log.warn("Caught exception when running value resolver for variable: " + variableName, ex);
+      value = VALUE_ON_ERROR;
+    }
+
+    return value != null ? value : StringUtils.EMPTY;
+  }
+
+  private NotificationMessage createNotificationMessage(
+      NotificationTemplate template, Map<String, String> expressionToValueMap) {
+    String subject = replaceExpressions(template.getDisplaySubjectTemplate(), expressionToValueMap);
+    subject = chop(subject, SUBJECT_CHAR_LIMIT);
+
+    boolean hasSmsRecipients = template.getDeliveryChannels().contains(DeliveryChannel.SMS);
+
+    String message = replaceExpressions(template.getDisplayMessageTemplate(), expressionToValueMap);
+    message = chop(message, hasSmsRecipients ? SMS_CHAR_LIMIT : EMAIL_CHAR_LIMIT);
+
+    return new NotificationMessage(subject, message);
+  }
+
+  private static String replaceExpressions(
+      String input, final Map<String, String> expressionToValueMap) {
+    if (StringUtils.isEmpty(input)) {
+      return StringUtils.EMPTY;
+    }
+
+    return Stream.of(ExpressionType.values())
+        .map(ExpressionType::getExpressionPattern)
+        .reduce(
+            input,
+            (str, pattern) -> {
+              StringBuilder sb = new StringBuilder(str.length());
+              Matcher matcher = pattern.matcher(str);
+
+              while (matcher.find()) {
+                String key = matcher.group(1);
+                String value = expressionToValueMap.getOrDefault(key, MISSING_VALUE_REPLACEMENT);
+                value = StringUtils.defaultIfBlank(value, StringUtils.EMPTY);
+
+                matcher.appendReplacement(sb, value);
+              }
+
+              return matcher.appendTail(sb).toString();
+            },
+            (oldStr, newStr) -> newStr);
+  }
+
+  private Map<ExpressionType, Set<String>> extractExpressionsByType(String template) {
+    return Arrays.stream(ExpressionType.values())
+        .collect(Collectors.toMap(Function.identity(), type -> extractExpressions(template, type)));
+  }
+
+  private Set<String> extractExpressions(String template, ExpressionType type) {
+    Map<Boolean, Set<String>> groupedExpressions =
+        RegexUtils.getMatches(type.getExpressionPattern(), template, 1).stream()
+            .collect(
+                Collectors.groupingBy(
+                    expr -> isValidExpressionContent(expr, type), Collectors.toSet()));
+
+    warnOfUnrecognizedExpressions(groupedExpressions.get(false), type);
+
+    Set<String> expressions = groupedExpressions.get(true);
+
+    if (expressions == null || expressions.isEmpty()) {
+      return Collections.emptySet();
+    }
+
+    return expressions;
+  }
+
+  private static void warnOfUnrecognizedExpressions(Set<String> unrecognized, ExpressionType type) {
+    if (unrecognized != null && !unrecognized.isEmpty()) {
+      log.warn(
+          String.format(
+              "%d unrecognized expressions of type %s were ignored: %s",
+              unrecognized.size(), type.name(), Arrays.toString(unrecognized.toArray())));
+    }
+  }
+
+  // -------------------------------------------------------------------------
+  // Supportive methods
+  // -------------------------------------------------------------------------
+
+  protected static String chop(String input, int limit) {
+    return input.substring(0, Math.min(input.length(), limit));
+  }
+
+  protected static String getOptionName(@Nonnull OptionSet optionSet, String value) {
+    return optionSet.getOptions().stream()
+        .filter(option -> Objects.equals(option.getCode(), value))
+        .findFirst()
+        .map(Option::getName)
+        .orElse(OPTION_SET_NOT_FOUND);
+  }
+
+  protected static String daysUntil(Date date) {
+    return String.valueOf(Days.daysBetween(DateTime.now(), new DateTime(date)).getDays());
+  }
+
+  protected static String daysSince(Date date) {
+    return String.valueOf(Days.daysBetween(new DateTime(date), DateTime.now()).getDays());
+  }
+
+  protected static String formatDate(Date date) {
+    return DateUtils.toMediumDate(date);
+  }
+}

@@ -1,0 +1,572 @@
+/*
+ * Copyright (c) 2004-2022, University of Oslo
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors 
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.hisp.dhis.tracker.acl;
+
+import static org.hisp.dhis.security.acl.AccessStringHelper.CATEGORY_NO_DATA_SHARING_DEFAULT;
+import static org.hisp.dhis.test.utils.Assertions.assertIsEmpty;
+import static org.hisp.dhis.tracker.imports.validation.ValidationCode.E1000;
+import static org.hisp.dhis.tracker.imports.validation.ValidationCode.E1099;
+import static org.hisp.dhis.tracker.imports.validation.ValidationCode.E1102;
+import static org.hisp.dhis.tracker.imports.validation.ValidationCode.E1324;
+import static org.hisp.dhis.tracker.test.TrackerTestBase.createEnrollment;
+import static org.hisp.dhis.tracker.test.TrackerTestBase.createTrackedEntity;
+import static org.hisp.dhis.user.UserDetails.fromUser;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import com.google.common.collect.Sets;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.BiFunction;
+import org.apache.commons.lang3.time.DateUtils;
+import org.hisp.dhis.category.CategoryOption;
+import org.hisp.dhis.category.CategoryOptionCombo;
+import org.hisp.dhis.category.CategoryService;
+import org.hisp.dhis.common.AccessLevel;
+import org.hisp.dhis.common.IdentifiableObjectManager;
+import org.hisp.dhis.common.ValueType;
+import org.hisp.dhis.dataelement.DataElement;
+import org.hisp.dhis.event.EventStatus;
+import org.hisp.dhis.feedback.BadRequestException;
+import org.hisp.dhis.feedback.ForbiddenException;
+import org.hisp.dhis.feedback.NotFoundException;
+import org.hisp.dhis.organisationunit.OrganisationUnit;
+import org.hisp.dhis.program.Program;
+import org.hisp.dhis.program.ProgramStage;
+import org.hisp.dhis.program.ProgramStageDataElement;
+import org.hisp.dhis.program.ProgramStageDataElementService;
+import org.hisp.dhis.program.ProgramType;
+import org.hisp.dhis.security.acl.AccessStringHelper;
+import org.hisp.dhis.test.integration.PostgresIntegrationTestBase;
+import org.hisp.dhis.trackedentity.TrackedEntityType;
+import org.hisp.dhis.trackedentity.TrackedEntityTypeService;
+import org.hisp.dhis.tracker.export.trackedentity.TrackedEntityService;
+import org.hisp.dhis.tracker.imports.validation.ValidationCode;
+import org.hisp.dhis.tracker.model.Enrollment;
+import org.hisp.dhis.tracker.model.TrackedEntity;
+import org.hisp.dhis.tracker.model.TrackerEvent;
+import org.hisp.dhis.user.User;
+import org.hisp.dhis.user.UserDetails;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+/**
+ * @author Ameen Mohamed <ameen@dhis2.org>
+ */
+class TrackerAccessManagerTest extends PostgresIntegrationTestBase {
+
+  @Autowired private TrackerAccessManager trackerAccessManager;
+
+  @Autowired private TrackerOwnershipManager trackerOwnershipManager;
+
+  @Autowired private TrackedEntityProgramOwnerService trackedEntityProgramOwnerService;
+
+  @Autowired private TrackedEntityTypeService trackedEntityTypeService;
+
+  @Autowired private TrackedEntityService trackedEntityService;
+
+  @Autowired private ProgramStageDataElementService programStageDataElementService;
+
+  @Autowired private IdentifiableObjectManager manager;
+
+  @Autowired private CategoryService categoryService;
+
+  private TrackedEntity trackedEntityA;
+
+  private OrganisationUnit orgUnitA;
+
+  private OrganisationUnit orgUnitB;
+
+  private Program programA;
+
+  private ProgramStage programStageA;
+
+  private ProgramStage programStageB;
+
+  private TrackedEntityType trackedEntityType;
+
+  private TrackerEvent eventA;
+
+  private TrackerEvent eventB;
+
+  @BeforeEach
+  void setUp() {
+    CategoryOptionCombo coA = categoryService.getDefaultCategoryOptionCombo();
+    orgUnitA = createOrganisationUnit('A');
+    orgUnitB = createOrganisationUnit('B');
+    manager.save(orgUnitA);
+    manager.save(orgUnitB);
+    trackedEntityType = createTrackedEntityType('A');
+    trackedEntityType.setPublicAccess(AccessStringHelper.FULL);
+    trackedEntityTypeService.addTrackedEntityType(trackedEntityType);
+    DataElement dataElementA = createDataElement('A');
+    DataElement dataElementB = createDataElement('B');
+    dataElementA.setValueType(ValueType.INTEGER);
+    dataElementB.setValueType(ValueType.INTEGER);
+    manager.save(dataElementA);
+    manager.save(dataElementB);
+    programStageA = createProgramStage('A', 0);
+    programStageB = createProgramStage('B', 0);
+    programStageB.setRepeatable(true);
+    manager.save(programStageA);
+    manager.save(programStageB);
+    programA = createProgram('A', new HashSet<>(), orgUnitA);
+    programA.setProgramType(ProgramType.WITH_REGISTRATION);
+    programA.setAccessLevel(AccessLevel.PROTECTED);
+    programA.setPublicAccess(AccessStringHelper.FULL);
+    programA.addOrganisationUnit(orgUnitB);
+    programA.setTrackedEntityType(trackedEntityType);
+    manager.save(programA);
+    ProgramStageDataElement programStageDataElement = new ProgramStageDataElement();
+    programStageDataElement.setDataElement(dataElementA);
+    programStageDataElement.setProgramStage(programStageA);
+    programStageDataElementService.addProgramStageDataElement(programStageDataElement);
+    programStageA.getProgramStageDataElements().add(programStageDataElement);
+    programStageA.setProgram(programA);
+    programStageDataElement = new ProgramStageDataElement();
+    programStageDataElement.setDataElement(dataElementB);
+    programStageDataElement.setProgramStage(programStageB);
+    programStageDataElementService.addProgramStageDataElement(programStageDataElement);
+    programStageB.getProgramStageDataElements().add(programStageDataElement);
+    programStageB.setProgram(programA);
+    programStageB.setMinDaysFromStart(2);
+    programA.setProgramStages(Set.of(programStageA, programStageB));
+    manager.update(programStageA);
+    manager.update(programStageB);
+    manager.update(programA);
+    trackedEntityA = createTrackedEntity(orgUnitA, trackedEntityType);
+    TrackedEntity trackedEntityB = createTrackedEntity(orgUnitB, trackedEntityType);
+    TrackedEntity femaleA = createTrackedEntity(orgUnitA, trackedEntityType);
+    TrackedEntity femaleB = createTrackedEntity(orgUnitB, trackedEntityType);
+
+    manager.save(trackedEntityA);
+    manager.save(trackedEntityB);
+    manager.save(femaleA);
+    manager.save(femaleB);
+
+    Enrollment enrollmentA = createEnrollment(programA, trackedEntityA, orgUnitA);
+    manager.save(enrollmentA);
+    trackedEntityA.getEnrollments().add(enrollmentA);
+    manager.update(trackedEntityA);
+
+    trackedEntityProgramOwnerService.createTrackedEntityProgramOwner(
+        trackedEntityA, programA, orgUnitA);
+
+    eventA = new TrackerEvent();
+    eventA.setEnrollment(enrollmentA);
+    eventA.setProgramStage(programStageA);
+    eventA.setOrganisationUnit(orgUnitA);
+    eventA.setStatus(EventStatus.COMPLETED);
+    eventA.setOccurredDate(new Date());
+    eventA.setAttributeOptionCombo(coA);
+    manager.save(eventA, false);
+
+    eventB = new TrackerEvent();
+    eventB.setEnrollment(enrollmentA);
+    eventB.setProgramStage(programStageB);
+    eventB.setOrganisationUnit(orgUnitB);
+    eventB.setStatus(EventStatus.SCHEDULE);
+    eventB.setScheduledDate(DateUtils.addDays(new Date(), 10));
+    eventB.setAttributeOptionCombo(coA);
+    manager.save(eventB, false);
+
+    User adminUser = getAdminUser();
+    adminUser.setTeiSearchOrganisationUnits(Set.of(orgUnitA, orgUnitB));
+    adminUser.setOrganisationUnits(Set.of(orgUnitA));
+    injectSecurityContextUser(adminUser);
+  }
+
+  @Test
+  void checkAccessPermissionForTeWhenTeOuInCaptureScope()
+      throws ForbiddenException, NotFoundException {
+    programA.setPublicAccess(AccessStringHelper.FULL);
+    manager.update(programA);
+    User user = createUserWithAuth("user1").setOrganisationUnits(Sets.newHashSet(orgUnitA));
+    UserDetails userDetails = fromUser(user);
+    trackedEntityType.setPublicAccess(AccessStringHelper.FULL);
+    manager.update(trackedEntityType);
+    TrackedEntity te = trackedEntityService.getTrackedEntity(trackedEntityA.getUID());
+    // Can read te
+    assertNoErrors(trackerAccessManager.canRead(userDetails, te));
+    // can write te
+    assertNoErrorMessages(
+        trackerAccessManager.canUpdate(userDetails, te, te.getOrganisationUnit()));
+  }
+
+  @Test
+  void checkAccessPermissionForTeWhenTeOuInSearchScope()
+      throws ForbiddenException, NotFoundException {
+    programA.setPublicAccess(AccessStringHelper.FULL);
+    programA.setAccessLevel(AccessLevel.OPEN);
+    manager.update(programA);
+    User user = createUserWithAuth("user1").setOrganisationUnits(Sets.newHashSet(orgUnitB));
+    user.setTeiSearchOrganisationUnits(Sets.newHashSet(orgUnitA, orgUnitB));
+    UserDetails userDetails = fromUser(user);
+    trackedEntityType.setPublicAccess(AccessStringHelper.FULL);
+    manager.update(trackedEntityType);
+    TrackedEntity te = trackedEntityService.getTrackedEntity(trackedEntityA.getUID());
+    // Can Read
+    assertNoErrors(trackerAccessManager.canRead(userDetails, te));
+    // Can write
+    assertNoErrorMessages(
+        trackerAccessManager.canUpdate(userDetails, te, te.getOrganisationUnit()));
+  }
+
+  @Test
+  void checkAccessPermissionForTeWhenTeOuOutsideSearchScope()
+      throws ForbiddenException, NotFoundException {
+    programA.setPublicAccess(AccessStringHelper.FULL);
+    programA.setAccessLevel(AccessLevel.OPEN);
+    manager.update(programA);
+    User user = createUserWithAuth("user1").setOrganisationUnits(Sets.newHashSet(orgUnitB));
+    UserDetails userDetails = fromUser(user);
+    trackedEntityType.setPublicAccess(AccessStringHelper.FULL);
+    manager.update(trackedEntityType);
+    TrackedEntity te = trackedEntityService.getTrackedEntity(trackedEntityA.getUID());
+    // Cannot Read
+    assertHasErrorMessage(trackerAccessManager.canRead(userDetails, te), E1324);
+    // Cannot write
+    assertHasErrorMessage(
+        trackerAccessManager.canUpdate(userDetails, te, te.getOrganisationUnit()), E1324);
+  }
+
+  @Test
+  void checkAccessPermissionForTeWhenNoWriteAccessToTet() {
+    programA.setPublicAccess(AccessStringHelper.FULL);
+    programA.setAccessLevel(AccessLevel.OPEN);
+    manager.update(programA);
+    User user = createUserWithAuth("user1").setOrganisationUnits(Sets.newHashSet(orgUnitB));
+    user.setTeiSearchOrganisationUnits(Sets.newHashSet(orgUnitA, orgUnitB));
+    UserDetails userDetails = fromUser(user);
+    trackedEntityType.getSharing().setPublicAccess(AccessStringHelper.DATA_READ);
+    manager.update(trackedEntityType);
+
+    assertNoErrors(trackerAccessManager.canRead(userDetails, trackedEntityA));
+    assertHasErrorMessage(
+        trackerAccessManager.canUpdate(
+            userDetails, trackedEntityA, trackedEntityA.getOrganisationUnit()),
+        ValidationCode.E1001);
+  }
+
+  @Test
+  void checkAccessPermissionForEnrollmentInClosedProgram()
+      throws ForbiddenException, BadRequestException, NotFoundException {
+    programA.setPublicAccess(AccessStringHelper.FULL);
+    manager.update(programA);
+    trackedEntityType.setPublicAccess(AccessStringHelper.FULL);
+    manager.update(trackedEntityType);
+    User user = createUserWithAuth("user1").setOrganisationUnits(Sets.newHashSet(orgUnitA));
+    user.setTeiSearchOrganisationUnits(Sets.newHashSet(orgUnitA, orgUnitB));
+    UserDetails userDetails = fromUser(user);
+    TrackedEntity trackedEntity = manager.get(TrackedEntity.class, trackedEntityA.getUid());
+    assertNotNull(trackedEntity);
+    Enrollment enrollment = trackedEntity.getEnrollments().iterator().next();
+    // Can create enrollment
+    assertNoErrors(trackerAccessManager.canCreate(userDetails, enrollment));
+    // Can update enrollment
+    assertNoErrors(
+        trackerAccessManager.canUpdate(userDetails, enrollment, enrollment.getOrganisationUnit()));
+    // Can delete enrollment
+    assertNoErrors(trackerAccessManager.canDelete(userDetails, enrollment));
+    // Can read enrollment
+    assertNoErrors(trackerAccessManager.canRead(userDetails, enrollment));
+    // Cannot create enrollment if enrollmentOU is outside capture scope
+    // even if user is owner.
+    enrollment.setOrganisationUnit(orgUnitB);
+    assertHasErrorMessage(trackerAccessManager.canCreate(userDetails, enrollment), E1000);
+    enrollment.setOrganisationUnit(orgUnitA);
+    // Transferring ownership to orgUnitB. user is no longer owner
+    trackerOwnershipManager.transferOwnership(trackedEntity, programA.getUID(), orgUnitB.getUID());
+    // Cannot create enrollment if not owner
+    assertHasErrorMessage(trackerAccessManager.canCreate(userDetails, enrollment), E1102);
+    // Cannot update enrollment if not owner
+    assertHasErrorMessage(
+        trackerAccessManager.canUpdate(userDetails, enrollment, enrollment.getOrganisationUnit()),
+        E1102);
+    // Cannot delete enrollment if not owner
+    assertHasErrorMessage(trackerAccessManager.canDelete(userDetails, enrollment), E1102);
+    // Cannot read enrollment if not owner
+    assertHasErrorMessage(trackerAccessManager.canRead(userDetails, enrollment), E1102);
+  }
+
+  @Test
+  void checkAccessPermissionForEnrollmentInOpenProgram()
+      throws ForbiddenException, BadRequestException, NotFoundException {
+    programA.setPublicAccess(AccessStringHelper.FULL);
+    programA.setAccessLevel(AccessLevel.OPEN);
+    manager.update(programA);
+    trackedEntityType.setPublicAccess(AccessStringHelper.FULL);
+    manager.update(trackedEntityType);
+    User user = createUserWithAuth("user1").setOrganisationUnits(Sets.newHashSet(orgUnitB));
+    user.setTeiSearchOrganisationUnits(Sets.newHashSet(orgUnitA, orgUnitB));
+    UserDetails userDetails = fromUser(user);
+    TrackedEntity trackedEntity = manager.get(TrackedEntity.class, trackedEntityA.getUid());
+    assertNotNull(trackedEntity);
+    Enrollment enrollment = trackedEntity.getEnrollments().iterator().next();
+    // Cannot create enrollment if enrollmentOU falls outside capture scope
+    assertHasError(trackerAccessManager.canCreate(userDetails, enrollment));
+    // Can update enrollment if ownerOU falls inside search scope
+    assertNoErrors(
+        trackerAccessManager.canUpdate(userDetails, enrollment, enrollment.getOrganisationUnit()));
+    // Cannot delete enrollment if enrollmentOU fails outside capture scope
+    assertHasError(trackerAccessManager.canDelete(userDetails, enrollment));
+    // Can read enrollment if ownerOU falls inside search scope
+    assertNoErrors(trackerAccessManager.canRead(userDetails, enrollment));
+
+    // Transferring ownership to orgUnitB. user is now owner
+    trackerOwnershipManager.transferOwnership(trackedEntity, programA.getUID(), orgUnitB.getUID());
+    // Cannot create enrollment if enrollmentOU falls outside capture scope,
+    // even if user is owner
+    assertHasErrorMessage(trackerAccessManager.canCreate(userDetails, enrollment), E1000);
+    // Can update enrollment
+    assertNoErrors(
+        trackerAccessManager.canUpdate(userDetails, enrollment, enrollment.getOrganisationUnit()));
+    // Cannot delete enrollment if enrollmentOU falls outside capture scope,
+    // even if user is owner
+    assertHasErrorMessage(trackerAccessManager.canDelete(userDetails, enrollment), E1000);
+    // Can read enrollment
+    assertNoErrors(trackerAccessManager.canRead(userDetails, enrollment));
+
+    // Transferring ownership to orgUnitA. user is now owner
+    User adminUser = getAdminUser();
+    adminUser.setOrganisationUnits(Set.of(orgUnitB));
+    injectSecurityContextUser(adminUser);
+    trackerOwnershipManager.transferOwnership(trackedEntity, programA.getUID(), orgUnitA.getUID());
+    user.setTeiSearchOrganisationUnits(Sets.newHashSet(orgUnitA, orgUnitB));
+    userDetails.getUserSearchOrgUnitIds().addAll(List.of(orgUnitA.getUid(), orgUnitB.getUid()));
+    // Cannot create enrollment if enrollment OU is outside capture scope
+    assertHasErrorMessage(trackerAccessManager.canCreate(userDetails, enrollment), E1000);
+    // Can update enrollment if ownerOU is in search scope
+    assertNoErrors(
+        trackerAccessManager.canUpdate(userDetails, enrollment, enrollment.getOrganisationUnit()));
+    // Cannot delete enrollment if enrollment OU is outside capture scope
+    assertHasErrorMessage(trackerAccessManager.canDelete(userDetails, enrollment), E1000);
+    // Can read enrollment if ownerOU is in search scope
+    assertNoErrors(trackerAccessManager.canRead(userDetails, enrollment));
+
+    // Adding org unitA to user's capture scope
+    userDetails.getUserOrgUnitIds().add(orgUnitA.getUid());
+    // Can create enrollment if enrollment OU is in capture scope
+    assertNoErrors(trackerAccessManager.canCreate(userDetails, enrollment));
+    // Can delete enrollment if enrollment OU is in capture scope
+    assertNoErrors(trackerAccessManager.canDelete(userDetails, enrollment));
+  }
+
+  @Test
+  void checkAccessPermissionsForEventInClosedProgram()
+      throws ForbiddenException, BadRequestException, NotFoundException {
+    programA.setPublicAccess(AccessStringHelper.FULL);
+    programStageA.setPublicAccess(AccessStringHelper.FULL);
+    programStageB.setPublicAccess(AccessStringHelper.FULL);
+    manager.update(programStageA);
+    manager.update(programStageB);
+    manager.update(programA);
+    trackedEntityType.setPublicAccess(AccessStringHelper.FULL);
+    manager.update(trackedEntityType);
+
+    User user =
+        createUserWithAuth("user1").setOrganisationUnits(Sets.newHashSet(orgUnitA, orgUnitB));
+    UserDetails userDetails = fromUser(user);
+    // Can create events if event org unit and owner org unit in capture scope
+    assertNoErrors(trackerAccessManager.canCreate(userDetails, eventA));
+    // Can read events if owner org unit falls into users search scope
+    assertNoErrors(trackerAccessManager.canRead(userDetails, eventA));
+    // Can update events if owner org unit falls into users search scope
+    assertNoErrors(
+        trackerAccessManager.canUpdate(userDetails, eventA, eventA.getOrganisationUnit()));
+    // Can delete events if event org unit and owner org unit in capture scope
+    assertNoErrors(trackerAccessManager.canDelete(userDetails, eventA));
+
+    user.setOrganisationUnits(Sets.newHashSet(orgUnitA));
+    user.setTeiSearchOrganisationUnits(Sets.newHashSet(orgUnitA, orgUnitB));
+    userDetails = fromUser(user);
+    // Can create scheduled events outside capture scope if user is owner
+    assertNoErrors(trackerAccessManager.canCreate(userDetails, eventB));
+    // Cannot create regular events outside capture scope even if user is
+    // owner
+    eventB.setStatus(EventStatus.ACTIVE);
+    assertHasErrorMessage(trackerAccessManager.canCreate(userDetails, eventB), E1000);
+    // Can read events if user is owner irrespective of eventOU
+    assertNoErrors(trackerAccessManager.canRead(userDetails, eventB));
+    // Can update events if user is owner irrespective of eventOU
+    assertNoErrors(
+        trackerAccessManager.canUpdate(userDetails, eventB, eventB.getOrganisationUnit()));
+    // Cannot delete events outside capture scope even if user is owner
+    assertHasErrorMessage(trackerAccessManager.canDelete(userDetails, eventB), E1000);
+    trackerOwnershipManager.transferOwnership(trackedEntityA, programA.getUID(), orgUnitB.getUID());
+    // Cannot create events anywhere if user is not owner and event org unit not in capture scope
+    assertHasErrors(2, trackerAccessManager.canCreate(userDetails, eventB));
+    // Cannot read events if user is not owner (OwnerOU falls into capture scope)
+    assertHasErrorMessage(trackerAccessManager.canRead(userDetails, eventB), E1102);
+    // Cannot update events if user is not owner (OwnerOU falls into capture scope)
+    assertHasErrorMessage(
+        trackerAccessManager.canUpdate(userDetails, eventB, eventB.getOrganisationUnit()), E1102);
+    // Cannot delete events anywhere if user is not owner and event org unit not in capture scope
+    assertHasErrors(2, trackerAccessManager.canDelete(userDetails, eventB));
+  }
+
+  @Test
+  void checkAccessPermissionsForEventInOpenProgram()
+      throws ForbiddenException, BadRequestException, NotFoundException {
+    programA.setPublicAccess(AccessStringHelper.FULL);
+    programA.setAccessLevel(AccessLevel.OPEN);
+    programStageA.setPublicAccess(AccessStringHelper.FULL);
+    programStageB.setPublicAccess(AccessStringHelper.FULL);
+    manager.update(programStageA);
+    manager.update(programStageB);
+    manager.update(programA);
+    trackedEntityType.setPublicAccess(AccessStringHelper.FULL);
+    manager.update(trackedEntityType);
+
+    User user = createUserWithAuth("user1").setOrganisationUnits(Sets.newHashSet(orgUnitB));
+    user.setOrganisationUnits(Sets.newHashSet(orgUnitA, orgUnitB));
+    UserDetails userDetails = fromUser(user);
+    // Can create events if event org unit and owner org unit in capture scope
+    assertNoErrors(trackerAccessManager.canCreate(userDetails, eventA));
+    // Can read events if owner org unit falls into users search scope
+    assertNoErrors(trackerAccessManager.canRead(userDetails, eventA));
+    // Can update events if owner org unit falls into users search scope
+    assertNoErrors(
+        trackerAccessManager.canUpdate(userDetails, eventA, eventA.getOrganisationUnit()));
+    // Can delete events if event org unit and owner org unit in capture scope
+    assertNoErrors(trackerAccessManager.canDelete(userDetails, eventA));
+
+    user.setOrganisationUnits(Set.of());
+    user.setTeiSearchOrganisationUnits(Sets.newHashSet(orgUnitA, orgUnitB));
+    userDetails = fromUser(user);
+    // Cannot create events with event ou outside capture scope
+    assertHasErrorMessage(trackerAccessManager.canCreate(userDetails, eventA), E1000);
+    // Can read events if ownerOu falls into users search scope
+    assertNoErrors(trackerAccessManager.canRead(userDetails, eventA));
+    // Can update events if ownerOu falls into users search scope
+    assertNoErrors(
+        trackerAccessManager.canUpdate(userDetails, eventA, eventA.getOrganisationUnit()));
+    // Cannot delete events with event ou outside capture scope
+    assertHasErrorMessage(trackerAccessManager.canDelete(userDetails, eventA), E1000);
+    trackerOwnershipManager.transferOwnership(trackedEntityA, programA.getUID(), orgUnitB.getUID());
+    // Cannot create events with eventOu outside capture scope, even if
+    // ownerOu is
+    // also in capture scope
+    assertHasErrorMessage(trackerAccessManager.canCreate(userDetails, eventA), E1000);
+    // Can read events if ownerOu falls into users capture scope
+    assertNoErrors(trackerAccessManager.canRead(userDetails, eventA));
+    // Can update events if ownerOu falls into users capture scope
+    assertNoErrors(
+        trackerAccessManager.canUpdate(userDetails, eventA, eventA.getOrganisationUnit()));
+    // Cannot delete events with eventOu outside capture scope, even if ownerOu is also in capture
+    // scope
+    assertHasErrorMessage(trackerAccessManager.canDelete(userDetails, eventA), E1000);
+  }
+
+  @Test
+  void shouldFailToCreateEnrollmentWhenUserLacksCategoryOptionWriteAccess() {
+    assertEnrollmentCategoryOptionAccessFails(
+        (userDetails, enrollment) -> trackerAccessManager.canCreate(userDetails, enrollment));
+  }
+
+  @Test
+  void shouldFailToUpdateEnrollmentWhenUserLacksAccess() {
+    assertEnrollmentCategoryOptionAccessFails(
+        (userDetails, enrollment) ->
+            trackerAccessManager.canUpdate(
+                userDetails, enrollment, enrollment.getOrganisationUnit()));
+  }
+
+  @Test
+  void shouldFailToDeleteEnrollmentWhenUserLacksAccess() {
+    assertEnrollmentCategoryOptionAccessFails(
+        (userDetails, enrollment) -> trackerAccessManager.canDelete(userDetails, enrollment));
+  }
+
+  private void assertEnrollmentCategoryOptionAccessFails(
+      BiFunction<UserDetails, Enrollment, List<ErrorMessage>> accessCheck) {
+    TrackedEntity trackedEntity = manager.get(TrackedEntity.class, trackedEntityA.getUid());
+    assertNotNull(trackedEntity);
+
+    Enrollment enrollment = trackedEntity.getEnrollments().iterator().next();
+
+    programA.setPublicAccess(AccessStringHelper.FULL);
+    manager.update(programA);
+
+    trackedEntityType.setPublicAccess(AccessStringHelper.FULL);
+    manager.update(trackedEntityType);
+
+    CategoryOptionCombo coc = categoryService.getDefaultCategoryOptionCombo();
+    CategoryOption categoryOption = coc.getCategoryOptions().iterator().next();
+    categoryOption.getSharing().setPublicAccess(CATEGORY_NO_DATA_SHARING_DEFAULT);
+    manager.update(categoryOption);
+
+    User user = createUserWithAuth("user1").setOrganisationUnits(Sets.newHashSet(orgUnitA));
+    user.setTeiSearchOrganisationUnits(Sets.newHashSet(orgUnitA, orgUnitB));
+    UserDetails userDetails = fromUser(user);
+
+    List<ErrorMessage> errorMessages = accessCheck.apply(userDetails, enrollment);
+    assertHasErrorMessage(errorMessages, E1099);
+  }
+
+  private void assertNoErrors(List<?> errors) {
+    assertIsEmpty(errors);
+  }
+
+  private void assertNoErrorMessages(List<ErrorMessage> errors) {
+    assertIsEmpty(errors);
+  }
+
+  private void assertHasErrorMessage(List<ErrorMessage> errors, ValidationCode validationCode) {
+    assertFalse(errors.isEmpty(), "error not found since there are no errors");
+    assertAll(
+        () ->
+            assertEquals(
+                1,
+                errors.size(),
+                String.format(
+                    "mismatch in number of expected error(s), want 1, got %d: %s",
+                    errors.size(), errors)),
+        () ->
+            assertTrue(
+                errors.stream().anyMatch(err -> err.validationCode().equals(validationCode)),
+                String.format(
+                    "error '%s' not found in error(s) %s", validationCode.getMessage(), errors)));
+  }
+
+  private void assertHasError(List<?> errors) {
+    assertEquals(1, errors.size());
+  }
+
+  private void assertHasErrors(int errorNumber, List<?> errors) {
+    assertEquals(errorNumber, errors.size());
+  }
+}

@@ -1,0 +1,211 @@
+/*
+ * Copyright (c) 2004-2022, University of Oslo
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors 
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.hisp.dhis.webapi.controller.category;
+
+import static org.hisp.dhis.feedback.ErrorCode.E1129;
+import static org.hisp.dhis.security.Authorities.F_CATEGORY_OPTION_COMBO_MERGE;
+import static org.hisp.dhis.webapi.controller.CrudControllerAdvice.getHelpfulMessage;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
+import jakarta.persistence.PersistenceException;
+import jakarta.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.Map;
+import java.util.Set;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.hisp.dhis.category.CategoryOptionCombo;
+import org.hisp.dhis.category.CategoryOptionComboService;
+import org.hisp.dhis.category.CategoryOptionComboUpdateDto;
+import org.hisp.dhis.common.Maturity.Beta;
+import org.hisp.dhis.common.OpenApi;
+import org.hisp.dhis.common.UID;
+import org.hisp.dhis.commons.jackson.jsonpatch.JsonPatch;
+import org.hisp.dhis.commons.jackson.jsonpatch.JsonPatchException;
+import org.hisp.dhis.dxf2.webmessage.WebMessage;
+import org.hisp.dhis.dxf2.webmessage.WebMessageUtils;
+import org.hisp.dhis.feedback.ConflictException;
+import org.hisp.dhis.feedback.ErrorCode;
+import org.hisp.dhis.feedback.ForbiddenException;
+import org.hisp.dhis.feedback.MergeReport;
+import org.hisp.dhis.feedback.NotFoundException;
+import org.hisp.dhis.merge.MergeParams;
+import org.hisp.dhis.merge.MergeService;
+import org.hisp.dhis.query.GetObjectListParams;
+import org.hisp.dhis.security.RequiresAuthority;
+import org.hisp.dhis.user.UserDetails;
+import org.hisp.dhis.webapi.controller.AbstractCrudController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * @author Morten Olav Hansen <mortenoh@gmail.com>
+ */
+@Slf4j
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/categoryOptionCombos")
+@OpenApi.Document(classifiers = {"team:platform", "purpose:metadata"})
+public class CategoryOptionComboController
+    extends AbstractCrudController<CategoryOptionCombo, GetObjectListParams> {
+
+  private final MergeService categoryOptionComboMergeService;
+  private final CategoryOptionComboService categoryOptionComboService;
+
+  @Beta
+  @ResponseStatus(HttpStatus.OK)
+  @RequiresAuthority(anyOf = F_CATEGORY_OPTION_COMBO_MERGE)
+  @PostMapping(value = "/merge", produces = APPLICATION_JSON_VALUE)
+  public WebMessage mergeCategoryOptionCombos(@RequestBody MergeParams params)
+      throws ConflictException {
+    log.info("CategoryOptionCombo merge received");
+
+    MergeReport report;
+    try {
+      report = categoryOptionComboMergeService.processMerge(params);
+    } catch (PersistenceException ex) {
+      String helpfulMessage = getHelpfulMessage(ex);
+      log.error("Error while processing CategoryOptionCombo merge: {}", helpfulMessage);
+      throw ex;
+    }
+
+    log.info("CategoryOptionCombo merge processed with report: {}", report);
+    return WebMessageUtils.mergeReport(report);
+  }
+
+  /**
+   * Creating a single CategoryOptionCombo is not allowed. They should be either:
+   *
+   * <p>
+   *
+   * <ul>
+   *   <li>left to be auto-generated by the system
+   *   <li>imported through the metadata endpoint
+   * </ul>
+   *
+   * @param request request
+   * @return WebMessage
+   */
+  @OpenApi.Description(
+      """
+      Creating a single CategoryOptionCombo is not allowed. They should be either:
+      - left to be auto-generated by the system
+      - imported through the metadata endpoint
+      """)
+  @Override
+  @PostMapping(produces = APPLICATION_JSON_VALUE)
+  public WebMessage postJsonObject(HttpServletRequest request) {
+    return WebMessageUtils.conflict(E1129);
+  }
+
+  /**
+   * {@link CategoryOptionCombo} needs a very specific update implementation. Only 3 fields are
+   * updatable through the PUT endpoint: <br>
+   * - attributeValues <br>
+   * - code <br>
+   * - ignoreApproval <br>
+   * Metadata import endpoint has very different behaviour for importing {@link
+   * CategoryOptionCombo}s and is not suitable for individual updates.
+   */
+  @OpenApi.Description(
+      """
+      Updating a CategoryOptionCombos is restricted, only 3 fields are updatable
+      through the PUT endpoint:
+      - attributeValues
+      - code
+      - ignoreApproval
+      Metadata import has very different behaviour for importing CategoryOptionCombos and is
+      not suitable for individual updates.
+      """)
+  @Override
+  @PutMapping(value = "/{uid}", produces = APPLICATION_JSON_VALUE)
+  public WebMessage putJsonObject(
+      @PathVariable UID uid, UserDetails currentUser, HttpServletRequest request)
+      throws NotFoundException, ForbiddenException, ConflictException, IOException {
+    CategoryOptionCombo persisted = getEntity(uid);
+    updatePermissionCheck(currentUser, persisted);
+
+    CategoryOptionComboUpdateDto cocUpdate =
+        jsonMapper.readValue(request.getInputStream(), CategoryOptionComboUpdateDto.class);
+    categoryOptionComboService.updateCoc(persisted, cocUpdate);
+    return WebMessageUtils.ok();
+  }
+
+  /**
+   * {@link CategoryOptionCombo} needs a very specific update implementation. Only 3 fields are
+   * updatable through the PATCH endpoint: <br>
+   * - attributeValues <br>
+   * - code <br>
+   * - ignoreApproval <br>
+   * Metadata import has very different behaviour for importing {@link CategoryOptionCombo}s and is
+   * not suitable for individual updates.
+   */
+  @OpenApi.Description(
+      """
+      Updating a CategoryOptionCombos is restricted, only 3 fields are updatable
+      through the PATCH endpoint:
+      - attributeValues
+      - code
+      - ignoreApproval
+      Metadata import has very different behaviour for importing CategoryOptionCombos and is
+      not suitable for individual updates.
+      """)
+  @Override
+  @PatchMapping(value = "/{uid}", produces = APPLICATION_JSON_VALUE)
+  public WebMessage patchObject(
+      @PathVariable UID uid,
+      Map<String, String> rpParameters,
+      UserDetails currentUser,
+      @RequestBody JsonPatch patch)
+      throws NotFoundException, ForbiddenException, ConflictException, JsonPatchException {
+    CategoryOptionCombo persisted = getEntity(uid);
+    updatePermissionCheck(currentUser, persisted);
+
+    if (patch.getOperations().stream()
+        .map(op -> op.getPath().getMatchingProperty())
+        .anyMatch(
+            property -> !Set.of("attributeValues", "code", "ignoreApproval").contains(property))) {
+      throw new ConflictException(ErrorCode.E1134);
+    }
+
+    CategoryOptionCombo categoryOptionCombo = doPatch(patch, persisted);
+    CategoryOptionComboUpdateDto cocUpdate =
+        jsonMapper.convertValue(categoryOptionCombo, CategoryOptionComboUpdateDto.class);
+    categoryOptionComboService.updateCoc(persisted, cocUpdate);
+    return WebMessageUtils.ok();
+  }
+}

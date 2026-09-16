@@ -1,0 +1,104 @@
+/*
+ * Copyright (c) 2004-2022, University of Oslo
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors 
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.hisp.dhis.program;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import org.hisp.dhis.dataelement.DataElement;
+
+/**
+ * TODO do we need this service given cascade all on program stage -> program stage data element?
+ *
+ * @author Viet Nguyen
+ */
+public interface ProgramStageDataElementService {
+  String ID = ProgramStageDataElementService.class.getName();
+
+  /**
+   * Adds an {@link ProgramStageDataElement}
+   *
+   * @param programStageDataElement The to ProgramStageDataElement add.
+   */
+  void addProgramStageDataElement(ProgramStageDataElement programStageDataElement);
+
+  /**
+   * Updates an {@link ProgramStageDataElement}.
+   *
+   * @param programStageDataElement the ProgramStageDataElement to update.
+   */
+  void updateProgramStageDataElement(ProgramStageDataElement programStageDataElement);
+
+  /**
+   * Deletes a {@link ProgramStageDataElement}.
+   *
+   * @param programStageDataElement the ProgramStageDataElement to delete.
+   */
+  void deleteProgramStageDataElement(ProgramStageDataElement programStageDataElement);
+
+  /**
+   * Retrieve ProgramStageDataElement on a program stage and a data element
+   *
+   * @param programStage ProgramStage
+   * @param dataElement DataElement
+   * @return ProgramStageDataElement
+   */
+  ProgramStageDataElement get(ProgramStage programStage, DataElement dataElement);
+
+  /**
+   * Returns all {@link ProgramStageDataElement}
+   *
+   * @return a collection of all ProgramStageDataElement, or an empty collection if there are no
+   *     ProgramStageDataElements.
+   */
+  List<ProgramStageDataElement> getAllProgramStageDataElements();
+
+  /**
+   * Returns all {@link ProgramStageDataElement} for the given {@link DataElement}.
+   *
+   * @param dataElement filter, not null
+   * @return a collection of {@link ProgramStageDataElement} associated with the provided {@link
+   *     DataElement}
+   */
+  List<ProgramStageDataElement> getProgramStageDataElements(DataElement dataElement);
+
+  /**
+   * Returns a map of ProgramStages containing sets of DataElements (together forming
+   * ProgramStageDataElements) that have the skipSynchronization flag set to true.
+   *
+   * <p>This method retrieves all ProgramStage–DataElement associations for the given Program where
+   * the skipSynchronization flag is enabled, meaning these data elements should be excluded from
+   * synchronization operations.
+   *
+   * @return a map where the key is the ProgramStage UID and the value is a set of DataElement UIDs
+   *     associated with that ProgramStage that have skipSynchronization set to true
+   */
+  Map<String, Set<String>> getProgramStageDataElementsWithSkipSynchronizationSetToTrue();
+}

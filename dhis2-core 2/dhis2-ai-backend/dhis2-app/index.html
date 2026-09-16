@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>NextGen Planning</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      display: flex;
+      height: 100vh;
+      background: #f4f6f8;
+      color: #333;
+    }
+
+    /* Sidebar */
+    nav {
+      width: 220px;
+      min-width: 220px;
+      background: #1a2740;
+      display: flex;
+      flex-direction: column;
+      padding-top: 0;
+    }
+
+    .nav-header {
+      background: #152033;
+      padding: 18px 20px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      border-bottom: 1px solid #0d1826;
+    }
+
+    .nav-header span {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      color: #7a9bbf;
+      margin-top: 3px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 12px 0;
+      flex: 1;
+    }
+
+    nav ul li a {
+      display: block;
+      padding: 11px 20px;
+      color: #a8c0d6;
+      text-decoration: none;
+      font-size: 13.5px;
+      border-left: 3px solid transparent;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    nav ul li a:hover {
+      background: #243450;
+      color: #fff;
+    }
+
+    nav ul li a.active {
+      background: #1e3a5f;
+      color: #fff;
+      border-left-color: #4a9fd4;
+      font-weight: 500;
+    }
+
+    /* Main content */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .topbar {
+      background: #fff;
+      border-bottom: 1px solid #dde3ea;
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .topbar h1 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1a2740;
+    }
+
+    .topbar .badge {
+      font-size: 11px;
+      background: #e8f3fb;
+      color: #2678b5;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: 500;
+    }
+
+    .content {
+      flex: 1;
+      padding: 32px 28px;
+      overflow-y: auto;
+    }
+
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .placeholder {
+      background: #fff;
+      border: 1px solid #dde3ea;
+      border-radius: 6px;
+      padding: 40px 32px;
+      max-width: 680px;
+    }
+
+    .placeholder h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a2740;
+      margin-bottom: 10px;
+    }
+
+    .placeholder p {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    /* Integration panel specifics */
+    .field-row { margin-bottom: 14px; }
+    .field-row label { display: block; font-size: 13px; color: #444; margin-bottom: 4px; font-weight: 500; }
+    .field-row input { width: 100%; padding: 8px 10px; border: 1px solid #cdd5de; border-radius: 4px; font-size: 13px; }
+    .field-row .note { font-size: 11px; color: #888; margin-top: 4px; }
+
+    button.primary {
+      background: #2678b5;
+      color: #fff;
+      border: none;
+      padding: 9px 20px;
+      border-radius: 4px;
+      font-size: 13px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    button.primary:hover { background: #1f609a; }
+
+    #status {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 4px;
+      white-space: pre-wrap;
+      font-family: monospace;
+      font-size: 12px;
+      display: none;
+    }
+    .ok { background: #e6f4ea; border: 1px solid #34a853; }
+    .err { background: #fce8e6; border: 1px solid #d93025; }
+
+    .coming-soon {
+      display: inline-block;
+      font-size: 11px;
+      background: #fff3cd;
+      color: #856404;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-left: 8px;
+      font-weight: 500;
+    }
+
+    /* Integration checks grid */
+    .checks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+      max-width: 900px;
+    }
+
+    .check-card {
+      background: #fff;
+      border: 1px solid #dde3ea;
+      border-radius: 6px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .check-title { font-size: 13px; font-weight: 600; color: #1a2740; }
+    .check-desc { font-size: 11px; color: #888; font-family: monospace; }
+
+    .check-result {
+      font-size: 12px;
+      padding: 6px 8px;
+      border-radius: 4px;
+      background: #f4f6f8;
+      color: #555;
+      min-height: 28px;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .check-result.pass { background: #e6f4ea; color: #1e7e34; }
+    .check-result.fail { background: #fce8e6; color: #c0392b; }
+
+    .check-btn {
+      background: #f0f4f8;
+      border: 1px solid #cdd5de;
+      padding: 5px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      align-self: flex-start;
+      margin-top: 4px;
+    }
+    .check-btn:hover { background: #e2eaf2; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-header">
+      NextGen Planning
+      <span>Ethiopia MoH · Prototype</span>
+    </div>
+    <ul>
+      <li><a href="#" class="active" data-panel="integration">Integration</a></li>
+      <li><a href="#" data-panel="forecasting">Forecasting</a></li>
+      <li><a href="#" data-panel="situational">Situational Analysis</a></li>
+      <li><a href="#" data-panel="evidence">Evidence Synthesis</a></li>
+      <li><a href="#" data-panel="targets">Target Setting</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <div class="topbar">
+      <h1 id="page-title">Integration</h1>
+      <span class="badge">Prototype</span>
+    </div>
+
+    <div class="content">
+
+      <!-- Integration -->
+      <div class="panel active" id="panel-integration">
+        <div class="placeholder">
+          <h2>Data Integration</h2>
+          <p>Fetch all immunisation data from DHIS2 (all regions, zones, woredas — EFY2011–2017) and push it to GCP via the FastAPI backend.</p>
+          <div class="field-row">
+            <label for="apiBase">FastAPI base URL</label>
+            <input type="text" id="apiBase" value="http://localhost:8000" />
+            <div class="note">Swap for Cloud Run URL once deployed.</div>
+          </div>
+          <button class="primary" id="pushBtn">Push All Immunisation Data to GCP</button>
+          <div id="status"></div>
+        </div>
+
+        <div class="checks-grid">
+          <div class="check-card" id="check-api">
+            <div class="check-title">FastAPI health</div>
+            <div class="check-desc">GET /health</div>
+            <div class="check-result">—</div>
+            <button class="check-btn" onclick="runCheck('api')">Run</button>
+          </div>
+          <div class="check-card" id="check-dbping">
+            <div class="check-title">Postgres connectivity</div>
+            <div class="check-desc">SELECT 1 against GCP Cloud SQL</div>
+            <div class="check-result">—</div>
+            <button class="check-btn" onclick="runCheck('dbping')">Run</button>
+          </div>
+          <div class="check-card" id="check-tables">
+            <div class="check-title">Public schema tables</div>
+            <div class="check-desc">information_schema.tables WHERE schema = public</div>
+            <div class="check-result">—</div>
+            <button class="check-btn" onclick="runCheck('tables')">Run</button>
+          </div>
+          <div class="check-card" id="check-rowcounts">
+            <div class="check-title">Row counts</div>
+            <div class="check-desc">COUNT(*) per table</div>
+            <div class="check-result">—</div>
+            <button class="check-btn" onclick="runCheck('rowcounts')">Run</button>
+          </div>
+          <div class="check-card" id="check-dhis2">
+            <div class="check-title">DHIS2 dataset check</div>
+            <div class="check-desc">Verify immunisation dataset exists (C11WC1lXDMl)</div>
+            <div class="check-result">—</div>
+            <button class="check-btn" onclick="runCheck('dhis2')">Run</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Forecasting -->
+      <div class="panel" id="panel-forecasting">
+       <div style="padding:24px 28px; max-width:1200px;">
+          <h2 style="font-size:20px;font-weight:600;margin-bottom:6px;">Forecasting</h2>
+         <p style="color:#555;margin-bottom:20px;font-size:13px;">
+           ARIMA forecasts for 10 immunisation coverage KPIs — models historical EFY2011–2017 trends and projects EFY2018–2020. The 90% HSDIP target is shown as a reference line on each chart.
+         </p>
+
+         <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;flex-wrap:wrap;">
+           <button class="primary" id="runForecastBtn">▶ Run Forecast</button>
+           <span id="forecastStatus" style="font-size:13px;color:#555;display:none;"></span>
+         </div>
+
+         <div id="forecastCharts" style="display:none;">
+           <!-- Summary table -->
+           <div style="margin-bottom:28px;">
+             <div style="font-size:13px;font-weight:600;color:#1e3a5f;margin-bottom:10px;letter-spacing:.02em;">FORECAST SUMMARY — All KPIs</div>
+             <div style="overflow-x:auto;border:1px solid #e5e7eb;border-radius:10px;">
+               <table id="forecastSummaryTable" style="width:100%;border-collapse:collapse;font-size:12px;">
+                 <thead>
+                   <tr style="background:#f3f4f6;color:#6b7280;text-transform:uppercase;letter-spacing:.04em;font-size:11px;">
+                     <th style="padding:10px 14px;text-align:left;font-weight:600;">KPI</th>
+                     <th style="padding:10px 14px;text-align:right;font-weight:600;">EFY2017 (actual)</th>
+                     <th style="padding:10px 14px;text-align:right;font-weight:600;">EFY2018 forecast</th>
+                     <th style="padding:10px 14px;text-align:right;font-weight:600;">EFY2019 forecast</th>
+                     <th style="padding:10px 14px;text-align:right;font-weight:600;">EFY2020 forecast</th>
+                     <th style="padding:10px 14px;text-align:center;font-weight:600;">Trend</th>
+                     <th style="padding:10px 14px;text-align:center;font-weight:600;">Target by 2020?</th>
+                   </tr>
+                 </thead>
+                 <tbody id="forecastSummaryBody"></tbody>
+               </table>
+             </div>
+           </div>
+
+           <!-- KPI groups -->
+           <div id="chartsGrid"></div>
+         </div>
+       </div>
+      </div>
+
+      <!-- Situational Analysis -->
+      <div class="panel" id="panel-situational">
+        <div style="display:flex;flex-direction:column;height:100%;padding:24px 28px;gap:16px;max-width:1400px;">
+
+          <!-- Header row -->
+          <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+            <div style="flex:1;">
+              <h2 style="font-size:20px;font-weight:600;margin-bottom:4px;">Situational Analysis</h2>
+              <p style="color:#555;font-size:13px;">Gemini analyses immunisation coverage data and generates a structured SWOT/PESTEL/Bottleneck report. Use the chat to ask questions or request amendments.</p>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center;">
+              <span id="saState" style="font-size:12px;padding:3px 10px;border-radius:12px;display:none;"></span>
+              <button class="primary" id="saGenerateBtn">✦ Generate Analysis</button>
+              <button id="saEndorseBtn" style="display:none;background:#166534;color:#fff;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px;">✓ Endorse</button>
+            </div>
+          </div>
+
+          <span id="saStatus" style="font-size:13px;color:#555;display:none;"></span>
+
+          <!-- Report (full width) -->
+          <div id="saMain" style="display:none;flex:1;min-height:0;">
+            <div style="background:#fff;border:1px solid #e5e7eb;border-radius:8px;overflow-y:auto;padding:28px 32px;height:100%;box-sizing:border-box;" id="saReport"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Floating chat bubble (shown when report exists) ── -->
+      <button id="saChatToggle" title="Discuss & Amend report"
+        style="display:none;position:fixed;bottom:28px;right:28px;z-index:1000;
+               width:52px;height:52px;border-radius:50%;border:none;cursor:pointer;
+               background:#1d4ed8;color:#fff;font-size:22px;box-shadow:0 4px 16px rgba(0,0,0,0.25);
+               transition:transform .15s;">💬</button>
+
+      <!-- ── Chat drawer ── -->
+      <div id="saChatDrawer"
+        style="display:none;position:fixed;bottom:92px;right:28px;z-index:999;
+               width:380px;max-height:520px;border-radius:14px;
+               background:#fff;border:1px solid #e5e7eb;
+               box-shadow:0 8px 32px rgba(0,0,0,0.18);
+               display:none;flex-direction:column;overflow:hidden;">
+
+        <!-- Drawer header -->
+        <div style="display:flex;align-items:center;justify-content:space-between;
+                    padding:12px 16px;background:#1e3a5f;color:#fff;">
+          <div>
+            <div style="font-size:14px;font-weight:600;">💬 Discuss & Amend</div>
+            <div style="font-size:11px;opacity:.8;margin-top:1px;">Ask questions or request changes to the report</div>
+          </div>
+          <button id="saChatClose"
+            style="background:none;border:none;color:#fff;font-size:18px;cursor:pointer;opacity:.7;line-height:1;">✕</button>
+        </div>
+
+        <!-- Message history -->
+        <div id="saChatHistory"
+          style="flex:1;overflow-y:auto;padding:14px 14px 6px;
+                 display:flex;flex-direction:column;gap:10px;
+                 background:#f9fafb;min-height:200px;max-height:340px;"></div>
+
+        <!-- Input row -->
+        <div style="padding:10px 12px;border-top:1px solid #e5e7eb;display:flex;gap:8px;background:#fff;">
+          <textarea id="saChatInput" rows="2"
+            placeholder="Ask about findings, or say 'Change Penta-3 EFY2017 to 85%' to amend…"
+            style="flex:1;resize:none;border:1px solid #d1d5db;border-radius:8px;
+                   padding:8px 10px;font-size:13px;font-family:inherit;line-height:1.4;
+                   outline:none;"></textarea>
+          <button id="saSendBtn"
+            style="background:#1d4ed8;color:#fff;border:none;border-radius:8px;
+                   width:40px;cursor:pointer;font-size:18px;flex-shrink:0;">↑</button>
+        </div>
+      </div>
+
+      <!-- Evidence Synthesis -->
+      <div class="panel" id="panel-evidence">
+        <div style="display:flex;flex-direction:column;height:100%;padding:24px 28px;gap:20px;max-width:1100px;">
+
+          <!-- Header -->
+          <div>
+            <h2 style="font-size:20px;font-weight:600;margin-bottom:4px;">Evidence Synthesis</h2>
+            <p style="color:#555;font-size:13px;">Upload a document (optional) and select internal DHIS2 KPIs. Describe your objective and click Synthesize — the LLM reasons over the full document and the programme data together.</p>
+          </div>
+
+          <!-- Step 1: Objective -->
+          <div style="background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px;">
+            <div style="font-size:12px;font-weight:700;color:#1e3a5f;text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px;">1 · Your Objective</div>
+            <textarea id="evObjective" rows="3"
+              placeholder="What are you trying to understand? e.g. 'Determine whether the drop-out rate between Penta-1 and Penta-3 shown in the uploaded survey is consistent with DHIS2 programme data, and identify likely drivers.'"
+              style="width:100%;box-sizing:border-box;border:1px solid #d1d5db;border-radius:8px;padding:10px 12px;font-size:13px;resize:vertical;font-family:inherit;"></textarea>
+          </div>
+
+          <!-- Step 2: Upload -->
+          <div style="background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px;">
+            <div style="font-size:12px;font-weight:700;color:#1e3a5f;text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px;">2 · Upload Document <span style="font-weight:400;color:#9ca3af;text-transform:none;">(optional)</span></div>
+            <div id="evDropZone"
+              style="border:2px dashed #d1d5db;border-radius:8px;padding:22px;text-align:center;
+                     cursor:pointer;background:#f9fafb;transition:border-color .2s,background .2s;">
+              <div style="font-size:24px;margin-bottom:6px;">📄</div>
+              <div id="evDropLabel" style="font-size:13px;font-weight:500;color:#374151;">
+                Drop a file here, or <label for="evFileInput" style="color:#1d4ed8;cursor:pointer;text-decoration:underline;">browse</label>
+              </div>
+              <div style="font-size:12px;color:#9ca3af;margin-top:4px;">PDF · Word (.docx) · Excel (.xlsx) — must have a text layer</div>
+              <input type="file" id="evFileInput" accept=".pdf,.docx,.xlsx,.xls" style="display:none;">
+            </div>
+            <div id="evUploadStatus" style="display:none;margin-top:10px;font-size:13px;"></div>
+            <input type="hidden" id="evUploadId">
+          </div>
+
+          <!-- Step 3: KPI selector -->
+          <div style="background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px;">
+            <div style="font-size:12px;font-weight:700;color:#1e3a5f;text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px;">3 · Include Internal DHIS2 KPIs <span style="font-weight:400;color:#9ca3af;text-transform:none;">(optional)</span></div>
+            <div id="evKpiCheckboxes" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+          </div>
+
+          <!-- Synthesize button -->
+          <div>
+            <button id="evSynthesizeBtn" class="primary" style="font-size:14px;padding:10px 24px;">✦ Synthesize</button>
+            <div id="evStatus" style="display:none;font-size:13px;color:#555;margin-top:10px;"></div>
+          </div>
+
+          <!-- Output -->
+          <div id="evSynthesisSection" style="display:none;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
+              <span style="font-size:14px;font-weight:600;">Synthesis</span>
+              <div style="display:flex;gap:8px;">
+                <button id="evCopyBtn" style="font-size:12px;padding:5px 14px;border:1px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;">📋 Copy</button>
+                <button id="evSendToSABtn" style="font-size:12px;padding:5px 14px;border:1px solid #1d4ed8;border-radius:6px;background:#eff6ff;color:#1d4ed8;cursor:pointer;">→ Send to SA Chat</button>
+              </div>
+            </div>
+            <div id="evSynthesisOutput"
+              style="background:#fff;border:1px solid #e5e7eb;border-radius:8px;
+                     padding:24px 28px;overflow-y:auto;max-height:500px;
+                     font-size:13px;line-height:1.7;"></div>
+            <textarea id="evSynthesisRaw" style="display:none;"></textarea>
+            <input type="hidden" id="evSynthesisId">
+          </div>
+
+        </div>
+
+        <!-- Evidence floating chat bubble -->
+        <button id="evChatBubble" title="Discuss this synthesis"
+          style="display:none;position:fixed;bottom:28px;right:28px;width:52px;height:52px;
+                 border-radius:50%;background:#1e3a5f;border:none;cursor:pointer;
+                 font-size:22px;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.25);z-index:1000;">💬</button>
+
+        <!-- Evidence chat drawer -->
+        <div id="evChatDrawer"
+          style="display:none;position:fixed;bottom:90px;right:28px;width:380px;
+                 border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.2);
+                 background:#fff;z-index:999;overflow:hidden;border:1px solid #e5e7eb;">
+          <div style="background:#1e3a5f;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;">
+            <span style="color:#fff;font-weight:600;font-size:14px;">💬 Discuss Synthesis</span>
+            <button id="evChatClose" style="background:transparent;border:none;color:#93c5fd;cursor:pointer;font-size:18px;">×</button>
+          </div>
+          <div id="evChatMessages"
+            style="height:300px;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:#f9fafb;">
+            <div style="font-size:12px;color:#9ca3af;text-align:center;">Ask questions about the synthesis findings or request amendments.</div>
+          </div>
+          <div style="padding:10px 14px;border-top:1px solid #e5e7eb;display:flex;gap:8px;">
+            <input id="evChatInput" type="text" placeholder="Ask about the synthesis…"
+              style="flex:1;border:1px solid #d1d5db;border-radius:6px;padding:7px 10px;font-size:13px;">
+            <button id="evChatSend"
+              style="background:#1e3a5f;color:#fff;border:none;border-radius:6px;padding:7px 14px;cursor:pointer;font-size:13px;">Send</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Target Setting -->
+      <div class="panel" id="panel-targets">
+        <div style="display:flex;flex-direction:column;height:100%;padding:24px 28px;gap:20px;max-width:1300px;">
+
+          <!-- Header -->
+          <div>
+            <h2 style="font-size:20px;font-weight:600;margin-bottom:4px;">Indicative Target Setting</h2>
+            <p style="color:#555;font-size:13px;">Population-weighted, trajectory-adjusted disaggregation of the national HSDIP target (90%) across regions, zones, and woredas. Every recommendation includes a stated rationale. <strong>Indicative only — does not finalise targets.</strong></p>
+          </div>
+
+          <!-- Controls row -->
+          <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;">
+            <div>
+              <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px;">KPI</label>
+              <select id="tgtKpi" style="border:1px solid #d1d5db;border-radius:6px;padding:7px 12px;font-size:13px;min-width:220px;">
+                <option value="">Loading…</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px;">Level</label>
+              <select id="tgtLevel" style="border:1px solid #d1d5db;border-radius:6px;padding:7px 12px;font-size:13px;">
+                <option value="2">Region (Level 2)</option>
+                <option value="3">Zone (Level 3)</option>
+                <option value="4">Woreda (Level 4)</option>
+              </select>
+            </div>
+            <button class="primary" id="tgtRunBtn">▶ Run Disaggregation</button>
+          </div>
+
+          <div id="tgtStatus" style="display:none;font-size:13px;color:#555;"></div>
+
+          <!-- Reconciliation banner -->
+          <div id="tgtReconciliation" style="display:none;"></div>
+
+          <!-- Results table -->
+          <div id="tgtResults" style="display:none;flex:1;min-height:0;overflow-y:auto;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+              <span id="tgtResultsLabel" style="font-size:13px;font-weight:600;"></span>
+              <span style="font-size:12px;color:#6b7280;">Click a row to see full rationale.</span>
+            </div>
+            <div style="overflow-x:auto;border:1px solid #e5e7eb;border-radius:8px;">
+              <table style="width:100%;border-collapse:collapse;">
+                <thead>
+                  <tr style="background:#f3f4f6;font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.04em;">
+                    <th style="padding:8px 12px;text-align:left;">Unit</th>
+                    <th style="padding:8px 12px;text-align:right;">Baseline (EFY2017)</th>
+                    <th style="padding:8px 12px;text-align:right;">Trend (pp/yr)</th>
+                    <th style="padding:8px 12px;text-align:center;">Indicative Range</th>
+                    <th style="padding:8px 12px;text-align:right;">Recommended Target</th>
+                    <th style="padding:8px 12px;text-align:center;">vs 90% Target</th>
+                    <th style="padding:8px 12px;text-align:center;">Flag</th>
+                  </tr>
+                </thead>
+                <tbody id="tgtBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Rationale drawer -->
+          <div id="tgtRationale" style="display:none;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:16px 20px;">
+            <div style="font-size:12px;font-weight:600;color:#1e3a5f;margin-bottom:6px;">📋 Stated Rationale</div>
+            <div id="tgtRationaleText" style="font-size:13px;color:#374151;line-height:1.7;white-space:pre-wrap;"></div>
+            <div style="font-size:11px;color:#9ca3af;margin-top:10px;" id="tgtMethodNote"></div>
+          </div>
+
+          <!-- LLM Review section -->
+          <div id="tgtLLMSection" style="display:none;border-top:1px solid #e5e7eb;padding-top:16px;">
+            <div style="font-size:14px;font-weight:600;margin-bottom:10px;">✦ LLM Narrative Review</div>
+            <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px;">Additional context <span style="color:#9ca3af;">(policy, financial, resource constraints, facility investments — optional)</span></label>
+            <textarea id="tgtContext" rows="3"
+              placeholder="e.g. Amhara region has 3 new health facilities opening in EFY2018. National programme prioritising cold chain upgrade in low-performing woredas. Resource allocation formula revised per MoH directive 2024/08."
+              style="width:100%;box-sizing:border-box;border:1px solid #d1d5db;border-radius:8px;padding:10px 12px;font-size:13px;resize:vertical;font-family:inherit;margin-bottom:10px;"></textarea>
+            <button id="tgtLLMReviewBtn" class="primary" style="background:#1e3a5f;">✦ Generate LLM Narrative</button>
+          </div>
+
+          <!-- LLM narrative output -->
+          <div id="tgtLLMOutput" style="display:none;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+              <span style="font-size:14px;font-weight:600;">LLM Narrative Rationale</span>
+              <button id="tgtLLMCopyBtn" style="font-size:12px;padding:5px 14px;border:1px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;">📋 Copy</button>
+            </div>
+            <div id="tgtLLMText"
+              style="background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:20px 24px;
+                     font-size:13px;line-height:1.7;overflow-y:auto;max-height:400px;"></div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    const DATASET_ID = "C11WC1lXDMl";
+    const PERIODS = ["2011July","2012July","2013July","2014July","2015July","2016July","2017July"];
+
+    async function fetchAllFromDhis2(statusEl) {
+      let allValues = [];
+      for (const period of PERIODS) {
+        statusEl.textContent = `Fetching DHIS2 data: period ${period}...`;
+        const res = await fetch(
+          `/api/dataValueSets.json?dataSet=${DATASET_ID}&period=${period}&orgUnit=ImspTQPwCqd&children=true`,
+          { credentials: "same-origin" }
+        );
+        if (!res.ok) throw new Error(`DHIS2 fetch failed for ${period}: ${res.status}`);
+        const json = await res.json();
+        if (json.dataValues) {
+          // DHIS2 omits period from each record when queried by period — inject it back
+          allValues = allValues.concat(json.dataValues.map(dv => ({ ...dv, period })));
+        }
+      }
+      return allValues;
+    }
+
+    document.getElementById("pushBtn").addEventListener("click", async () => {
+      const statusEl = document.getElementById("status");
+      const apiBase = document.getElementById("apiBase").value.replace(/\/$/, "");
+      const btn = document.getElementById("pushBtn");
+      statusEl.style.display = "block";
+      statusEl.className = "";
+      btn.disabled = true;
+
+      try {
+        const dataValues = await fetchAllFromDhis2(statusEl);
+        statusEl.textContent = `Fetched ${dataValues.length} values from DHIS2. Pushing to FastAPI...`;
+
+        const res = await fetch(apiBase + "/ingest/push", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ dataValues, source: "dhis2-nextgen-integration" })
+        });
+        const result = await res.json();
+        statusEl.className = res.ok ? "ok" : "err";
+        statusEl.textContent = res.ok
+          ? `✓ Done. Fetched: ${dataValues.length} values. Written to GCP: ${result.written}.`
+          : `Error (${res.status}):\n` + JSON.stringify(result, null, 2);
+      } catch (e) {
+        statusEl.className = "err";
+        statusEl.textContent = "Failed: " + e.message;
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    // Integration checks
+    async function runCheck(type) {
+      const card = document.getElementById("check-" + type);
+      const resultEl = card.querySelector(".check-result");
+      const apiBase = document.getElementById("apiBase").value.replace(/\/$/, "");
+      resultEl.className = "check-result";
+      resultEl.textContent = "Running...";
+
+      try {
+        let res, data;
+        if (type === "api") {
+          res = await fetch(apiBase + "/health");
+          data = await res.json();
+          resultEl.className = "check-result " + (res.ok ? "pass" : "fail");
+          resultEl.textContent = res.ok ? "✓ " + data.status : "✗ " + JSON.stringify(data);
+
+        } else if (type === "dbping") {
+          res = await fetch(apiBase + "/diagnostics/db-ping");
+          data = await res.json();
+          resultEl.className = "check-result " + (res.ok ? "pass" : "fail");
+          resultEl.textContent = res.ok ? "✓ " + data.message : "✗ " + (data.detail || JSON.stringify(data));
+
+        } else if (type === "tables") {
+          res = await fetch(apiBase + "/diagnostics/tables");
+          data = await res.json();
+          resultEl.className = "check-result " + (res.ok ? "pass" : "fail");
+          resultEl.textContent = res.ok
+            ? `✓ ${data.count} table(s):\n` + data.tables.join("\n")
+            : "✗ " + (data.detail || JSON.stringify(data));
+
+        } else if (type === "rowcounts") {
+          res = await fetch(apiBase + "/diagnostics/row-counts");
+          data = await res.json();
+          resultEl.className = "check-result " + (res.ok ? "pass" : "fail");
+          if (res.ok) {
+            const lines = Object.entries(data.counts).map(([t, n]) => `${t}: ${n}`);
+            resultEl.textContent = lines.length ? "✓\n" + lines.join("\n") : "✓ No tables found";
+          } else {
+            resultEl.textContent = "✗ " + (data.detail || JSON.stringify(data));
+          }
+
+        } else if (type === "dhis2") {
+          res = await fetch("/api/dataSets/C11WC1lXDMl.json?fields=id,name,periodType", { credentials: "same-origin" });
+          data = await res.json();
+          resultEl.className = "check-result " + (res.ok ? "pass" : "fail");
+          resultEl.textContent = res.ok
+            ? `✓ ${data.name}\nperiod: ${data.periodType}`
+            : "✗ Dataset not found (" + res.status + ")";
+        }
+      } catch (e) {
+        resultEl.className = "check-result fail";
+        resultEl.textContent = "✗ " + e.message;
+      }
+    }
+    // ── Forecasting ──────────────────────────────────────────────────────────
+
+    const KPI_DISPLAY_FC = {
+      "Penta-1 Coverage":          "Penta-1 (DTP-HepB-Hib 1st dose)",
+      "Penta-3 Coverage":          "Penta-3 (DTP-HepB-Hib 3rd dose)",
+      "MCV1 Coverage":             "MCV-1 (Measles 1st dose)",
+      "MCV2 Coverage":             "MCV-2 (Measles 2nd dose)",
+      "OPV3 Coverage":             "OPV-3 (Oral Polio 3rd dose)",
+      "PCV-3 Coverage":            "PCV-3 (Pneumococcal 3rd dose)",
+      "IPV Coverage":              "IPV (Inactivated Polio)",
+      "Full Immunization Coverage":"Full Immunization Coverage",
+      "PAB Coverage":              "PAB (Protection at Birth)",
+      "Rotavirus-2 Coverage":      "Rota-2 (Rotavirus 2nd dose)",
+    };
+    const KPI_GROUPS = [
+      { label:"Primary Series",          kpis:["Penta-1 Coverage","Penta-3 Coverage","OPV3 Coverage","PCV-3 Coverage"] },
+      { label:"Supplementary Antigens",  kpis:["MCV1 Coverage","MCV2 Coverage","IPV Coverage","Rotavirus-2 Coverage"] },
+      { label:"Composite & Maternal",    kpis:["Full Immunization Coverage","PAB Coverage"] },
+    ];
+
+    function fmtPeriod(p) { return p.replace("July",""); }
+
+    function buildForecastChart(container, kpiData) {
+      const { kpi, series } = kpiData;
+      const hist   = series.filter(s => !s.is_forecast);
+      const fcast  = series.filter(s =>  s.is_forecast);
+      const all    = series;
+
+      const W = Math.max(container.clientWidth || 520, 400);
+      const H = 270;
+      const pad = { top: 36, right: 24, bottom: 44, left: 52 };
+      const iW  = W - pad.left - pad.right;
+      const iH  = H - pad.top  - pad.bottom;
+
+      const vals   = all.map(s => s.value);
+      const lows   = fcast.map(s => s.lower_ci ?? s.value);
+      const highs  = fcast.map(s => s.upper_ci ?? s.value);
+      const TARGET = 90;
+      const yMin   = Math.max(0, Math.floor(Math.min(...vals, ...lows, TARGET) - 8));
+      const yMax   = Math.min(110, Math.ceil(Math.max(...vals, ...highs, TARGET) + 8));
+
+      const xScale = i => pad.left + (i / (all.length - 1)) * iW;
+      const yScale = v => pad.top  + iH - ((v - yMin) / (yMax - yMin)) * iH;
+
+      // Forecast zone background
+      const fcastX0 = fcast.length ? xScale(hist.length - 1) : null;
+      const fcastX1 = fcast.length ? xScale(all.length - 1) : null;
+      const fcastBg = fcast.length
+        ? `<rect x="${fcastX0}" y="${pad.top}" width="${fcastX1 - fcastX0}" height="${iH}" fill="#eff6ff" rx="0"/>`
+        : "";
+
+      // Forecast zone label
+      const fcastZoneLabel = fcast.length
+        ? `<text x="${(fcastX0 + fcastX1)/2}" y="${pad.top - 6}" text-anchor="middle" font-size="10" fill="#93c5fd" font-weight="600" letter-spacing=".04em">FORECAST →</text>`
+        : "";
+
+      // Divider line between historical and forecast
+      const divider = fcast.length
+        ? `<line x1="${fcastX0}" x2="${fcastX0}" y1="${pad.top}" y2="${pad.top + iH}" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="4,3"/>`
+        : "";
+
+      // 90% HSDIP target line
+      const targetY = yScale(TARGET);
+      const targetLine = `
+        <line x1="${pad.left}" x2="${pad.left + iW}" y1="${targetY}" y2="${targetY}"
+              stroke="#f97316" stroke-width="1.5" stroke-dasharray="6,3" opacity=".8"/>
+        <text x="${pad.left + iW + 3}" y="${targetY + 4}" font-size="10" fill="#f97316" font-weight="600">90%</text>`;
+
+      // CI band polygon
+      let ciPoly = "";
+      if (fcast.length) {
+        const startIdx = hist.length;
+        const fwdX = fcast.map((_, i) => xScale(startIdx + i));
+        const loY  = fcast.map(s => yScale(s.lower_ci ?? s.value));
+        const hiY  = fcast.map(s => yScale(s.upper_ci ?? s.value));
+        // extend CI band back to divider line
+        const joinX = xScale(hist.length - 1);
+        const joinV = hist[hist.length - 1].value;
+        const topPts = [`${joinX},${yScale(joinV)}`, ...fwdX.map((x,i) => `${x},${hiY[i]}`)].join(" ");
+        const botPts = [...fwdX.map((x,i) => `${x},${loY[i]}`).reverse(), `${joinX},${yScale(joinV)}`].join(" ");
+        ciPoly = `<polygon points="${topPts} ${botPts}" fill="#3b82f6" fill-opacity="0.15"/>`;
+      }
+
+      // Grid lines + Y axis labels
+      const yTicks = [0, 0.25, 0.5, 0.75, 1].map(t => {
+        const v = yMin + t * (yMax - yMin);
+        const y = yScale(v);
+        return `<line x1="${pad.left}" x2="${pad.left + iW}" y1="${y}" y2="${y}" stroke="#e5e7eb" stroke-width="1"/>
+                <text x="${pad.left - 6}" y="${y + 4}" text-anchor="end" font-size="10" fill="#9ca3af">${Math.round(v)}%</text>`;
+      }).join("");
+
+      // Historical line
+      const histLine = hist.map((s, i) =>
+        `${i === 0 ? "M" : "L"}${xScale(i)},${yScale(s.value)}`
+      ).join(" ");
+
+      // Forecast line
+      const fcastLine = fcast.length
+        ? "M" + xScale(hist.length - 1) + "," + yScale(hist[hist.length-1].value) + " " +
+          fcast.map((s, i) => `L${xScale(hist.length + i)},${yScale(s.value)}`).join(" ")
+        : "";
+
+      // X axis labels — show every label, formatted
+      const xLabels = all.map((s, i) =>
+        `<text x="${xScale(i)}" y="${H - 8}" text-anchor="middle" font-size="10" fill="#9ca3af"
+               transform="rotate(-35,${xScale(i)},${H-8})">${fmtPeriod(s.period)}</text>`
+      ).join("");
+
+      // Historical dots
+      const histDots = hist.map((s, i) => {
+        const cx = xScale(i), cy = yScale(s.value);
+        return `<circle cx="${cx}" cy="${cy}" r="3.5" fill="#1d4ed8"/>`;
+      }).join("");
+
+      // Forecast dots + value labels
+      const fcastDots = fcast.map((s, i) => {
+        const cx = xScale(hist.length + i), cy = yScale(s.value);
+        const labelY = cy > pad.top + 18 ? cy - 9 : cy + 16;
+        return `<circle cx="${cx}" cy="${cy}" r="4" fill="#fff" stroke="#3b82f6" stroke-width="2"/>
+                <text x="${cx}" y="${labelY}" text-anchor="middle" font-size="10" font-weight="600" fill="#1d4ed8">${s.value.toFixed(1)}%</text>`;
+      }).join("");
+
+      // Last historical value label
+      const lastHist = hist[hist.length - 1];
+      const lastX = xScale(hist.length - 1), lastY = yScale(lastHist.value);
+      const lastLabel = `<text x="${lastX}" y="${lastY - 9}" text-anchor="middle" font-size="10" font-weight="600" fill="#1d4ed8">${lastHist.value.toFixed(1)}%</text>`;
+
+      // Trend indicator for card header
+      const last = hist[hist.length-1].value;
+      const first = hist[0].value;
+      const trend = last - first;
+      const trendColor = trend > 2 ? "#166534" : trend < -2 ? "#b91c1c" : "#854d0e";
+      const trendArrow = trend > 2 ? "↑" : trend < -2 ? "↓" : "→";
+      const f2020 = fcast.length ? fcast[fcast.length-1].value : null;
+      const willHitTarget = f2020 !== null && f2020 >= TARGET;
+
+      container.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;flex-wrap:wrap;gap:6px;">
+          <div>
+            <div style="font-size:13px;font-weight:700;color:#1e3a5f;">${KPI_DISPLAY_FC[kpi] || kpi}</div>
+            <div style="font-size:11px;color:#9ca3af;margin-top:2px;">EFY2011–2020 · ARIMA model</div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;">
+            <span style="font-size:12px;font-weight:600;color:${trendColor};">${trendArrow} ${trend > 0 ? "+" : ""}${trend.toFixed(1)}pp (2011→2017)</span>
+            <span style="font-size:11px;padding:2px 8px;border-radius:10px;
+              background:${willHitTarget ? "#dcfce7" : "#fee2e2"};
+              color:${willHitTarget ? "#166534" : "#b91c1c"};">
+              ${willHitTarget ? "✓ On track for 90%" : "✗ Below target 2020"}
+            </span>
+          </div>
+        </div>
+        <svg width="100%" viewBox="0 0 ${W} ${H}" style="overflow:visible;display:block;">
+          ${fcastBg}${yTicks}${targetLine}${ciPoly}
+          <path d="${histLine}" fill="none" stroke="#1d4ed8" stroke-width="2.5" stroke-linejoin="round"/>
+          <path d="${fcastLine}" fill="none" stroke="#3b82f6" stroke-width="2" stroke-dasharray="6,3"/>
+          ${divider}${fcastZoneLabel}
+          ${histDots}${lastLabel}${fcastDots}${xLabels}
+        </svg>
+        <div style="font-size:10px;color:#9ca3af;margin-top:8px;display:flex;gap:16px;flex-wrap:wrap;">
+          <span style="display:flex;align-items:center;gap:4px;">
+            <svg width="18" height="4" style="flex-shrink:0;"><line x1="0" y1="2" x2="18" y2="2" stroke="#1d4ed8" stroke-width="2.5"/></svg>Historical
+          </span>
+          <span style="display:flex;align-items:center;gap:4px;">
+            <svg width="18" height="4" style="flex-shrink:0;"><line x1="0" y1="2" x2="18" y2="2" stroke="#3b82f6" stroke-width="2" stroke-dasharray="5,3"/></svg>Forecast
+          </span>
+          <span style="display:flex;align-items:center;gap:4px;">
+            <svg width="14" height="10" style="flex-shrink:0;"><rect width="14" height="10" fill="#3b82f6" fill-opacity="0.15"/></svg>95% CI
+          </span>
+          <span style="display:flex;align-items:center;gap:4px;">
+            <svg width="18" height="4" style="flex-shrink:0;"><line x1="0" y1="2" x2="18" y2="2" stroke="#f97316" stroke-width="1.5" stroke-dasharray="5,3"/></svg>90% target
+          </span>
+        </div>`;
+    }
+
+    function buildForecastSummaryRow(kpiData) {
+      const { kpi, series } = kpiData;
+      const hist  = series.filter(s => !s.is_forecast);
+      const fcast = series.filter(s =>  s.is_forecast);
+      const last  = hist.length ? hist[hist.length-1].value : null;
+      const f = [0,1,2].map(i => fcast[i] || null);
+      const f2020 = f[2] ? f[2].value : null;
+      const hitTarget = f2020 !== null && f2020 >= 90;
+      const trend = last !== null && hist.length > 1
+        ? last - hist[0].value : 0;
+      const trendColor = trend > 2 ? "#166534" : trend < -2 ? "#b91c1c" : "#854d0e";
+      const trendArrow = trend > 2 ? "↑" : trend < -2 ? "↓" : "→";
+
+      const fmtFc = (fc) => fc
+        ? `${fc.value.toFixed(1)}% <span style="color:#9ca3af;font-size:10px;">[${(fc.lower_ci??fc.value).toFixed(1)}–${(fc.upper_ci??fc.value).toFixed(1)}]</span>`
+        : "—";
+
+      return `<tr style="border-top:1px solid #f3f4f6;">
+        <td style="padding:9px 14px;font-size:12px;font-weight:600;color:#1e3a5f;">${KPI_DISPLAY_FC[kpi] || kpi}</td>
+        <td style="padding:9px 14px;text-align:right;font-size:12px;font-weight:700;">${last !== null ? last.toFixed(1)+"%" : "—"}</td>
+        <td style="padding:9px 14px;text-align:right;font-size:12px;">${fmtFc(f[0])}</td>
+        <td style="padding:9px 14px;text-align:right;font-size:12px;">${fmtFc(f[1])}</td>
+        <td style="padding:9px 14px;text-align:right;font-size:12px;">${fmtFc(f[2])}</td>
+        <td style="padding:9px 14px;text-align:center;font-size:12px;font-weight:600;color:${trendColor};">${trendArrow} ${trend > 0 ? "+" : ""}${trend.toFixed(1)}pp</td>
+        <td style="padding:9px 14px;text-align:center;">
+          <span style="font-size:11px;padding:2px 8px;border-radius:10px;
+            background:${hitTarget ? "#dcfce7" : "#fee2e2"};
+            color:${hitTarget ? "#166534" : "#b91c1c"};">
+            ${hitTarget ? "✓ On track" : "✗ Below"}
+          </span>
+        </td>
+      </tr>`;
+    }
+
+    document.getElementById("runForecastBtn").addEventListener("click", async () => {
+      const btn    = document.getElementById("runForecastBtn");
+      const status = document.getElementById("forecastStatus");
+      const charts = document.getElementById("forecastCharts");
+      const grid   = document.getElementById("chartsGrid");
+      const apiBase = document.getElementById("apiBase").value.replace(/\/$/, "");
+
+      btn.disabled = true;
+      status.style.display = "inline";
+      status.textContent = "Running ARIMA forecasts — this may take ~20s...";
+      charts.style.display = "none";
+
+      try {
+        const res  = await fetch(apiBase + "/forecasting/run", { method: "POST" });
+        const data = await res.json();
+
+        if (!res.ok) throw new Error(data.detail || JSON.stringify(data));
+
+        // Build lookup by kpi name
+        const byKpi = {};
+        data.results.forEach(r => { byKpi[r.kpi] = r; });
+
+        // Summary table
+        const summaryBody = document.getElementById("forecastSummaryBody");
+        summaryBody.innerHTML = "";
+        KPI_GROUPS.forEach(group => {
+          summaryBody.innerHTML += `<tr><td colspan="7" style="padding:6px 14px 4px;font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.06em;background:#fafafa;border-top:1px solid #e5e7eb;">${group.label}</td></tr>`;
+          group.kpis.forEach(kpi => {
+            if (byKpi[kpi]) summaryBody.innerHTML += buildForecastSummaryRow(byKpi[kpi]);
+          });
+        });
+
+        // Charts grouped by category — with fallback for any ungrouped KPIs
+        grid.innerHTML = "";
+        const groupedKpiSet = new Set(KPI_GROUPS.flatMap(g => g.kpis));
+        const ungroupedKpis = data.results.filter(r => !groupedKpiSet.has(r.kpi));
+        const allGroups = ungroupedKpis.length
+          ? [...KPI_GROUPS, { label:"Other", kpis: ungroupedKpis.map(r => r.kpi) }]
+          : [...KPI_GROUPS];
+
+        allGroups.forEach(group => {
+          const groupKpis = group.kpis.filter(k => byKpi[k]);
+          if (!groupKpis.length) return;
+
+          const section = document.createElement("div");
+          section.style.cssText = "margin-bottom:32px;";
+          section.innerHTML = `<div style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid #e5e7eb;">${group.label}</div>`;
+          const subGrid = document.createElement("div");
+          subGrid.style.cssText = "display:grid;grid-template-columns:repeat(auto-fill,minmax(500px,1fr));gap:16px;";
+          section.appendChild(subGrid);
+          grid.appendChild(section);
+
+          groupKpis.forEach(kpi => {
+            const card = document.createElement("div");
+            card.style.cssText = "background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px;box-shadow:0 1px 4px rgba(0,0,0,.04);";
+            subGrid.appendChild(card);
+            buildForecastChart(card, byKpi[kpi]);
+          });
+        });
+
+        charts.style.display = "block";
+        status.textContent = `✓ Forecast complete — ${data.kpis_forecast} KPIs · EFY2011–2020`;
+        status.style.color = "#166534";
+      } catch (e) {
+        status.textContent = "✗ Error: " + e.message;
+        status.style.color = "#b91c1c";
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    // ── Situational Analysis ─────────────────────────────────────────────────
+    let saReportId = null;
+    let saChatOpen = false;
+
+    function showChatBubble() {
+      document.getElementById("saChatToggle").style.display = "flex";
+      document.getElementById("saChatToggle").style.alignItems = "center";
+      document.getElementById("saChatToggle").style.justifyContent = "center";
+    }
+
+    function toggleChat(open) {
+      saChatOpen = (open === undefined) ? !saChatOpen : open;
+      const drawer = document.getElementById("saChatDrawer");
+      const btn = document.getElementById("saChatToggle");
+      if (saChatOpen) {
+        drawer.style.display = "flex";
+        btn.style.transform = "scale(0.9)";
+        btn.textContent = "✕";
+        setTimeout(() => document.getElementById("saChatInput").focus(), 50);
+      } else {
+        drawer.style.display = "none";
+        btn.style.transform = "scale(1)";
+        btn.textContent = "💬";
+      }
+    }
+
+    document.getElementById("saChatToggle").addEventListener("click", () => toggleChat());
+    document.getElementById("saChatClose").addEventListener("click", () => toggleChat(false));
+
+    function renderMarkdown(md) {
+      // Minimal markdown renderer: headers, bold, tables, bullets
+      return md
+        .replace(/^#### (.+)$/gm, '<h4 style="font-size:13px;font-weight:600;color:#374151;margin:12px 0 4px;">$1</h4>')
+        .replace(/^### (.+)$/gm, '<h3 style="font-size:15px;font-weight:600;color:#1e3a5f;margin:16px 0 6px;border-bottom:1px solid #e5e7eb;padding-bottom:4px;">$1</h3>')
+        .replace(/^## (.+)$/gm, '<h2 style="font-size:17px;font-weight:700;color:#1e3a5f;margin:20px 0 8px;">$1</h2>')
+        .replace(/^# (.+)$/gm, '<h1 style="font-size:20px;font-weight:700;color:#1e3a5f;margin:0 0 16px;">$1</h1>')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g, '<em>$1</em>')
+        .replace(/^\- (.+)$/gm, '<li style="margin:3px 0;">$1</li>')
+        .replace(/(<li.*<\/li>\n?)+/g, s => `<ul style="padding-left:20px;margin:6px 0;">${s}</ul>`)
+        .replace(/^\|(.+)\|$/gm, row => {
+          const cells = row.split('|').filter(c => c.trim()).map(c => c.trim());
+          return '<tr>' + cells.map(c => `<td style="padding:4px 10px;border:1px solid #e5e7eb;font-size:12px;">${c}</td>`).join('') + '</tr>';
+        })
+        .replace(/(<tr>.*<\/tr>\n?)+/g, s => `<table style="border-collapse:collapse;width:100%;margin:10px 0;">${s}</table>`)
+        .replace(/\n\n/g, '</p><p style="margin:6px 0;">')
+        .replace(/^(?!<)(.+)$/gm, '<p style="margin:5px 0;font-size:13px;line-height:1.6;">$1</p>');
+    }
+
+    function appendChatBubble(role, text) {
+      const history = document.getElementById("saChatHistory");
+      const div = document.createElement("div");
+      const isUser = role === "user";
+      div.style.cssText = `align-self:${isUser?"flex-end":"flex-start"};max-width:85%;background:${isUser?"#1d4ed8":"#f3f4f6"};color:${isUser?"#fff":"#111"};padding:8px 12px;border-radius:10px;font-size:13px;line-height:1.5;white-space:pre-wrap;`;
+      div.textContent = text;
+      history.appendChild(div);
+      history.scrollTop = history.scrollHeight;
+    }
+
+    async function loadLatestSAReport() {
+      const apiBase = document.getElementById("apiBase").value.replace(/\/$/, "");
+      const res = await fetch(apiBase + "/situational-analysis/latest");
+      const data = await res.json();
+      if (data.report) {
+        saReportId = data.report.id;
+        document.getElementById("saReport").innerHTML = renderMarkdown(data.report.report_md);
+        document.getElementById("saMain").style.display = "flex";
+        document.getElementById("saEndorseBtn").style.display = data.report.state === "draft" ? "inline-block" : "none";
+        const stateEl = document.getElementById("saState");
+        stateEl.style.display = "inline-block";
+        stateEl.textContent = data.report.state === "endorsed" ? "✓ Endorsed" : "● Draft";
+        stateEl.style.background = data.report.state === "endorsed" ? "#dcfce7" : "#fef9c3";
+        stateEl.style.color = data.report.state === "endorsed" ? "#166534" : "#854d0e";
+        document.getElementById("saChatHistory").innerHTML = "";
+        (data.chat || []).forEach(m => appendChatBubble(m.role, m.content));
+        showChatBubble();
+      }
+    }
+
+    document.getElementById("saGenerateBtn").addEventListener("click", async () => {
+      const btn = document.getElementById("saGenerateBtn");
+      const status = document.getElementById("saStatus");
+      const apiBase = document.getElementById("apiBase").value.replace(/\/$/, "");
+      btn.disabled = true;
+      status.style.display = "inline";
+      status.style.color = "#555";
+      status.textContent = "Calling Gemini — generating SWOT/PESTEL/Bottleneck report (~15–30s)…";
+
+      try {
+        const res = await fetch(apiBase + "/situational-analysis/generate", { method: "POST" });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || JSON.stringify(data));
+        saReportId = data.id;
+        document.getElementById("saReport").innerHTML = renderMarkdown(data.report_md);
+        document.getElementById("saMain").style.display = "flex";
+        document.getElementById("saEndorseBtn").style.display = "inline-block";
+        const stateEl = document.getElementById("saState");
+        stateEl.style.display = "inline-block";
+        stateEl.textContent = "● Draft";
+        stateEl.style.background = "#fef9c3";
+        stateEl.style.color = "#854d0e";
+        document.getElementById("saChatHistory").innerHTML = "";
+        showChatBubble();
+        status.textContent = "✓ Report generated";
+        status.style.color = "#166534";
+      } catch(e) {
+        status.textContent = "✗ " + e.message;
+        status.style.color = "#b91c1c";
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    document.getElementById("saEndorseBtn").addEventListener("click", async () => {
+      const apiBase = document.getElementById("apiBase").value.replace(/\/$/, "");
+      if (!confirm("Endorse this Situational Analysis? This marks it as reviewed and approved.")) return;
+      const res = await fetch(apiBase + "/situational-analysis/endorse", { method: "POST" });
+      if (res.ok) {
+        document.getElementById("saEndorseBtn").style.display = "none";
+        const stateEl = document.getElementById("saState");
+        stateEl.textContent = "✓ Endorsed";
+        stateEl.style.background = "#dcfce7";
+        stateEl.style.color = "#166534";
+      }
+    });
+
+    document.getElementById("saSendBtn").addEventListener("click", async () => {
+      const input = document.getElementById("saChatInput");
+      const msg = input.value.trim();
+      if (!msg || !saReportId) return;
+      const apiBase = document.getElementById("apiBase").value.replace(/\/$/, "");
+      input.value = "";
+      appendChatBubble("user", msg);
+      const sendBtn = document.getElementById("saSendBtn");
+      sendBtn.disabled = true;
+      sendBtn.textContent = "…";
+
+      try {
+        const res = await fetch(apiBase + "/situational-analysis/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: msg, report_id: saReportId }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || JSON.stringify(data));
+        appendChatBubble("assistant", data.reply);
+
+        // If the reply contains an amendment, extract and apply it to the report
+        if (data.reply.includes("[AMENDMENT]")) {
+          const amendMatch = data.reply.match(/\[AMENDMENT\]([\s\S]+)/);
+          if (amendMatch) {
+            const amended = amendMatch[1].trim();
+            // Show a banner at the top of the report
+            const banner = document.createElement("div");
+            banner.style.cssText = "background:#fef9c3;border:1px solid #fde047;border-radius:6px;padding:8px 14px;font-size:12px;color:#854d0e;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;";
+            banner.innerHTML = `<span>⚠️ This report has been amended via chat. The underlying data was not changed.</span>
+              <button onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;font-size:14px;color:#854d0e;">✕</button>`;
+            const reportEl = document.getElementById("saReport");
+            if (!reportEl.querySelector(".amendment-banner")) {
+              banner.classList.add("amendment-banner");
+              reportEl.insertBefore(banner, reportEl.firstChild);
+            }
+          }
+        }
+      } catch(e) {
+        appendChatBubble("assistant", "Error: " + e.message);
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.textContent = "↑";
+      }
+    });
+
+    document.getElementById("saChatInput").addEventListener("keydown", e => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        document.getElementById("saSendBtn").click();
+      }
+    });
+
+    // Load existing report when switching to the tab
+    document.querySelectorAll("nav a[data-panel]").forEach(link => {
+      if (link.dataset.panel === "situational") {
+        link.addEventListener("click", () => { if (!saReportId) loadLatestSAReport(); });
+      }
+    });
+
+    // ── Evidence Synthesis ────────────────────────────────────────────────────
+
+    let evUploadId = null;
+    let evSynthesisId = null;
+
+    // Load KPI names from backend and build checkboxes
+    (async () => {
+      const apiBase = document.getElementById("apiBase").value.replace(/\/$/, "");
+      try {
+        const res = await fetch(apiBase + "/evidence/kpis");
+        const kpis = await res.json();
+        const container = document.getElementById("evKpiCheckboxes");
+        kpis.forEach(kpi => {
+          const label = document.createElement("label");
+          label.style.cssText = "display:flex;align-items:center;gap:5px;font-size:13px;background:#f3f4f6;border:1px solid #e5e7eb;border-radius:6px;padding:4px 10px;cursor:pointer;";
+          label.innerHTML = `<input type="checkbox" class="ev-kpi-check" value="${kpi}" style="cursor:pointer;"> ${kpi}`;
+          container.appendChild(label);
+        });
+      } catch(e) {
+        document.getElementById("evKpiCheckboxes").textContent = "(Failed to load KPIs)";
+      }
+    })();
+
+    // Upload handler — stores full text, shows confirmation only
+    const evDropZone = document.getElementById("evDropZone");
+    evDropZone.addEventListener("dragover", e => { e.preventDefault(); evDropZone.style.borderColor = "#1d4ed8"; evDropZone.style.background = "#eff6ff"; });
+    evDropZone.addEventListener("dragleave", () => { evDropZone.style.borderColor = "#d1d5db"; evDropZone.style.background = "#f9fafb"; });
+    evDropZone.addEventListener("drop", e => { e.preventDefault(); evDropZone.style.borderColor = "#d1d5db"; evDropZone.style.background = "#f9fafb"; if (e.dataTransfer.files[0]) handleEvidenceUpload(e.dataTransfer.files[0]); });
+    document.getElementById("evFileInput").addEventListener("change", e => { if (e.target.files[0]) handleEvidenceUpload(e.target.files[0]); });
+
+    async function handleEvidenceUpload(file) {
+      const apiBase = document.getElementById("apiBase").value.replace(/\/$/, "");
+      const uploadStatus = document.getElementById("evUploadStatus");
+      uploadStatus.style.display = "block";
+      uploadStatus.style.color = "#555";
+      uploadStatus.textContent = `Uploading "${file.name}"…`;
+      document.getElementById("evUploadId").value = "";
+      evUploadId = null;
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      try {
+        const res = await fetch(apiBase + "/evidence/upload", { method: "POST", body: formData });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || JSON.stringify(data));
+
+        evUploadId = data.upload_id;
+        document.getElementById("evUploadId").value = data.upload_id;
+        uploadStatus.style.color = "#166534";
+        uploadStatus.innerHTML = `✓ <strong>${file.name}</strong> uploaded — ${data.char_count.toLocaleString()} characters extracted. Preview: <em style="color:#6b7280;">${data.preview.replace(/</g,"&lt;")}</em>`;
+        document.getElementById("evDropLabel").innerHTML = `✓ ${file.name} <label for="evFileInput" style="color:#1d4ed8;cursor:pointer;text-decoration:underline;margin-left:8px;">Change</label>`;
+      } catch(e) {
+        uploadStatus.style.color = "#b91c1c";
+        uploadStatus.textContent = "✗ " + e.message;
+      }
+    }
+
+    // Synthesize — single button, sends everything to the LLM
+    document.getElementById("evSynthesizeBtn").addEventListener("click", async () => {
+      const objective = document.getElementById("evObjective").value.trim();
+      if (!objective) { alert("Please enter your objective first."); return; }
+
+      const selected = [...document.querySelectorAll(".ev-kpi-check:checked")].map(c => c.value);
+      const uploadId = parseInt(document.getElementById("evUploadId").value) || null;
+
+      if (!uploadId && !selected.length) {
+        alert("Please upload a document and/or select at least one internal KPI.");
+        return;
+      }
+
+      const apiBase = document.getElementById("apiBase").value.replace(/\/$/, "");
+      const btn = document.getElementById("evSynthesizeBtn");
+      const status = document.getElementById("evStatus");
+      btn.disabled = true; btn.textContent = "Synthesizing…";
+      status.style.display = "block"; status.style.color = "#555";
+      status.textContent = uploadId
+        ? "Sending document + DHIS2 data to Gemini — this may take ~15s…"
+        : "Sending DHIS2 data to Gemini…";
+      document.getElementById("evSynthesisSection").style.display = "none";
+
+      try {
+        const res = await fetch(apiBase + "/evidence/synthesize", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            upload_id: uploadId,
+            objective,
+            selected_kpis: selected.length ? selected : null,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || JSON.stringify(data));
+
+        evSynthesisId = data.synthesis_id;
+        document.getElementById("evSynthesisOutput").innerHTML = renderMarkdown(data.synthesis_md);
+        document.getElementById("evSynthesisRaw").value = data.synthesis_md;
+        document.getElementById("evSynthesisId").value = data.synthesis_id;
+        document.getElementById("evSynthesisSection").style.display = "block";
+        document.getElementById("evChatBubble").style.display = "flex";
+        status.textContent = "✓ Synthesis complete."; status.style.color = "#166534";
+        document.getElementById("evSynthesisSection").scrollIntoView({ behavior: "smooth" });
+      } catch(e) {
+        status.textContent = "✗ " + e.message; status.style.color = "#b91c1c";
+      } finally {
+        btn.disabled = false; btn.textContent = "✦ Synthesize";
+      }
+    });
+
+    document.getElementById("evCopyBtn").addEventListener("click", () => {
+      navigator.clipboard.writeText(document.getElementById("evSynthesisRaw").value).then(() => {
+        const btn = document.getElementById("evCopyBtn");
+        btn.textContent = "✓ Copied!";
+        setTimeout(() => { btn.textContent = "📋 Copy"; }, 2000);
+      });
+    });
+
+    document.getElementById("evSendToSABtn").addEventListener("click", () => {
+      const raw = document.getElementById("evSynthesisRaw").value;
+      if (!raw) return;
+      const saLink = document.querySelector("nav a[data-panel='situational-analysis']");
+      if (saLink) saLink.click();
+      setTimeout(() => {
+        const saInput = document.getElementById("saChatInput");
+        if (saInput) { saInput.value = "Evidence synthesis to incorporate:\n\n" + raw.slice(0, 2000); saInput.focus(); }
+      }, 200);
+    });
+
+    // Evidence chat
+    document.getElementById("evChatBubble").addEventListener("click", () => {
+      const drawer = document.getElementById("evChatDrawer");
+      drawer.style.display = drawer.style.display === "none" ? "block" : "none";
+    });
+    document.getElementById("evChatClose").addEventListener("click", () => {
+      document.getElementById("evChatDrawer").style.display = "none";
+    });
+
+    async function sendEvidenceChatMsg() {
+      const input = document.getElementById("evChatInput");
+      const msg = input.value.trim();
+      if (!msg) return;
+      const sid = parseInt(document.getElementById("evSynthesisId").value);
+      if (!sid) { alert("Generate a synthesis first."); return; }
+      const apiBase = document.getElementById("apiBase").value.replace(/\/$/, "");
+      input.value = "";
+      appendEvMsg("user", msg);
+      try {
+        const res = await fetch(apiBase + "/evidence/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ synthesis_id: sid, message: msg }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || JSON.stringify(data));
+        appendEvMsg("assistant", data.reply);
+      } catch(e) {
+        appendEvMsg("assistant", "⚠ Error: " + e.message);
+      }
+    }
+
+    function appendEvMsg(role, content) {
+      const container = document.getElementById("evChatMessages");
+      const div = document.createElement("div");
+      div.style.cssText = `max-width:85%;padding:8px 12px;border-radius:10px;font-size:13px;line-height:1.6;
+        ${role === "user" ? "background:#1e3a5f;color:#fff;align-self:flex-end;margin-left:auto;" : "background:#fff;border:1px solid #e5e7eb;color:#374151;"}`;
+      div.innerHTML = renderMarkdown(content);
+      container.appendChild(div);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    document.getElementById("evChatSend").addEventListener("click", sendEvidenceChatMsg);
+    document.getElementById("evChatInput").addEventListener("keydown", e => {
+      if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendEvidenceChatMsg(); }
+    });
+
+    // ── Target Setting ────────────────────────────────────────────────────────
+
+    // Load KPI list on page load
+    async function loadTargetKpis() {
+      const apiBase = document.getElementById("apiBase").value.replace(/\/$/, "");
+      try {
+        const res = await fetch(apiBase + "/targets/kpis");
+        const kpis = await res.json();
+        const sel = document.getElementById("tgtKpi");
+        sel.innerHTML = kpis.map(k => `<option value="${k.id}">${k.display_name}</option>`).join("");
+      } catch(e) {
+        document.getElementById("tgtKpi").innerHTML = '<option value="">Failed to load KPIs</option>';
+      }
+    }
+    loadTargetKpis();
+
+    document.getElementById("tgtRunBtn").addEventListener("click", async () => {
+      const kpi = document.getElementById("tgtKpi").value;
+      const level = parseInt(document.getElementById("tgtLevel").value);
+      const apiBase = document.getElementById("apiBase").value.replace(/\/$/, "");
+      if (!kpi) return;
+
+      const btn = document.getElementById("tgtRunBtn");
+      const status = document.getElementById("tgtStatus");
+      btn.disabled = true;
+      status.style.display = "block";
+      status.style.color = "#555";
+      status.textContent = "Running disaggregation — computing trajectories, cohorts, and rationales…";
+      document.getElementById("tgtResults").style.display = "none";
+      document.getElementById("tgtRationale").style.display = "none";
+      document.getElementById("tgtReconciliation").style.display = "none";
+      document.getElementById("tgtLLMSection").style.display = "none";
+      document.getElementById("tgtLLMOutput").style.display = "none";
+
+      try {
+        const res = await fetch(`${apiBase}/targets/disaggregate/${kpi}/2017July`);
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || JSON.stringify(data));
+
+        const levelKey = `level_${level}`;
+        const units = (data.disaggregation || {})[levelKey] || [];
+        const recon = (data.reconciliation || {})[levelKey] || {};
+
+        // Reconciliation banner
+        const reconEl = document.getElementById("tgtReconciliation");
+        reconEl.style.display = "block";
+        const isOk = recon.reconciled;
+        reconEl.innerHTML = `
+          <div style="background:${isOk ? "#dcfce7" : "#fef9c3"};border:1px solid ${isOk ? "#86efac" : "#fde047"};
+                      border-radius:8px;padding:10px 16px;font-size:13px;color:${isOk ? "#166534" : "#854d0e"};">
+            ${isOk ? "✓" : "⚠"} <strong>Reconciliation:</strong>
+            National target: <strong>${recon.national_target}%</strong> ·
+            Bottom-up weighted sum: <strong>${recon.bottom_up_weighted_sum}%</strong> ·
+            Gap: <strong>${recon.gap_pp > 0 ? "+" : ""}${recon.gap_pp}pp</strong> ·
+            ${recon.note}
+          </div>`;
+
+        if (units.length === 0) {
+          status.textContent = "⚠ No data returned for this level.";
+          status.style.color = "#854d0e";
+          return;
+        }
+
+        const levelName = {2: "Regions", 3: "Zones", 4: "Woredas"}[level];
+        document.getElementById("tgtResultsLabel").textContent =
+          `${levelName} — ${data.kpi} · National target: 90%`;
+
+        renderTargetTable(units);
+        document.getElementById("tgtResults").style.display = "block";
+        status.textContent = `✓ ${units.length} units computed. ${units.filter(u => u.divergence_flagged).length} flagged for review.`;
+        status.style.color = "#166534";
+
+        // Store method notes for rationale drawer
+        window._tgtMethodNotes = (data.method_notes || []).join(" · ");
+        showLLMSection();
+
+      } catch(e) {
+        status.textContent = "✗ " + e.message;
+        status.style.color = "#b91c1c";
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    function renderTargetTable(units) {
+      const tbody = document.getElementById("tgtBody");
+      tbody.innerHTML = "";
+      units.forEach(u => {
+        const gap = u.recommended_target - 90;
+        const trendStr = u.trajectory_pp_per_year !== null
+          ? `${u.trajectory_pp_per_year > 0 ? "+" : ""}${u.trajectory_pp_per_year.toFixed(1)}`
+          : "—";
+        const trendColor = u.trajectory_pp_per_year > 0 ? "#166534"
+          : u.trajectory_pp_per_year < 0 ? "#b91c1c" : "#6b7280";
+
+        const tr = document.createElement("tr");
+        tr.style.cssText = "border-bottom:1px solid #f3f4f6;cursor:pointer;";
+        tr.onmouseover = () => tr.style.background = "#f9fafb";
+        tr.onmouseout = () => tr.style.background = "";
+        tr.onclick = () => showRationale(u);
+
+        tr.innerHTML = `
+          <td style="padding:9px 12px;font-size:13px;font-weight:500;">${u.unit_name}</td>
+          <td style="padding:9px 12px;text-align:right;font-size:13px;">${u.baseline_efy2017.toFixed(1)}%</td>
+          <td style="padding:9px 12px;text-align:right;font-size:13px;color:${trendColor};">${trendStr}</td>
+          <td style="padding:9px 12px;text-align:center;font-size:13px;color:#6b7280;">
+            ${u.indicative_range.low}% – ${u.indicative_range.high}%
+          </td>
+          <td style="padding:9px 12px;text-align:right;font-size:14px;font-weight:700;color:#1e3a5f;">
+            ${u.recommended_target}%
+          </td>
+          <td style="padding:9px 12px;text-align:center;">
+            <span style="font-size:12px;padding:2px 8px;border-radius:10px;
+                  background:${gap >= 0 ? "#dcfce7" : "#fee2e2"};
+                  color:${gap >= 0 ? "#166534" : "#b91c1c"};">
+              ${gap >= 0 ? "+" : ""}${gap.toFixed(1)}pp
+            </span>
+          </td>
+          <td style="padding:9px 12px;text-align:center;">
+            ${u.divergence_flagged
+              ? `<span title="${u.divergence_pp}pp divergence from indicative midpoint"
+                    style="font-size:11px;padding:2px 8px;border-radius:10px;background:#fef9c3;color:#854d0e;">⚠ Review</span>`
+              : `<span style="font-size:11px;padding:2px 8px;border-radius:10px;background:#f3f4f6;color:#9ca3af;">OK</span>`}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function showRationale(unit) {
+      const el = document.getElementById("tgtRationale");
+      const text = document.getElementById("tgtRationaleText");
+      const note = document.getElementById("tgtMethodNote");
+      text.textContent = unit.rationale;
+      note.textContent = window._tgtMethodNotes || "";
+      el.style.display = "block";
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Show LLM section once results are loaded
+    function showLLMSection() {
+      document.getElementById("tgtLLMSection").style.display = "block";
+    }
+
+    document.getElementById("tgtLLMReviewBtn").addEventListener("click", async () => {
+      const kpi = document.getElementById("tgtKpi").value;
+      if (!kpi) { alert("Run disaggregation first."); return; }
+
+      const apiBase = document.getElementById("apiBase").value.replace(/\/$/, "");
+      const btn = document.getElementById("tgtLLMReviewBtn");
+      btn.disabled = true; btn.textContent = "Generating narrative…";
+      document.getElementById("tgtLLMOutput").style.display = "none";
+
+      const additionalContext = document.getElementById("tgtContext").value.trim();
+
+      try {
+        const res = await fetch(apiBase + "/targets/llm-review", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ kpi, additional_context: additionalContext || null }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || JSON.stringify(data));
+
+        document.getElementById("tgtLLMText").innerHTML = renderMarkdown(data.llm_narrative);
+        window._tgtLLMRaw = data.llm_narrative;
+        document.getElementById("tgtLLMOutput").style.display = "block";
+        document.getElementById("tgtLLMOutput").scrollIntoView({ behavior: "smooth" });
+      } catch(e) {
+        alert("LLM Review error: " + e.message);
+      } finally {
+        btn.disabled = false; btn.textContent = "✦ Generate LLM Narrative";
+      }
+    });
+
+    document.getElementById("tgtLLMCopyBtn").addEventListener("click", () => {
+      navigator.clipboard.writeText(window._tgtLLMRaw || "").then(() => {
+        const btn = document.getElementById("tgtLLMCopyBtn");
+        btn.textContent = "✓ Copied!";
+        setTimeout(() => { btn.textContent = "📋 Copy"; }, 2000);
+      });
+    });
+
+
+    const navLinks = document.querySelectorAll("nav a[data-panel]");
+    const panels = document.querySelectorAll(".panel");
+    const pageTitle = document.getElementById("page-title");
+
+    navLinks.forEach(link => {
+      link.addEventListener("click", e => {
+        e.preventDefault();
+        navLinks.forEach(l => l.classList.remove("active"));
+        panels.forEach(p => p.classList.remove("active"));
+        link.classList.add("active");
+        document.getElementById("panel-" + link.dataset.panel).classList.add("active");
+        pageTitle.textContent = link.textContent;
+      });
+    });
+  </script>
+</body>
+</html>

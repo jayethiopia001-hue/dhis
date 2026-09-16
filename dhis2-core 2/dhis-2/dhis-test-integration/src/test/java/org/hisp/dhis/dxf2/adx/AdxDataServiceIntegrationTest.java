@@ -1,0 +1,511 @@
+/*
+ * Copyright (c) 2004-2022, University of Oslo
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors 
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.hisp.dhis.dxf2.adx;
+
+import static org.hisp.dhis.common.IdScheme.CODE;
+import static org.hisp.dhis.common.IdScheme.UID;
+import static org.hisp.dhis.scheduling.RecordingJobProgress.transitory;
+import static org.hisp.dhis.test.utils.Assertions.assertContainsOnly;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import com.google.common.collect.Sets;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import org.hisp.dhis.category.Category;
+import org.hisp.dhis.category.CategoryCombo;
+import org.hisp.dhis.category.CategoryOption;
+import org.hisp.dhis.category.CategoryOptionCombo;
+import org.hisp.dhis.common.IdProperty;
+import org.hisp.dhis.common.IdSchemes;
+import org.hisp.dhis.common.IdentifiableObjectManager;
+import org.hisp.dhis.common.ValueType;
+import org.hisp.dhis.dataelement.DataElement;
+import org.hisp.dhis.dataset.DataSet;
+import org.hisp.dhis.datavalue.DataDumpService;
+import org.hisp.dhis.datavalue.DataEntryPipeline;
+import org.hisp.dhis.datavalue.DataExportParams;
+import org.hisp.dhis.datavalue.DataExportPipeline;
+import org.hisp.dhis.datavalue.DataExportStore;
+import org.hisp.dhis.datavalue.DataExportValue;
+import org.hisp.dhis.datavalue.DataValue;
+import org.hisp.dhis.dxf2.common.ImportOptions;
+import org.hisp.dhis.dxf2.importsummary.ImportStatus;
+import org.hisp.dhis.dxf2.importsummary.ImportSummary;
+import org.hisp.dhis.organisationunit.OrganisationUnit;
+import org.hisp.dhis.organisationunit.OrganisationUnitGroup;
+import org.hisp.dhis.organisationunit.OrganisationUnitGroupService;
+import org.hisp.dhis.period.Period;
+import org.hisp.dhis.period.PeriodService;
+import org.hisp.dhis.period.PeriodType;
+import org.hisp.dhis.test.integration.PostgresIntegrationTestBase;
+import org.hisp.dhis.user.User;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+
+/*
+ * @author Jim Grace
+ */
+class AdxDataServiceIntegrationTest extends PostgresIntegrationTestBase {
+  @Autowired private DataExportPipeline dataExportPipeline;
+
+  @Autowired private DataEntryPipeline dataEntryPipeline;
+
+  @Autowired private IdentifiableObjectManager idObjectManager;
+
+  @Autowired private PeriodService periodService;
+
+  @Autowired private DataExportStore dataExportStore;
+
+  @Autowired private DataDumpService dataDumpService;
+
+  @Autowired private OrganisationUnitGroupService organisationUnitGroupService;
+
+  private CategoryOption coUnder5;
+
+  private CategoryOption coOver5;
+
+  private CategoryOption coF;
+
+  private CategoryOption coM;
+
+  private CategoryOption coPepfar;
+
+  private CategoryOption coMcDonalds;
+
+  private Category cAge;
+
+  private Category cSex;
+
+  private Category cMechanism;
+
+  private CategoryCombo ccAgeAndSex;
+
+  private CategoryCombo ccMechanism;
+
+  private CategoryOptionCombo cocFUnder5;
+
+  private CategoryOptionCombo cocMUnder5;
+
+  private CategoryOptionCombo cocFOver5;
+
+  private CategoryOptionCombo cocMOver5;
+
+  private CategoryOptionCombo cocPepfar;
+
+  private CategoryOptionCombo cocMcDonalds;
+
+  private CategoryOptionCombo cocDefault;
+
+  private DataElement deA;
+
+  private DataElement deB;
+
+  private Period pe202001;
+
+  private Period pe202002;
+
+  private Period pe2021Q1;
+
+  private DataSet dsA;
+
+  private DataSet dsB;
+
+  private OrganisationUnit ouA;
+
+  private OrganisationUnit ouB;
+
+  private OrganisationUnitGroup ougA;
+
+  private User user;
+
+  @BeforeEach
+  void setUp() {
+    // Category Option
+    coUnder5 = new CategoryOption("Under 5");
+    coOver5 = new CategoryOption("Over 5");
+    coF = new CategoryOption("Female");
+    coM = new CategoryOption("Male");
+    coPepfar = new CategoryOption("PEPFAR mechanism");
+    coMcDonalds = new CategoryOption("McDonalds mechanism");
+    coUnder5.setCode("under5");
+    coOver5.setCode("over5");
+    coF.setCode("F");
+    coM.setCode("M");
+    coPepfar.setCode("PEPFAR");
+    coMcDonalds.setCode("McDonalds");
+    coUnder5.setUid("under555555");
+    coOver5.setUid("over5555555");
+    coF.setUid("FFFFFFFFFFF");
+    coM.setUid("MMMMMMMMMMM");
+    coPepfar.setUid("PEPFARRRRRR");
+    coMcDonalds.setUid("McDonaldsss");
+    idObjectManager.save(coUnder5);
+    idObjectManager.save(coOver5);
+    idObjectManager.save(coF);
+    idObjectManager.save(coM);
+    idObjectManager.save(coPepfar);
+    idObjectManager.save(coMcDonalds);
+    // Category
+    cAge = createCategory('A', coUnder5, coOver5);
+    cSex = createCategory('B', coF, coM);
+    cMechanism = createCategory('C', coPepfar, coMcDonalds);
+    cAge.setName("Age_category");
+    cSex.setName("Sex_category");
+    cMechanism.setName("Mechanism_category");
+    cAge.setCode("age");
+    cSex.setCode("sex");
+    cMechanism.setCode("mechanism");
+    cAge.setUid("ageeeeeeeee");
+    cSex.setUid("sexxxxxxxxx");
+    cMechanism.setUid("mechanismmm");
+    idObjectManager.save(cAge);
+    idObjectManager.save(cSex);
+    idObjectManager.save(cMechanism);
+    // Category Combo
+    ccAgeAndSex = createCategoryCombo('A', cAge, cSex);
+    ccMechanism = createCategoryCombo('B', cMechanism);
+    ccAgeAndSex.setName("Age and Sex Category Combo");
+    ccMechanism.setName("Mechanism Category Combo");
+    idObjectManager.save(ccAgeAndSex);
+    idObjectManager.save(ccMechanism);
+    cAge.setCategoryCombos(Sets.newHashSet(ccAgeAndSex));
+    cSex.setCategoryCombos(Sets.newHashSet(ccAgeAndSex));
+    cMechanism.setCategoryCombos(Sets.newHashSet(ccMechanism));
+    idObjectManager.update(cAge);
+    idObjectManager.update(cSex);
+    idObjectManager.update(cMechanism);
+    // Category Option Combo
+    cocFUnder5 = createCategoryOptionCombo(ccAgeAndSex, coF, coUnder5);
+    cocMUnder5 = createCategoryOptionCombo(ccAgeAndSex, coM, coUnder5);
+    cocFOver5 = createCategoryOptionCombo(ccAgeAndSex, coF, coOver5);
+    cocMOver5 = createCategoryOptionCombo(ccAgeAndSex, coM, coOver5);
+    cocPepfar = createCategoryOptionCombo(ccMechanism, coPepfar);
+    cocMcDonalds = createCategoryOptionCombo(ccMechanism, coMcDonalds);
+    cocFUnder5.setName("Female Under 5");
+    cocMUnder5.setName("Male Under 5");
+    cocFOver5.setName("Female Over 5");
+    cocMOver5.setName("Male Over 5");
+    cocPepfar.setName("PEPFAR CategoryOptionCombo");
+    cocMcDonalds.setName("McDonalds CategoryOptionCombo");
+    cocFUnder5.setCode("F_Under5");
+    cocMUnder5.setCode("M_Under5");
+    cocFOver5.setCode("F_Over5");
+    cocMOver5.setCode("M_Over5");
+    cocPepfar.setCode("coc_PEPFAR");
+    cocMcDonalds.setCode("coc_McDonalds");
+    cocFUnder5.setUid("FUnder55555");
+    cocMUnder5.setUid("MUnder55555");
+    cocFOver5.setUid("FOver555555");
+    cocMOver5.setUid("MOver555555");
+    cocPepfar.setUid("cocPEPFARRR");
+    cocMcDonalds.setUid("cocMcDonald");
+    idObjectManager.save(cocFUnder5);
+    idObjectManager.save(cocMUnder5);
+    idObjectManager.save(cocFOver5);
+    idObjectManager.save(cocMOver5);
+    idObjectManager.save(cocPepfar);
+    idObjectManager.save(cocMcDonalds);
+    ccAgeAndSex.getOptionCombos().add(cocFUnder5);
+    ccAgeAndSex.getOptionCombos().add(cocMUnder5);
+    ccAgeAndSex.getOptionCombos().add(cocFOver5);
+    ccAgeAndSex.getOptionCombos().add(cocMOver5);
+    ccMechanism.getOptionCombos().add(cocPepfar);
+    ccMechanism.getOptionCombos().add(cocMcDonalds);
+    idObjectManager.update(ccAgeAndSex);
+    idObjectManager.update(ccMechanism);
+    cocDefault = categoryService.getDefaultCategoryOptionCombo();
+    // Data Element
+    deA = createDataElement('A');
+    deB = createDataElement('B');
+    deA.setName("Malaria numeric");
+    deB.setName("Malaria text");
+    deA.setCode("Mal_num");
+    deB.setCode("Mal_text");
+    deA.setUid("MalNummmmmm");
+    deB.setUid("MalTexttttt");
+    deA.setCategoryCombo(ccAgeAndSex);
+    deB.setValueType(ValueType.TEXT);
+    idObjectManager.save(deA);
+    idObjectManager.save(deB);
+    // Period
+    pe202001 = Period.of("202001");
+    pe202002 = Period.of("202002");
+    pe2021Q1 = Period.of("2021Q1");
+    periodService.addPeriod(pe202001);
+    periodService.addPeriod(pe202002);
+    periodService.addPeriod(pe2021Q1);
+
+    // Organisation Unit
+    ouA = createOrganisationUnit('A');
+    ouB = createOrganisationUnit('B', ouA);
+    ouA.setName("Provincial Hospital");
+    ouB.setName("District Hospital");
+    ouA.setCode("123");
+    ouB.setCode("456");
+    ouA.setUid("P1233333333");
+    ouB.setUid("D4566666666");
+    idObjectManager.save(ouA);
+    idObjectManager.save(ouB);
+
+    // Data Set
+    dsA = createDataSet('A', PeriodType.getPeriodTypeByName("Monthly"));
+    dsB = createDataSet('B', PeriodType.getPeriodTypeByName("Quarterly"));
+    dsA.setName("Malaria DS");
+    dsB.setName("Malaria Mechanism DS");
+    dsA.setCode("MalariaDS");
+    dsB.setCode("MalariaMechanismDS");
+    dsA.setUid("MalariaDSSS");
+    dsA.addOrganisationUnit(ouA);
+    dsB.setUid("MalariaMech");
+    dsA.addDataSetElement(deA);
+    dsA.addDataSetElement(deB);
+    dsB.addDataSetElement(deA);
+    dsB.addDataSetElement(deB);
+    dsB.setCategoryCombo(ccMechanism);
+    idObjectManager.save(dsA);
+    idObjectManager.save(dsB);
+
+    // Organisation Unit Group
+    ougA = createOrganisationUnitGroup('A');
+    ougA.addOrganisationUnit(ouA);
+    ougA.addOrganisationUnit(ouB);
+    organisationUnitGroupService.addOrganisationUnitGroup(ougA);
+    // User & Current User Service
+    user = getAdminUser();
+    user.setOrganisationUnits(Sets.newHashSet(ouA, ouB));
+    userService.addUser(user);
+    injectSecurityContextUser(user);
+  }
+
+  // --------------------------------------------------------------------------
+  // Test export
+  // --------------------------------------------------------------------------
+  @Test
+  void testWriteDataValueSetA() throws Exception {
+    testExport(
+        "adx/exportA.adx.xml",
+        getCommonExportParams().toBuilder()
+            .idScheme(IdProperty.CODE)
+            .dataElementIdScheme(IdProperty.NAME)
+            .categoryIdScheme(IdProperty.NAME)
+            .categoryOptionIdScheme(IdProperty.UID)
+            .build());
+  }
+
+  @Test
+  void testWriteDataValueSetB() throws Exception {
+    testExport(
+        "adx/exportB.adx.xml",
+        getCommonExportParams().toBuilder()
+            .idScheme(IdProperty.CODE)
+            .dataSetIdScheme(IdProperty.NAME)
+            .orgUnitIdScheme(IdProperty.UID)
+            .dataElementIdScheme(IdProperty.UID)
+            .categoryOptionComboIdScheme(IdProperty.NAME)
+            .orgUnitGroup(Set.of(ougA.getUid()))
+            .build());
+  }
+
+  @Test
+  void testWriteDataValueSetC() throws Exception {
+    testExport(
+        "adx/exportC.adx.xml",
+        getCommonExportParams().toBuilder()
+            .idScheme(IdProperty.CODE)
+            .dataSetIdScheme(IdProperty.UID)
+            .orgUnitIdScheme(IdProperty.NAME)
+            .categoryIdScheme(IdProperty.UID)
+            .categoryOptionIdScheme(IdProperty.NAME)
+            .children(true)
+            .build());
+  }
+
+  @Test
+  void testWriteDataValueSetD() throws Exception {
+    testExport(
+        "adx/exportD.adx.xml",
+        getCommonExportParams().toBuilder()
+            .idScheme(IdProperty.CODE)
+            .dataSetIdScheme(IdProperty.UID)
+            .orgUnitIdScheme(IdProperty.NAME)
+            .categoryIdScheme(IdProperty.UID)
+            .categoryOptionIdScheme(IdProperty.NAME)
+            .children(true)
+            .attributeOptionCombo(Set.of(cocMcDonalds.getUid()))
+            .build());
+  }
+
+  // --------------------------------------------------------------------------
+  // Test import
+  // --------------------------------------------------------------------------
+  @Test
+  @Disabled("Moved from H2 to postgres test and it is not working anymore")
+  void testGetAllDataValuesA() throws Exception {
+    testImport(
+        "adx/importA.adx.xml",
+        new IdSchemes()
+            .setDefaultIdScheme(CODE)
+            .setDataElementIdScheme("NAME")
+            .setCategoryIdScheme("NAME")
+            .setCategoryOptionIdScheme("UID")
+            .setCategoryOptionComboIdScheme("UID"));
+  }
+
+  @Test
+  @Disabled("Moved from H2 to postgres test and it is not working anymore")
+  void testGetAllDataValuesB() throws Exception {
+    testImport(
+        "adx/importB.adx.xml",
+        new IdSchemes()
+            .setDefaultIdScheme(CODE)
+            .setDataSetIdScheme("NAME")
+            .setOrgUnitIdScheme("UID")
+            .setDataElementIdScheme("UID")
+            .setCategoryOptionComboIdScheme("NAME"));
+  }
+
+  @Test
+  @Disabled("Moved from H2 to postgres test and it is not working anymore")
+  void testGetAllDataValuesC() throws Exception {
+    testImport(
+        "adx/importC.adx.xml",
+        new IdSchemes()
+            .setDefaultIdScheme(CODE)
+            .setDataSetIdScheme("UID")
+            .setOrgUnitIdScheme("NAME")
+            .setCategoryIdScheme("UID")
+            .setCategoryOptionIdScheme("NAME"));
+  }
+
+  @Test
+  void testImportDataIgnoreDatesOnCreate() throws Exception {
+    assertEquals(0, dataExportStore.getAllDataValues().size());
+
+    InputStream in = new ClassPathResource("adx/importDates.adx.xml").getInputStream();
+    ImportOptions importOptions = ImportOptions.getDefaultImportOptions();
+    IdSchemes idSchemes = new IdSchemes().setDefaultIdScheme(UID);
+    importOptions.setIdSchemes(idSchemes);
+    ImportSummary summary = dataEntryPipeline.importXml(in, importOptions, transitory());
+
+    assertEquals(ImportStatus.SUCCESS, summary.getStatus(), summary::toString);
+    assertEquals(1, summary.getImportCount().getUpdated());
+  }
+
+  @Test
+  void testImportDataIgnoreDatesOnUpdate() throws Exception {
+    InputStream in = new ClassPathResource("adx/importDates.adx.xml").getInputStream();
+    ImportOptions importOptions = ImportOptions.getDefaultImportOptions();
+    IdSchemes idSchemes = new IdSchemes().setDefaultIdScheme(UID);
+    importOptions.setIdSchemes(idSchemes);
+    ImportSummary summary = dataEntryPipeline.importXml(in, importOptions, transitory());
+
+    assertEquals(ImportStatus.SUCCESS, summary.getStatus(), summary::toString);
+    assertEquals(1, summary.getImportCount().getUpdated());
+
+    InputStream in2 = new ClassPathResource("adx/importDatesUpdate.adx.xml").getInputStream();
+    summary = dataEntryPipeline.importXml(in2, importOptions, transitory());
+
+    assertEquals(ImportStatus.SUCCESS, summary.getStatus(), summary::toString);
+    assertEquals(1, summary.getImportCount().getUpdated());
+  }
+
+  // --------------------------------------------------------------------------
+  // Supportive methods
+  // --------------------------------------------------------------------------
+  private DataExportParams.Input getCommonExportParams() {
+    return DataExportParams.Input.builder()
+        .orgUnit(Set.of(ouA.getUid()))
+        .period(Set.of(pe202001.getIsoDate(), pe202002.getIsoDate()))
+        .dataSet(Set.of(dsA.getUid(), dsB.getUid()))
+        .build();
+  }
+
+  private void testExport(String filePath, DataExportParams.Input params) throws Exception {
+    addDataValues(
+        new DataValue(deA, pe202001, ouA, cocFUnder5, cocDefault, "1"),
+        new DataValue(deB, pe202002, ouA, cocDefault, cocDefault, "Some text"),
+        new DataValue(deA, pe202001, ouB, cocMOver5, cocMcDonalds, "2"),
+        new DataValue(deA, pe202001, ouB, cocFOver5, cocPepfar, "3"));
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    dataExportPipeline.exportAsXmlGroups(params, () -> out);
+    String result = out.toString(StandardCharsets.UTF_8);
+    InputStream expectedStream = new ClassPathResource(filePath).getInputStream();
+    String expected =
+        new BufferedReader(new InputStreamReader(expectedStream))
+            .lines()
+            .map(String::trim)
+            .collect(Collectors.joining());
+    assertEquals(adxGroups(expected), adxGroups(result));
+  }
+
+  // The adx groups could be in any order, but each contains only one value
+  private Set<String> adxGroups(String adx) {
+    Pattern pattern = Pattern.compile("<group>\\s*(.*?)\\s*</group>", Pattern.DOTALL);
+    Matcher matcher = pattern.matcher(adx);
+    return matcher.results().map(match -> match.group(1).trim()).collect(Collectors.toSet());
+  }
+
+  private void testImport(String filePath, IdSchemes idSchemes) throws Exception {
+    assertEquals(0, dataExportStore.getAllDataValues().size());
+    InputStream in = new ClassPathResource(filePath).getInputStream();
+    ImportOptions importOptions = ImportOptions.getDefaultImportOptions();
+    importOptions.setIdSchemes(idSchemes);
+    dataEntryPipeline.importXml(in, importOptions, transitory());
+    List<DataExportValue> dataValues = dataExportStore.getAllDataValues();
+    assertContainsOnly(
+        List.of(
+            new DataValue(deA, pe202001, ouA, cocFUnder5, cocDefault, "1").toEntry(),
+            new DataValue(deA, pe202001, ouA, cocMUnder5, cocDefault, "2").toEntry(),
+            new DataValue(deA, pe202001, ouA, cocFOver5, cocDefault, "3").toEntry(),
+            new DataValue(deA, pe202001, ouA, cocMOver5, cocDefault, "4").toEntry(),
+            new DataValue(deB, pe202001, ouA, cocDefault, cocDefault, "Text data value").toEntry(),
+            new DataValue(deA, pe202002, ouB, cocFUnder5, cocDefault, "6").toEntry(),
+            new DataValue(deA, pe2021Q1, ouB, cocFUnder5, cocPepfar, "10").toEntry(),
+            new DataValue(deA, pe2021Q1, ouB, cocFOver5, cocMcDonalds, "20").toEntry(),
+            new DataValue(deA, pe2021Q1, ouB, cocMUnder5, cocMcDonalds, "30").toEntry()),
+        dataValues);
+  }
+
+  private void addDataValues(DataValue... values) {
+    if (dataDumpService.upsertValues(values) < values.length) fail("Failed to upsert test data");
+  }
+}

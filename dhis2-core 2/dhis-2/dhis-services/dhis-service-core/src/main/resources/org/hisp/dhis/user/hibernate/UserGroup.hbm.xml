@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"
+  [<!ENTITY identifiableProperties SYSTEM "classpath://org/hisp/dhis/common/identifiableProperties.hbm">]
+  >
+
+<hibernate-mapping>
+  <typedef class="org.hibernate.type.PostgresUUIDType" name="pg-uuid" />
+  <class name="org.hisp.dhis.user.UserGroup" table="usergroup">
+
+    <cache usage="read-write" />
+
+    <id name="id" column="usergroupid">
+      <generator class="native" />
+    </id>
+    &identifiableProperties;
+
+    <property name="uuid" column="uuid" type="pg-uuid" not-null="false" unique="true" />
+
+    <property name="name" column="name" not-null="true" unique="false" length="230" />
+
+    <property name="description"  column="description" not-null="false" length="255"/>
+
+    <property name="translations" type="jblTranslations"/>
+
+    <!--
+      No L2 cache on members: all membership writes go through SQL bypass methods
+      (addMember, removeAllMemberships) that write directly to the DB and cannot reliably
+      invalidate L2 across cluster nodes. The collection is also rarely read in hot paths —
+      individual group membership checks happen on the inverse User.groups side, and bulk
+      enumeration of all members of a group is uncommon in production. The overhead of
+      manual cache eviction after every SQL bypass outweighs the benefit.
+    -->
+    <set name="members" table="usergroupmembers">
+      <key column="usergroupid" foreign-key="fk_usergroupmembers_usergroupid" />
+      <many-to-many column="userid" class="org.hisp.dhis.user.User" foreign-key="fk_usergroupmembers_userid" />
+    </set>
+
+    <set name="managedGroups" table="usergroupmanaged">
+      <cache usage="read-write" />
+      <key column="managedbygroupid" />
+      <many-to-many column="managedgroupid" class="org.hisp.dhis.user.UserGroup" />
+    </set>
+
+    <set name="managedByGroups" table="usergroupmanaged" inverse="true">
+      <key column="managedgroupid" foreign-key="fk_usergroupmanaging_managedgroupid" />
+      <many-to-many column="managedbygroupid" class="org.hisp.dhis.user.UserGroup" foreign-key="fk_usergroupmanaging_managedbygroupid" />
+    </set>
+
+    <many-to-one name="createdBy" class="org.hisp.dhis.user.User" column="userid" foreign-key="fk_usergroup_userid" />
+
+    <!-- Sharing -->
+    <property name="sharing" type="jsbObjectSharing"/>
+
+    <!-- Dynamic attribute values -->
+    <property name="attributeValues" type="jsbAttributeValues"/>
+
+
+  </class>
+
+</hibernate-mapping>

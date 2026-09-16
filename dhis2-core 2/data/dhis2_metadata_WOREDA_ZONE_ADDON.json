@@ -1,0 +1,112 @@
+{
+  "organisationUnits": [
+    {
+      "id": "kzzr09D7lGW",
+      "name": "Amhara Zone 1 (synthetic demo)",
+      "shortName": "Amhara Zone 1 (synthetic demo)",
+      "openingDate": "2011-07-01",
+      "parent": {
+        "id": "cIizHJIQgJl"
+      }
+    },
+    {
+      "id": "axKeXooc9T2",
+      "name": "Amhara Z1 Woreda 1 (synthetic demo)",
+      "shortName": "Amhara Z1 Woreda 1 (synthetic demo)",
+      "openingDate": "2011-07-01",
+      "parent": {
+        "id": "kzzr09D7lGW"
+      }
+    },
+    {
+      "id": "NB7HRO6bTfY",
+      "name": "Amhara Z1 Woreda 2 (synthetic demo)",
+      "shortName": "Amhara Z1 Woreda 2 (synthetic demo)",
+      "openingDate": "2011-07-01",
+      "parent": {
+        "id": "kzzr09D7lGW"
+      }
+    },
+    {
+      "id": "bCIvElc1oWm",
+      "name": "Amhara Zone 2 (synthetic demo)",
+      "shortName": "Amhara Zone 2 (synthetic demo)",
+      "openingDate": "2011-07-01",
+      "parent": {
+        "id": "cIizHJIQgJl"
+      }
+    },
+    {
+      "id": "Z3UVKThDZm5",
+      "name": "Amhara Z2 Woreda 1 (synthetic demo)",
+      "shortName": "Amhara Z2 Woreda 1 (synthetic demo)",
+      "openingDate": "2011-07-01",
+      "parent": {
+        "id": "bCIvElc1oWm"
+      }
+    },
+    {
+      "id": "IzwBx9xbfS9",
+      "name": "Amhara Z2 Woreda 2 (synthetic demo)",
+      "shortName": "Amhara Z2 Woreda 2 (synthetic demo)",
+      "openingDate": "2011-07-01",
+      "parent": {
+        "id": "bCIvElc1oWm"
+      }
+    },
+    {
+      "id": "FaeLGJt8gPM",
+      "name": "Oromia Zone 1 (synthetic demo)",
+      "shortName": "Oromia Zone 1 (synthetic demo)",
+      "openingDate": "2011-07-01",
+      "parent": {
+        "id": "gHddmQAtKCs"
+      }
+    },
+    {
+      "id": "vvLtgeYWxQP",
+      "name": "Oromia Z1 Woreda 1 (synthetic demo)",
+      "shortName": "Oromia Z1 Woreda 1 (synthetic demo)",
+      "openingDate": "2011-07-01",
+      "parent": {
+        "id": "FaeLGJt8gPM"
+      }
+    },
+    {
+      "id": "Q7z97K2Exp2",
+      "name": "Oromia Z1 Woreda 2 (synthetic demo)",
+      "shortName": "Oromia Z1 Woreda 2 (synthetic demo)",
+      "openingDate": "2011-07-01",
+      "parent": {
+        "id": "FaeLGJt8gPM"
+      }
+    },
+    {
+      "id": "kIBzTdr0Ocp",
+      "name": "Oromia Zone 2 (synthetic demo)",
+      "shortName": "Oromia Zone 2 (synthetic demo)",
+      "openingDate": "2011-07-01",
+      "parent": {
+        "id": "gHddmQAtKCs"
+      }
+    },
+    {
+      "id": "zeu38UDp7GT",
+      "name": "Oromia Z2 Woreda 1 (synthetic demo)",
+      "shortName": "Oromia Z2 Woreda 1 (synthetic demo)",
+      "openingDate": "2011-07-01",
+      "parent": {
+        "id": "kIBzTdr0Ocp"
+      }
+    },
+    {
+      "id": "b73wjwVE3Di",
+      "name": "Oromia Z2 Woreda 2 (synthetic demo)",
+      "shortName": "Oromia Z2 Woreda 2 (synthetic demo)",
+      "openingDate": "2011-07-01",
+      "parent": {
+        "id": "kIBzTdr0Ocp"
+      }
+    }
+  ]
+}

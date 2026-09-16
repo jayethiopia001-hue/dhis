@@ -1,0 +1,267 @@
+/*
+ * Copyright (c) 2004-2022, University of Oslo
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors 
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.hisp.dhis.webapi.controller;
+
+import static org.hisp.dhis.http.HttpAssertions.assertStatus;
+import static org.hisp.dhis.test.webapi.Assertions.assertWebMessage;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.hisp.dhis.common.IdentifiableObjectManager;
+import org.hisp.dhis.http.HttpStatus;
+import org.hisp.dhis.indicator.Indicator;
+import org.hisp.dhis.indicator.IndicatorType;
+import org.hisp.dhis.jsontree.JsonObject;
+import org.hisp.dhis.test.webapi.H2ControllerIntegrationTestBase;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ * Tests the {@link org.hisp.dhis.webapi.controller.mapping.MapController} using (mocked) REST
+ * requests.
+ *
+ * @author Jan Bernitt
+ */
+@Transactional
+class MapControllerTest extends H2ControllerIntegrationTestBase {
+
+  @Autowired private IdentifiableObjectManager manager;
+
+  @Test
+  void testPutJsonObject() {
+    String mapId = assertStatus(HttpStatus.CREATED, POST("/maps/", "{'name':'My map'}"));
+
+    JsonObject map = GET("/maps/{uid}", mapId).content();
+
+    // The default merge method is REPLACE, so we must set the mandatory attributes from the created
+    // object.
+    String mandatoryProperties =
+        "'lastUpdated':'"
+            + map.get("lastUpdated").string()
+            + "', 'created':'"
+            + map.get("created").string()
+            + "'";
+
+    assertStatus(
+        HttpStatus.OK,
+        PUT("/maps/" + mapId, "{'name':'My updated map'," + mandatoryProperties + "}"));
+
+    map = GET("/maps/{uid}", mapId).content();
+
+    assertEquals("My updated map", map.get("name").string());
+  }
+
+  @Test
+  void testPutJsonObject_NotFound() {
+    assertWebMessage(
+        "Not Found",
+        404,
+        "ERROR",
+        "Map does not exist: m1234567890",
+        PUT("/maps/m1234567890", "{'name':'My updated map'}").content(HttpStatus.NOT_FOUND));
+  }
+
+  @Test
+  void testGetWithMapViewAndOrgUnitField() {
+    String attrId =
+        assertStatus(
+            HttpStatus.CREATED,
+            POST(
+                "/attributes",
+                "{  'name':'GeoJsonAttribute', "
+                    + "'valueType':'GEOJSON', "
+                    + "'organisationUnit':true}"));
+
+    String mapId =
+        assertStatus(
+            HttpStatus.CREATED,
+            POST(
+                "/maps/",
+                "{\"name\":\"My map\", \"mapViews\":[ { \"orgUnitField\": \""
+                    + attrId
+                    + "\", "
+                    + "\"layer\": \"thematic1\",\"renderingStrategy\": \"SINGLE\" } ]}"));
+
+    JsonObject map = GET("/maps/{uid}", mapId).content();
+    assertNotNull(map.getArray("mapViews"));
+    assertEquals(1, map.getArray("mapViews").size());
+
+    JsonObject mapView = map.getArray("mapViews").get(0).as(JsonObject.class);
+    assertEquals(attrId, mapView.getString("orgUnitField").string());
+    assertEquals("GeoJsonAttribute", mapView.getString("orgUnitFieldDisplayName").string());
+  }
+
+  @Test
+  void testPostWithBaseMap() {
+    String id =
+        assertStatus(
+            HttpStatus.CREATED,
+            POST(
+                "/maps",
+                """
+                        {"type": "MAP",
+                        "name": "Test",
+                        "basemap": "openStreetMap",
+                        "basemaps": [
+                            {
+                                "id": "openStreetMap",
+                                "opacity": 1.2,
+                                "hidden": true
+                            }
+                        ]}
+                    """));
+
+    JsonObject map = GET("/maps/{uid}", id).content();
+    assertNotNull(map.getArray("basemaps"));
+    assertEquals(1, map.getArray("basemaps").size());
+
+    JsonObject basemaps = map.getArray("basemaps").get(0).as(JsonObject.class);
+    assertEquals("openStreetMap", basemaps.getString("id").string());
+    assertEquals(1.2, basemaps.getNumber("opacity").doubleValue());
+    assertTrue(basemaps.getBoolean("hidden").booleanValue());
+
+    assertEquals("openStreetMap", map.getString("basemap").string());
+  }
+
+  @Test
+  void testPostMapViewWithEventFallback() {
+    String mapId =
+        assertStatus(
+            HttpStatus.CREATED,
+            POST(
+                "/maps/",
+                """
+                    {\"name\":\"My map\",
+                    \"mapViews\":[ {
+                    \"eventCoordinateFieldFallback\": \"teigeometry\",
+                    \"layer\": \"thematic1\",
+                    \"renderingStrategy\": \"SINGLE\" } ]}
+                    """));
+
+    JsonObject map = GET("/maps/{uid}", mapId).content();
+    assertNotNull(map.getArray("mapViews"));
+    assertEquals(1, map.getArray("mapViews").size());
+
+    JsonObject mapView = map.getArray("mapViews").get(0).as(JsonObject.class);
+    assertEquals("teigeometry", mapView.getString("eventCoordinateFieldFallback").string());
+  }
+
+  @Test
+  void testPostMapViewWithEventFallbackError() {
+    assertStatus(
+        HttpStatus.CONFLICT,
+        POST(
+            "/maps/",
+            """
+                    {\"name\":\"My map\",
+                    \"mapViews\":[ {
+                    \"eventCoordinateFieldFallback\": \"teigeometry-123456\",
+                    \"layer\": \"thematic1\",
+                    \"renderingStrategy\": \"SINGLE\" } ]}
+                    """));
+  }
+
+  @Test
+  void testPostMapViewWithPeriods() {
+    IndicatorType indicatorType = createIndicatorType('A');
+    manager.save(indicatorType);
+
+    Indicator stubIndicator = createIndicator('A', indicatorType);
+    manager.save(stubIndicator);
+
+    String mapUid =
+        assertStatus(
+            HttpStatus.CREATED,
+            POST(
+                "/maps/",
+                """
+                {
+                    "name": "Any name",
+                    "mapViews": [
+                        {
+                            "columns": [
+                                {
+                                    "dimension": "dx",
+                                    "items": [
+                                        {
+                                            "id": "${ind}",
+                                            "name": "ANC 1 Coverage",
+                                            "dimensionItemType": "INDICATOR"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "filters": [
+                                {
+                                    "dimension": "pe",
+                                    "items": [
+                                        {
+                                            "id": "202601"
+                                        },
+                                        {
+                                            "id": "LAST_12_MONTHS"
+                                        },
+                                        {
+                                            "id": "THIS_MONTH"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "layer": "thematic",
+                            "name": "ANC 1 Coverage",
+                            "periodType": "PREDEFINED_PERIODS",
+                            "renderingStrategy": "SINGLE",
+                            "rows": [
+                                {
+                                    "dimension": "ou",
+                                    "items": [
+                                        {
+                                            "id": "LEVEL-wjP19dkFeIk"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+                                    """
+                    .replace("${ind}", stubIndicator.getUid())));
+
+    JsonObject map =
+        GET("/maps/{uid}?fields=mapViews[rawPeriods,filters[items]]", mapUid).content();
+    assertNotNull(map.getArray("mapViews"));
+    assertEquals(1, map.getArray("mapViews").size());
+    JsonObject mapView = map.getArray("mapViews").get(0).as(JsonObject.class);
+    assertEquals(3, mapView.getArray("filters").getObject(0).getArray("items").size());
+    assertEquals(3, mapView.getArray("rawPeriods").size());
+  }
+}

@@ -1,0 +1,1117 @@
+indicator_id,indicator_name,region,fiscal_year,is_synthetic,coverage_pct,count_value,eligible_pop,source
+1,Proportion of surviving infants who received 1st dose of Penta,Tigray,EFY2016,False,,,,baseline_missing_in_source
+1,Proportion of surviving infants who received 1st dose of Penta,Tigray,EFY2017,False,0.98,,,target_actual
+1,Proportion of surviving infants who received 1st dose of Penta,Afar,EFY2011,True,0.668741,36676,54843.9,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Afar,EFY2012,True,0.740367,41620,56214.99,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Afar,EFY2013,True,0.691172,39826,57620.37,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Afar,EFY2014,True,0.869198,51336,59060.88,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Afar,EFY2015,True,0.925006,55997,60537.4,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Afar,EFY2016,False,0.967426,26981,62050.83,baseline_actual
+1,Proportion of surviving infants who received 1st dose of Penta,Afar,EFY2017,False,1,62050.835,62050.835,target_actual
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,EFY2011,True,0.724909,515600,711261.37,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,EFY2012,True,0.745694,543643,729042.9,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,EFY2013,True,0.694617,519066,747268.97,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,EFY2014,True,0.893942,684716,765950.7,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,EFY2015,True,0.925272,726430,785099.46,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,EFY2016,False,1.032298,373269,804726.95,baseline_actual
+1,Proportion of surviving infants who received 1st dose of Penta,Amhara,EFY2017,False,1,804726.9506,804726.9506,target_actual
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,EFY2011,True,0.672063,879926,1309291.24,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,EFY2012,True,0.780181,1047021,1342023.52,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,EFY2013,True,0.824101,1133612,1375574.11,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,EFY2014,True,0.955582,1347336,1409963.46,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,EFY2015,True,1.05,1517473,1445212.55,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,EFY2016,False,1.122915,738384,1481342.86,baseline_actual
+1,Proportion of surviving infants who received 1st dose of Penta,Oromia,EFY2017,False,1,1481342.8612000002,1481342.8612000002,target_actual
+1,Proportion of surviving infants who received 1st dose of Penta,Somali,EFY2011,True,0.815977,158564,194324.6,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Somali,EFY2012,True,0.782632,155887,199182.71,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Somali,EFY2013,True,0.790562,161403,204162.28,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Somali,EFY2014,True,0.914448,191363,209266.34,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Somali,EFY2015,True,0.976162,209385,214497.99,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Somali,EFY2016,False,1.012272,98917,219860.44,baseline_actual
+1,Proportion of surviving infants who received 1st dose of Penta,Somali,EFY2017,False,1,219860.4444,219860.4444,target_actual
+1,Proportion of surviving infants who received 1st dose of Penta,B/Gumuz,EFY2011,True,0.46798,18383,39280.63,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,B/Gumuz,EFY2012,True,0.482926,19444,40262.65,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,B/Gumuz,EFY2013,True,0.488082,20143,41269.21,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,B/Gumuz,EFY2014,True,0.581634,24604,42300.94,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,B/Gumuz,EFY2015,True,0.602405,26119,43358.47,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,B/Gumuz,EFY2016,False,0.66692,12649,44442.43,baseline_actual
+1,Proportion of surviving infants who received 1st dose of Penta,B/Gumuz,EFY2017,False,1,44442.4277,44442.4277,target_actual
+1,Proportion of surviving infants who received 1st dose of Penta,Souther E,EFY2011,True,0.759308,183869,242152.71,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Souther E,EFY2012,True,0.816693,202709,248206.53,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Souther E,EFY2013,True,0.763898,194344,254411.69,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Souther E,EFY2014,True,0.963078,251144,260771.98,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Souther E,EFY2015,True,1.05,280656,267291.28,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Souther E,EFY2016,False,1.125931,250538,273973.56,baseline_actual
+1,Proportion of surviving infants who received 1st dose of Penta,Souther E,EFY2017,False,1,273973.5635544596,273973.5635544596,target_actual
+1,Proportion of surviving infants who received 1st dose of Penta,Central E,EFY2011,True,0.678287,136881,201804.2,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Central E,EFY2012,True,0.790522,163519,206849.3,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Central E,EFY2013,True,0.766816,162581,212020.53,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Central E,EFY2014,True,0.942283,204778,217321.05,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Central E,EFY2015,True,1.000244,222808,222754.07,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Central E,EFY2016,False,1.104755,81899,228322.92,baseline_actual
+1,Proportion of surviving infants who received 1st dose of Penta,Central E,EFY2017,False,1,228322.9249806634,228322.9249806634,target_actual
+1,Proportion of surviving infants who received 1st dose of Penta,Sidama,EFY2011,True,0.834652,124388,149029.58,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Sidama,EFY2012,True,0.882021,134733,152755.32,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Sidama,EFY2013,True,0.855821,134000,156574.2,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Sidama,EFY2014,True,1.022596,164115,160488.56,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Sidama,EFY2015,True,1.05,172726,164500.77,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Sidama,EFY2016,False,1.104755,81899,168613.29,baseline_actual
+1,Proportion of surviving infants who received 1st dose of Penta,Sidama,EFY2017,False,1,168613.2885270483,168613.2885270483,target_actual
+1,Proportion of surviving infants who received 1st dose of Penta,Sout West,EFY2011,True,0.656367,70893,108008.68,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Sout West,EFY2012,True,0.748151,82827,110708.9,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Sout West,EFY2013,True,0.680543,77226,113476.62,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Sout West,EFY2014,True,0.859224,99939,116313.53,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Sout West,EFY2015,True,0.904494,107835,119221.37,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Sout West,EFY2016,False,0.980908,52702,122201.91,baseline_actual
+1,Proportion of surviving infants who received 1st dose of Penta,Sout West,EFY2017,False,1,122201.90673782853,122201.90673782853,target_actual
+1,Proportion of surviving infants who received 1st dose of Penta,Gambela,EFY2011,True,0.815384,12180,14937.92,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Gambela,EFY2012,True,0.861867,13196,15311.37,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Gambela,EFY2013,True,0.834723,13100,15694.16,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Gambela,EFY2014,True,0.965173,15526,16086.51,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Gambela,EFY2015,True,1.010468,16661,16488.67,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Gambela,EFY2016,False,1.072412,7891,16900.89,baseline_actual
+1,Proportion of surviving infants who received 1st dose of Penta,Gambela,EFY2017,False,1,16900.89,16900.89,target_actual
+1,Proportion of surviving infants who received 1st dose of Penta,Harrari,EFY2011,True,1.031248,8328,8075.89,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Harrari,EFY2012,True,1.05,8692,8277.79,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Harrari,EFY2013,True,1.006965,8544,8484.73,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Harrari,EFY2014,True,1.05,9132,8696.85,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Harrari,EFY2015,True,1.05,9360,8914.27,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Harrari,EFY2016,False,1.311144,5363,9137.13,baseline_actual
+1,Proportion of surviving infants who received 1st dose of Penta,Harrari,EFY2017,False,1,9137.130000000001,9137.130000000001,target_actual
+1,Proportion of surviving infants who received 1st dose of Penta,Dir Dawa,EFY2011,True,0.750078,12408,16542.81,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Dir Dawa,EFY2012,True,0.767604,13016,16956.38,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Dir Dawa,EFY2013,True,0.695741,12092,17380.29,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Dir Dawa,EFY2014,True,0.848296,15112,17814.79,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Dir Dawa,EFY2015,True,0.914546,16700,18260.16,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Dir Dawa,EFY2016,False,0.97727,8144,18716.67,baseline_actual
+1,Proportion of surviving infants who received 1st dose of Penta,Dir Dawa,EFY2017,False,1,18716.6686,18716.6686,target_actual
+1,Proportion of surviving infants who received 1st dose of Penta,Addis Ababa,EFY2011,True,1.05,88761,84534.73,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Addis Ababa,EFY2012,True,1.05,90981,86648.1,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Addis Ababa,EFY2013,True,1.05,93255,88814.3,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Addis Ababa,EFY2014,True,1.05,95586,91034.66,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Addis Ababa,EFY2015,True,1.05,97976,93310.52,synthetic_history
+1,Proportion of surviving infants who received 1st dose of Penta,Addis Ababa,EFY2016,False,1.706899,75191,95643.28,baseline_actual
+1,Proportion of surviving infants who received 1st dose of Penta,Addis Ababa,EFY2017,False,1,95643.2846,95643.2846,target_actual
+2,Proportion of surviving infants who received OPV3,Tigray,EFY2016,False,,,,baseline_missing_in_source
+2,Proportion of surviving infants who received OPV3,Tigray,EFY2017,False,0.94,,,target_actual
+2,Proportion of surviving infants who received OPV3,Afar,EFY2011,True,0.518978,26641,51333.89,synthetic_history
+2,Proportion of surviving infants who received OPV3,Afar,EFY2012,True,0.572648,30131,52617.23,synthetic_history
+2,Proportion of surviving infants who received OPV3,Afar,EFY2013,True,0.575732,31051,53932.67,synthetic_history
+2,Proportion of surviving infants who received OPV3,Afar,EFY2014,True,0.720451,39827,55280.98,synthetic_history
+2,Proportion of surviving infants who received OPV3,Afar,EFY2015,True,0.752584,42644,56663.01,synthetic_history
+2,Proportion of surviving infants who received OPV3,Afar,EFY2016,False,0.823787,22975,58079.58,baseline_actual
+2,Proportion of surviving infants who received OPV3,Afar,EFY2017,False,0.86,49948.4401416,58079.58156,target_actual
+2,Proportion of surviving infants who received OPV3,Amhara,EFY2011,True,0.710733,467098,657205.5,synthetic_history
+2,Proportion of surviving infants who received OPV3,Amhara,EFY2012,True,0.75536,508837,673635.64,synthetic_history
+2,Proportion of surviving infants who received OPV3,Amhara,EFY2013,True,0.702346,484954,690476.53,synthetic_history
+2,Proportion of surviving infants who received OPV3,Amhara,EFY2014,True,0.893082,632068,707738.44,synthetic_history
+2,Proportion of surviving infants who received OPV3,Amhara,EFY2015,True,0.913686,662817,725431.9,synthetic_history
+2,Proportion of surviving infants who received OPV3,Amhara,EFY2016,False,0.958416,346554,743567.7,baseline_actual
+2,Proportion of surviving infants who received OPV3,Amhara,EFY2017,False,0.98,728696.348307312,743567.7023544001,target_actual
+2,Proportion of surviving infants who received OPV3,Oromia,EFY2011,True,0.70297,853204,1213712.98,synthetic_history
+2,Proportion of surviving infants who received OPV3,Oromia,EFY2012,True,0.743341,924758,1244055.8,synthetic_history
+2,Proportion of surviving infants who received OPV3,Oromia,EFY2013,True,0.73237,933887,1275157.2,synthetic_history
+2,Proportion of surviving infants who received OPV3,Oromia,EFY2014,True,0.862117,1126818,1307036.13,synthetic_history
+2,Proportion of surviving infants who received OPV3,Oromia,EFY2015,True,0.92046,1233151,1339712.03,synthetic_history
+2,Proportion of surviving infants who received OPV3,Oromia,EFY2016,False,0.961216,632057,1373204.83,baseline_actual
+2,Proportion of surviving infants who received OPV3,Oromia,EFY2017,False,0.99,1359472.784009076,1373204.8323324,target_actual
+2,Proportion of surviving infants who received OPV3,Somali,EFY2011,True,0.651647,117640,180527.55,synthetic_history
+2,Proportion of surviving infants who received OPV3,Somali,EFY2012,True,0.681028,126018,185040.74,synthetic_history
+2,Proportion of surviving infants who received OPV3,Somali,EFY2013,True,0.631375,119751,189666.76,synthetic_history
+2,Proportion of surviving infants who received OPV3,Somali,EFY2014,True,0.792148,154000,194408.43,synthetic_history
+2,Proportion of surviving infants who received OPV3,Somali,EFY2015,True,0.796774,158772,199268.64,synthetic_history
+2,Proportion of surviving infants who received OPV3,Somali,EFY2016,False,0.863926,84421,204250.35,baseline_actual
+2,Proportion of surviving infants who received OPV3,Somali,EFY2017,False,0.95,194037.83520522,204250.3528476,target_actual
+2,Proportion of surviving infants who received OPV3,B/Gumuz,EFY2011,True,0.417406,14740,35313.29,synthetic_history
+2,Proportion of surviving infants who received OPV3,B/Gumuz,EFY2012,True,0.403728,14613,36196.12,synthetic_history
+2,Proportion of surviving infants who received OPV3,B/Gumuz,EFY2013,True,0.417336,15484,37101.02,synthetic_history
+2,Proportion of surviving infants who received OPV3,B/Gumuz,EFY2014,True,0.553317,21042,38028.55,synthetic_history
+2,Proportion of surviving infants who received OPV3,B/Gumuz,EFY2015,True,0.570796,22249,38979.26,synthetic_history
+2,Proportion of surviving infants who received OPV3,B/Gumuz,EFY2016,False,0.62706,11893,39953.74,baseline_actual
+2,Proportion of surviving infants who received OPV3,B/Gumuz,EFY2017,False,0.89,35558.830827047,39953.7425023,target_actual
+2,Proportion of surviving infants who received OPV3,Souther E,EFY2011,True,0.748917,167207,223264.8,synthetic_history
+2,Proportion of surviving infants who received OPV3,Souther E,EFY2012,True,0.793194,181520,228846.42,synthetic_history
+2,Proportion of surviving infants who received OPV3,Souther E,EFY2013,True,0.767064,179928,234567.58,synthetic_history
+2,Proportion of surviving infants who received OPV3,Souther E,EFY2014,True,0.922245,221737,240431.77,synthetic_history
+2,Proportion of surviving infants who received OPV3,Souther E,EFY2015,True,0.941475,232020,246442.56,synthetic_history
+2,Proportion of surviving infants who received OPV3,Souther E,EFY2016,False,1.018874,226716,252603.63,baseline_actual
+2,Proportion of surviving infants who received OPV3,Souther E,EFY2017,False,1,252603.62559721177,252603.62559721177,target_actual
+2,Proportion of surviving infants who received OPV3,Central E,EFY2011,True,0.766854,142683,186063.47,synthetic_history
+2,Proportion of surviving infants who received OPV3,Central E,EFY2012,True,0.785605,149827,190715.06,synthetic_history
+2,Proportion of surviving infants who received OPV3,Central E,EFY2013,True,0.808782,158103,195482.93,synthetic_history
+2,Proportion of surviving infants who received OPV3,Central E,EFY2014,True,0.932519,186849,200370.01,synthetic_history
+2,Proportion of surviving infants who received OPV3,Central E,EFY2015,True,1.035053,212578,205379.26,synthetic_history
+2,Proportion of surviving infants who received OPV3,Central E,EFY2016,False,1.068105,79182,210513.74,baseline_actual
+2,Proportion of surviving infants who received OPV3,Central E,EFY2017,False,1,210513.73683217165,210513.73683217165,target_actual
+2,Proportion of surviving infants who received OPV3,Sidama,EFY2011,True,0.736425,101189,137405.27,synthetic_history
+2,Proportion of surviving infants who received OPV3,Sidama,EFY2012,True,0.813041,114509,140840.4,synthetic_history
+2,Proportion of surviving infants who received OPV3,Sidama,EFY2013,True,0.761676,109957,144361.41,synthetic_history
+2,Proportion of surviving infants who received OPV3,Sidama,EFY2014,True,0.946391,140038,147970.45,synthetic_history
+2,Proportion of surviving infants who received OPV3,Sidama,EFY2015,True,0.987937,149840,151669.71,synthetic_history
+2,Proportion of surviving infants who received OPV3,Sidama,EFY2016,False,1.068105,79182,155461.45,baseline_actual
+2,Proportion of surviving infants who received OPV3,Sidama,EFY2017,False,1,155461.45202193854,155461.45202193854,target_actual
+2,Proportion of surviving infants who received OPV3,Sout West,EFY2011,True,0.637202,63455,99584.0,synthetic_history
+2,Proportion of surviving infants who received OPV3,Sout West,EFY2012,True,0.667535,68138,102073.6,synthetic_history
+2,Proportion of surviving infants who received OPV3,Sout West,EFY2013,True,0.611973,64028,104625.44,synthetic_history
+2,Proportion of surviving infants who received OPV3,Sout West,EFY2014,True,0.732859,78593,107241.08,synthetic_history
+2,Proportion of surviving infants who received OPV3,Sout West,EFY2015,True,0.746173,82021,109922.11,synthetic_history
+2,Proportion of surviving infants who received OPV3,Sout West,EFY2016,False,0.820507,44084,112670.16,baseline_actual
+2,Proportion of surviving infants who received OPV3,Sout West,EFY2017,False,0.94,105909.94853154122,112670.1580122779,target_actual
+2,Proportion of surviving infants who received OPV3,Gambela,EFY2011,True,0.74949,10345,13802.64,synthetic_history
+2,Proportion of surviving infants who received OPV3,Gambela,EFY2012,True,0.744412,10532,14147.71,synthetic_history
+2,Proportion of surviving infants who received OPV3,Gambela,EFY2013,True,0.719908,10440,14501.4,synthetic_history
+2,Proportion of surviving infants who received OPV3,Gambela,EFY2014,True,0.833172,12384,14863.94,synthetic_history
+2,Proportion of surviving infants who received OPV3,Gambela,EFY2015,True,0.903942,13772,15235.53,synthetic_history
+2,Proportion of surviving infants who received OPV3,Gambela,EFY2016,False,0.950235,6992,15616.42,baseline_actual
+2,Proportion of surviving infants who received OPV3,Gambela,EFY2017,False,1,15616.42236,15616.42236,target_actual
+2,Proportion of surviving infants who received OPV3,Harrari,EFY2011,True,0.833887,6303,7559.03,synthetic_history
+2,Proportion of surviving infants who received OPV3,Harrari,EFY2012,True,0.895938,6942,7748.01,synthetic_history
+2,Proportion of surviving infants who received OPV3,Harrari,EFY2013,True,0.895671,7113,7941.71,synthetic_history
+2,Proportion of surviving infants who received OPV3,Harrari,EFY2014,True,1.037309,8444,8140.25,synthetic_history
+2,Proportion of surviving infants who received OPV3,Harrari,EFY2015,True,1.05,8761,8343.76,synthetic_history
+2,Proportion of surviving infants who received OPV3,Harrari,EFY2016,False,1.195016,4888,8552.35,baseline_actual
+2,Proportion of surviving infants who received OPV3,Harrari,EFY2017,False,1,8552.35368,8552.35368,target_actual
+2,Proportion of surviving infants who received OPV3,Dir Dawa,EFY2011,True,0.555249,8634,15550.24,synthetic_history
+2,Proportion of surviving infants who received OPV3,Dir Dawa,EFY2012,True,0.622097,9916,15939.0,synthetic_history
+2,Proportion of surviving infants who received OPV3,Dir Dawa,EFY2013,True,0.585251,9562,16337.47,synthetic_history
+2,Proportion of surviving infants who received OPV3,Dir Dawa,EFY2014,True,0.716905,12005,16745.91,synthetic_history
+2,Proportion of surviving infants who received OPV3,Dir Dawa,EFY2015,True,0.753315,12930,17164.55,synthetic_history
+2,Proportion of surviving infants who received OPV3,Dir Dawa,EFY2016,False,0.811192,6760,17593.67,baseline_actual
+2,Proportion of surviving infants who received OPV3,Dir Dawa,EFY2017,False,1,17593.668484,17593.668484,target_actual
+2,Proportion of surviving infants who received OPV3,Addis Ababa,EFY2011,True,1.05,85211,81153.34,synthetic_history
+2,Proportion of surviving infants who received OPV3,Addis Ababa,EFY2012,True,1.05,87341,83182.17,synthetic_history
+2,Proportion of surviving infants who received OPV3,Addis Ababa,EFY2013,True,1.05,89525,85261.73,synthetic_history
+2,Proportion of surviving infants who received OPV3,Addis Ababa,EFY2014,True,1.05,91763,87393.27,synthetic_history
+2,Proportion of surviving infants who received OPV3,Addis Ababa,EFY2015,True,1.05,94057,89578.1,synthetic_history
+2,Proportion of surviving infants who received OPV3,Addis Ababa,EFY2016,False,1.598571,70419,91817.55,baseline_actual
+2,Proportion of surviving infants who received OPV3,Addis Ababa,EFY2017,False,1,91817.553216,91817.553216,target_actual
+3,Proportion of surviving infants who received IPV,Tigray,EFY2016,False,,,,baseline_missing_in_source
+3,Proportion of surviving infants who received IPV,Tigray,EFY2017,False,0.88,,,target_actual
+3,Proportion of surviving infants who received IPV,Afar,EFY2011,True,0.59399,30492,51333.89,synthetic_history
+3,Proportion of surviving infants who received IPV,Afar,EFY2012,True,0.59925,31531,52617.23,synthetic_history
+3,Proportion of surviving infants who received IPV,Afar,EFY2013,True,0.627009,33816,53932.67,synthetic_history
+3,Proportion of surviving infants who received IPV,Afar,EFY2014,True,0.712878,39409,55280.98,synthetic_history
+3,Proportion of surviving infants who received IPV,Afar,EFY2015,True,0.735315,41665,56663.01,synthetic_history
+3,Proportion of surviving infants who received IPV,Afar,EFY2016,False,0.785995,21921,58079.58,baseline_actual
+3,Proportion of surviving infants who received IPV,Afar,EFY2017,False,0.9,52271.623404,58079.58156,target_actual
+3,Proportion of surviving infants who received IPV,Amhara,EFY2011,True,0.704964,463306,657205.5,synthetic_history
+3,Proportion of surviving infants who received IPV,Amhara,EFY2012,True,0.728305,490612,673635.64,synthetic_history
+3,Proportion of surviving infants who received IPV,Amhara,EFY2013,True,0.718743,496275,690476.53,synthetic_history
+3,Proportion of surviving infants who received IPV,Amhara,EFY2014,True,0.839436,594101,707738.44,synthetic_history
+3,Proportion of surviving infants who received IPV,Amhara,EFY2015,True,0.931087,675440,725431.9,synthetic_history
+3,Proportion of surviving infants who received IPV,Amhara,EFY2016,False,0.96533,349054,743567.7,baseline_actual
+3,Proportion of surviving infants who received IPV,Amhara,EFY2017,False,1,743567.7023544001,743567.7023544001,target_actual
+3,Proportion of surviving infants who received IPV,Oromia,EFY2011,True,0.632423,767580,1213712.98,synthetic_history
+3,Proportion of surviving infants who received IPV,Oromia,EFY2012,True,0.730699,909030,1244055.8,synthetic_history
+3,Proportion of surviving infants who received IPV,Oromia,EFY2013,True,0.721632,920195,1275157.2,synthetic_history
+3,Proportion of surviving infants who received IPV,Oromia,EFY2014,True,0.895134,1169972,1307036.13,synthetic_history
+3,Proportion of surviving infants who received IPV,Oromia,EFY2015,True,0.929807,1245674,1339712.03,synthetic_history
+3,Proportion of surviving infants who received IPV,Oromia,EFY2016,False,1.036952,681858,1373204.83,baseline_actual
+3,Proportion of surviving infants who received IPV,Oromia,EFY2017,False,1,1373204.8323324,1373204.8323324,target_actual
+3,Proportion of surviving infants who received IPV,Somali,EFY2011,True,0.673962,121669,180527.55,synthetic_history
+3,Proportion of surviving infants who received IPV,Somali,EFY2012,True,0.692282,128100,185040.74,synthetic_history
+3,Proportion of surviving infants who received IPV,Somali,EFY2013,True,0.619761,117548,189666.76,synthetic_history
+3,Proportion of surviving infants who received IPV,Somali,EFY2014,True,0.82379,160152,194408.43,synthetic_history
+3,Proportion of surviving infants who received IPV,Somali,EFY2015,True,0.828894,165173,199268.64,synthetic_history
+3,Proportion of surviving infants who received IPV,Somali,EFY2016,False,0.856138,83660,204250.35,baseline_actual
+3,Proportion of surviving infants who received IPV,Somali,EFY2017,False,0.97,198122.842262172,204250.3528476,target_actual
+3,Proportion of surviving infants who received IPV,B/Gumuz,EFY2011,True,0.412212,14557,35313.29,synthetic_history
+3,Proportion of surviving infants who received IPV,B/Gumuz,EFY2012,True,0.483543,17502,36196.12,synthetic_history
+3,Proportion of surviving infants who received IPV,B/Gumuz,EFY2013,True,0.486712,18058,37101.02,synthetic_history
+3,Proportion of surviving infants who received IPV,B/Gumuz,EFY2014,True,0.540416,20551,38028.55,synthetic_history
+3,Proportion of surviving infants who received IPV,B/Gumuz,EFY2015,True,0.598357,23323,38979.26,synthetic_history
+3,Proportion of surviving infants who received IPV,B/Gumuz,EFY2016,False,0.631436,11976,39953.74,baseline_actual
+3,Proportion of surviving infants who received IPV,B/Gumuz,EFY2017,False,0.9,35958.36825207,39953.7425023,target_actual
+3,Proportion of surviving infants who received IPV,Souther E,EFY2011,True,0.767888,171442,223264.8,synthetic_history
+3,Proportion of surviving infants who received IPV,Souther E,EFY2012,True,0.793917,181685,228846.42,synthetic_history
+3,Proportion of surviving infants who received IPV,Souther E,EFY2013,True,0.748817,175648,234567.58,synthetic_history
+3,Proportion of surviving infants who received IPV,Souther E,EFY2014,True,0.929836,223562,240431.77,synthetic_history
+3,Proportion of surviving infants who received IPV,Souther E,EFY2015,True,1.001422,246793,246442.56,synthetic_history
+3,Proportion of surviving infants who received IPV,Souther E,EFY2016,False,1.051689,234018,252603.63,baseline_actual
+3,Proportion of surviving infants who received IPV,Souther E,EFY2017,False,1,252603.62559721177,252603.62559721177,target_actual
+3,Proportion of surviving infants who received IPV,Central E,EFY2011,True,0.849409,158044,186063.47,synthetic_history
+3,Proportion of surviving infants who received IPV,Central E,EFY2012,True,0.882044,168219,190715.06,synthetic_history
+3,Proportion of surviving infants who received IPV,Central E,EFY2013,True,0.766541,149846,195482.93,synthetic_history
+3,Proportion of surviving infants who received IPV,Central E,EFY2014,True,0.984513,197267,200370.01,synthetic_history
+3,Proportion of surviving infants who received IPV,Central E,EFY2015,True,1.021433,209781,205379.26,synthetic_history
+3,Proportion of surviving infants who received IPV,Central E,EFY2016,False,1.070843,79385,210513.74,baseline_actual
+3,Proportion of surviving infants who received IPV,Central E,EFY2017,False,1,210513.73683217165,210513.73683217165,target_actual
+3,Proportion of surviving infants who received IPV,Sidama,EFY2011,True,0.755274,103779,137405.27,synthetic_history
+3,Proportion of surviving infants who received IPV,Sidama,EFY2012,True,0.845217,119041,140840.4,synthetic_history
+3,Proportion of surviving infants who received IPV,Sidama,EFY2013,True,0.795767,114878,144361.41,synthetic_history
+3,Proportion of surviving infants who received IPV,Sidama,EFY2014,True,0.951478,140791,147970.45,synthetic_history
+3,Proportion of surviving infants who received IPV,Sidama,EFY2015,True,1.021317,154903,151669.71,synthetic_history
+3,Proportion of surviving infants who received IPV,Sidama,EFY2016,False,1.070843,79385,155461.45,baseline_actual
+3,Proportion of surviving infants who received IPV,Sidama,EFY2017,False,1,155461.45202193854,155461.45202193854,target_actual
+3,Proportion of surviving infants who received IPV,Sout West,EFY2011,True,0.672886,67009,99584.0,synthetic_history
+3,Proportion of surviving infants who received IPV,Sout West,EFY2012,True,0.722398,73738,102073.6,synthetic_history
+3,Proportion of surviving infants who received IPV,Sout West,EFY2013,True,0.7283,76199,104625.44,synthetic_history
+3,Proportion of surviving infants who received IPV,Sout West,EFY2014,True,0.794188,85170,107241.08,synthetic_history
+3,Proportion of surviving infants who received IPV,Sout West,EFY2015,True,0.821521,90303,109922.11,synthetic_history
+3,Proportion of surviving infants who received IPV,Sout West,EFY2016,False,0.864618,46454,112670.16,baseline_actual
+3,Proportion of surviving infants who received IPV,Sout West,EFY2017,False,0.99,111543.45643215512,112670.1580122779,target_actual
+3,Proportion of surviving infants who received IPV,Gambela,EFY2011,True,0.689317,9514,13802.64,synthetic_history
+3,Proportion of surviving infants who received IPV,Gambela,EFY2012,True,0.692089,9791,14147.71,synthetic_history
+3,Proportion of surviving infants who received IPV,Gambela,EFY2013,True,0.687036,9963,14501.4,synthetic_history
+3,Proportion of surviving infants who received IPV,Gambela,EFY2014,True,0.831061,12353,14863.94,synthetic_history
+3,Proportion of surviving infants who received IPV,Gambela,EFY2015,True,0.860531,13111,15235.53,synthetic_history
+3,Proportion of surviving infants who received IPV,Gambela,EFY2016,False,0.936917,6894,15616.42,baseline_actual
+3,Proportion of surviving infants who received IPV,Gambela,EFY2017,False,1,15616.42236,15616.42236,target_actual
+3,Proportion of surviving infants who received IPV,Harrari,EFY2011,True,0.752948,5692,7559.03,synthetic_history
+3,Proportion of surviving infants who received IPV,Harrari,EFY2012,True,0.849358,6581,7748.01,synthetic_history
+3,Proportion of surviving infants who received IPV,Harrari,EFY2013,True,0.848614,6739,7941.71,synthetic_history
+3,Proportion of surviving infants who received IPV,Harrari,EFY2014,True,1.03069,8390,8140.25,synthetic_history
+3,Proportion of surviving infants who received IPV,Harrari,EFY2015,True,1.05,8761,8343.76,synthetic_history
+3,Proportion of surviving infants who received IPV,Harrari,EFY2016,False,1.205529,4931,8552.35,baseline_actual
+3,Proportion of surviving infants who received IPV,Harrari,EFY2017,False,1,8552.35368,8552.35368,target_actual
+3,Proportion of surviving infants who received IPV,Dir Dawa,EFY2011,True,0.597473,9291,15550.24,synthetic_history
+3,Proportion of surviving infants who received IPV,Dir Dawa,EFY2012,True,0.686844,10948,15939.0,synthetic_history
+3,Proportion of surviving infants who received IPV,Dir Dawa,EFY2013,True,0.635676,10385,16337.47,synthetic_history
+3,Proportion of surviving infants who received IPV,Dir Dawa,EFY2014,True,0.7581,12695,16745.91,synthetic_history
+3,Proportion of surviving infants who received IPV,Dir Dawa,EFY2015,True,0.838812,14398,17164.55,synthetic_history
+3,Proportion of surviving infants who received IPV,Dir Dawa,EFY2016,False,0.869031,7242,17593.67,baseline_actual
+3,Proportion of surviving infants who received IPV,Dir Dawa,EFY2017,False,0.99,17417.731799160003,17593.668484,target_actual
+3,Proportion of surviving infants who received IPV,Addis Ababa,EFY2011,True,1.05,85211,81153.34,synthetic_history
+3,Proportion of surviving infants who received IPV,Addis Ababa,EFY2012,True,1.05,87341,83182.17,synthetic_history
+3,Proportion of surviving infants who received IPV,Addis Ababa,EFY2013,True,1.05,89525,85261.73,synthetic_history
+3,Proportion of surviving infants who received IPV,Addis Ababa,EFY2014,True,1.05,91763,87393.27,synthetic_history
+3,Proportion of surviving infants who received IPV,Addis Ababa,EFY2015,True,1.05,94057,89578.1,synthetic_history
+3,Proportion of surviving infants who received IPV,Addis Ababa,EFY2016,False,1.640159,72251,91817.55,baseline_actual
+3,Proportion of surviving infants who received IPV,Addis Ababa,EFY2017,False,1,91817.553216,91817.553216,target_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Tigray,EFY2016,False,,,,baseline_missing_in_source
+4,Proportion of surviving infants vaccinated for Penta-3,Tigray,EFY2017,False,0.79,,,target_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Afar,EFY2011,True,0.49558,25440,51333.89,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Afar,EFY2012,True,0.574572,30232,52617.23,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Afar,EFY2013,True,0.565958,30524,53932.67,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Afar,EFY2014,True,0.691156,38208,55280.98,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Afar,EFY2015,True,0.799715,45314,56663.01,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Afar,EFY2016,False,0.815756,22751,58079.58,baseline_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Afar,EFY2017,False,1,58079.58156,58079.58156,target_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,EFY2011,True,0.782528,514282,657205.5,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,EFY2012,True,0.811978,546977,673635.64,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,EFY2013,True,0.803577,554851,690476.53,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,EFY2014,True,0.912736,645978,707738.44,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,EFY2015,True,0.952398,690900,725431.9,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,EFY2016,False,0.982828,355381,743567.7,baseline_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Amhara,EFY2017,False,1,743567.7023544001,743567.7023544001,target_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,EFY2011,True,0.714081,866689,1213712.98,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,EFY2012,True,0.824368,1025560,1244055.8,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,EFY2013,True,0.784274,1000073,1275157.2,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,EFY2014,True,0.941745,1230895,1307036.13,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,EFY2015,True,0.964656,1292361,1339712.03,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,EFY2016,False,1.056135,694472,1373204.83,baseline_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Oromia,EFY2017,False,1,1373204.8323324,1373204.8323324,target_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Somali,EFY2011,True,0.685966,123836,180527.55,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Somali,EFY2012,True,0.722396,133673,185040.74,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Somali,EFY2013,True,0.707362,134163,189666.76,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Somali,EFY2014,True,0.831554,161661,194408.43,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Somali,EFY2015,True,0.867033,172773,199268.64,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Somali,EFY2016,False,0.902906,88230,204250.35,baseline_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Somali,EFY2017,False,1,204250.3528476,204250.3528476,target_actual
+4,Proportion of surviving infants vaccinated for Penta-3,B/Gumuz,EFY2011,True,0.433212,15298,35313.29,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,B/Gumuz,EFY2012,True,0.480824,17404,36196.12,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,B/Gumuz,EFY2013,True,0.466391,17304,37101.02,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,B/Gumuz,EFY2014,True,0.56822,21609,38028.55,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,B/Gumuz,EFY2015,True,0.58082,22640,38979.26,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,B/Gumuz,EFY2016,False,0.635022,12044,39953.74,baseline_actual
+4,Proportion of surviving infants vaccinated for Penta-3,B/Gumuz,EFY2017,False,1,39953.7425023,39953.7425023,target_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Souther E,EFY2011,True,0.766674,171171,223264.8,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Souther E,EFY2012,True,0.834738,191027,228846.42,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Souther E,EFY2013,True,0.808312,189604,234567.58,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Souther E,EFY2014,True,0.940124,226036,240431.77,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Souther E,EFY2015,True,1.010865,249120,246442.56,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Souther E,EFY2016,False,1.066394,237290,252603.63,baseline_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Souther E,EFY2017,False,1,252603.62559721177,252603.62559721177,target_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Central E,EFY2011,True,0.0,0,186063.47,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Central E,EFY2012,True,0.000183,35,190715.06,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Central E,EFY2013,True,0.0,0,195482.93,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Central E,EFY2014,True,0.038486,7711,200370.01,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Central E,EFY2015,True,0.0,0,205379.26,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Central E,EFY2016,False,0.0,0,210513.74,baseline_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Central E,EFY2017,False,1,210513.73683217165,210513.73683217165,target_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Sidama,EFY2011,True,0.72775,99997,137405.27,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Sidama,EFY2012,True,0.803384,113149,140840.4,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Sidama,EFY2013,True,0.822864,118790,144361.41,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Sidama,EFY2014,True,0.965489,142864,147970.45,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Sidama,EFY2015,True,1.025802,155583,151669.71,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Sidama,EFY2016,False,1.075632,79740,155461.45,baseline_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Sidama,EFY2017,False,1,155461.45202193854,155461.45202193854,target_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Sout West,EFY2011,True,0.669294,66651,99584.0,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Sout West,EFY2012,True,0.708614,72331,102073.6,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Sout West,EFY2013,True,0.669757,70074,104625.44,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Sout West,EFY2014,True,0.804048,86227,107241.08,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Sout West,EFY2015,True,0.830672,91309,109922.11,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Sout West,EFY2016,False,0.910647,48927,112670.16,baseline_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Sout West,EFY2017,False,1,112670.1580122779,112670.1580122779,target_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Gambela,EFY2011,True,0.713146,9843,13802.64,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Gambela,EFY2012,True,0.763037,10795,14147.71,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Gambela,EFY2013,True,0.792966,11499,14501.4,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Gambela,EFY2014,True,0.850359,12640,14863.94,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Gambela,EFY2015,True,0.947172,14431,15235.53,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Gambela,EFY2016,False,0.950643,6995,15616.42,baseline_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Gambela,EFY2017,False,1,15616.42236,15616.42236,target_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Harrari,EFY2011,True,0.783788,5925,7559.03,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Harrari,EFY2012,True,0.853604,6614,7748.01,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Harrari,EFY2013,True,0.838327,6658,7941.71,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Harrari,EFY2014,True,1.036595,8438,8140.25,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Harrari,EFY2015,True,1.05,8761,8343.76,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Harrari,EFY2016,False,1.202106,4917,8552.35,baseline_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Harrari,EFY2017,False,1,8552.35368,8552.35368,target_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Dir Dawa,EFY2011,True,0.523808,8145,15550.24,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Dir Dawa,EFY2012,True,0.610739,9735,15939.0,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Dir Dawa,EFY2013,True,0.626607,10237,16337.47,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Dir Dawa,EFY2014,True,0.742704,12437,16745.91,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Dir Dawa,EFY2015,True,0.796914,13679,17164.55,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Dir Dawa,EFY2016,False,0.880071,7334,17593.67,baseline_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Dir Dawa,EFY2017,False,1,17593.668484,17593.668484,target_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Addis Ababa,EFY2011,True,1.05,85211,81153.34,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Addis Ababa,EFY2012,True,1.05,87341,83182.17,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Addis Ababa,EFY2013,True,1.05,89525,85261.73,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Addis Ababa,EFY2014,True,1.05,91763,87393.27,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Addis Ababa,EFY2015,True,1.05,94057,89578.1,synthetic_history
+4,Proportion of surviving infants vaccinated for Penta-3,Addis Ababa,EFY2016,False,1.689578,74428,91817.55,baseline_actual
+4,Proportion of surviving infants vaccinated for Penta-3,Addis Ababa,EFY2017,False,1,91817.553216,91817.553216,target_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Tigray,EFY2016,False,,,,baseline_missing_in_source
+6,Proportion of surviving infants vaccinated for measles (MCV1),Tigray,EFY2017,False,0.6,,,target_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Afar,EFY2011,True,0.636438,32671,51333.89,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Afar,EFY2012,True,0.67583,35560,52617.23,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Afar,EFY2013,True,0.690456,37238,53932.67,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Afar,EFY2014,True,0.819723,45315,55280.98,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Afar,EFY2015,True,0.845507,47909,56663.01,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Afar,EFY2016,False,0.981194,27365,58079.58,baseline_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Afar,EFY2017,False,1,58079.58156,58079.58156,target_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,EFY2011,True,0.589445,387387,657205.5,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,EFY2012,True,0.621474,418647,673635.64,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,EFY2013,True,0.644295,444871,690476.53,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,EFY2014,True,0.755809,534915,707738.44,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,EFY2015,True,0.818934,594081,725431.9,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,EFY2016,False,0.919507,332485,743567.7,baseline_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Amhara,EFY2017,False,0.96,713824.994260224,743567.7023544001,target_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,EFY2011,True,0.682367,828198,1213712.98,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,EFY2012,True,0.761156,946921,1244055.8,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,EFY2013,True,0.694444,885525,1275157.2,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,EFY2014,True,0.85576,1118510,1307036.13,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,EFY2015,True,0.941307,1261080,1339712.03,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,EFY2016,False,0.981001,645067,1373204.83,baseline_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Oromia,EFY2017,False,1,1373204.8323324,1373204.8323324,target_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Somali,EFY2011,True,0.610908,110286,180527.55,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Somali,EFY2012,True,0.662922,122668,185040.74,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Somali,EFY2013,True,0.608395,115392,189666.76,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Somali,EFY2014,True,0.732022,142311,194408.43,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Somali,EFY2015,True,0.780476,155524,199268.64,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Somali,EFY2016,False,0.804142,78579,204250.35,baseline_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Somali,EFY2017,False,0.9,183825.31756284,204250.3528476,target_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),B/Gumuz,EFY2011,True,0.425197,15015,35313.29,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),B/Gumuz,EFY2012,True,0.493379,17858,36196.12,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),B/Gumuz,EFY2013,True,0.412081,15289,37101.02,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),B/Gumuz,EFY2014,True,0.580061,22059,38028.55,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),B/Gumuz,EFY2015,True,0.646358,25195,38979.26,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),B/Gumuz,EFY2016,False,0.661701,12550,39953.74,baseline_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),B/Gumuz,EFY2017,False,0.85,33960.681126955,39953.7425023,target_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Souther E,EFY2011,True,0.716321,159929,223264.8,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Souther E,EFY2012,True,0.785152,179679,228846.42,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Souther E,EFY2013,True,0.808093,189553,234567.58,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Souther E,EFY2014,True,0.912218,219326,240431.77,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Souther E,EFY2015,True,0.962113,237106,246442.56,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Souther E,EFY2016,False,1.032086,229656,252603.63,baseline_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Souther E,EFY2017,False,1,252603.62559721177,252603.62559721177,target_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Central E,EFY2011,True,0.002098,390,186063.47,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Central E,EFY2012,True,0.0,0,190715.06,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Central E,EFY2013,True,0.019371,3787,195482.93,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Central E,EFY2014,True,0.006148,1232,200370.01,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Central E,EFY2015,True,0.018011,3699,205379.26,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Central E,EFY2016,False,0.0,0,210513.74,baseline_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Central E,EFY2017,False,1,210513.73683217165,210513.73683217165,target_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Sidama,EFY2011,True,0.652026,89592,137405.27,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Sidama,EFY2012,True,0.776411,109350,140840.4,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Sidama,EFY2013,True,0.758446,109490,144361.41,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Sidama,EFY2014,True,0.907805,134328,147970.45,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Sidama,EFY2015,True,0.976992,148180,151669.71,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Sidama,EFY2016,False,1.023712,75891,155461.45,baseline_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Sidama,EFY2017,False,1,155461.45202193854,155461.45202193854,target_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Sout West,EFY2011,True,0.509047,50693,99584.0,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Sout West,EFY2012,True,0.581262,59331,102073.6,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Sout West,EFY2013,True,0.541896,56696,104625.44,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Sout West,EFY2014,True,0.705279,75635,107241.08,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Sout West,EFY2015,True,0.769218,84554,109922.11,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Sout West,EFY2016,False,0.833945,44806,112670.16,baseline_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Sout West,EFY2017,False,0.88,99149.73905080455,112670.1580122779,target_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Gambela,EFY2011,True,0.705152,9733,13802.64,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Gambela,EFY2012,True,0.76381,10806,14147.71,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Gambela,EFY2013,True,0.706741,10249,14501.4,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Gambela,EFY2014,True,0.843978,12545,14863.94,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Gambela,EFY2015,True,0.925723,14104,15235.53,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Gambela,EFY2016,False,0.914221,6727,15616.42,baseline_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Gambela,EFY2017,False,0.95,14835.601242,15616.42236,target_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Harrari,EFY2011,True,0.760445,5748,7559.03,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Harrari,EFY2012,True,0.841791,6522,7748.01,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Harrari,EFY2013,True,0.783075,6219,7941.71,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Harrari,EFY2014,True,0.916716,7462,8140.25,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Harrari,EFY2015,True,0.97897,8168,8343.76,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Harrari,EFY2016,False,1.041483,4260,8552.35,baseline_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Harrari,EFY2017,False,1,8552.35368,8552.35368,target_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Dir Dawa,EFY2011,True,0.593428,9228,15550.24,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Dir Dawa,EFY2012,True,0.628251,10014,15939.0,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Dir Dawa,EFY2013,True,0.621137,10148,16337.47,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Dir Dawa,EFY2014,True,0.744113,12461,16745.91,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Dir Dawa,EFY2015,True,0.759275,13033,17164.55,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Dir Dawa,EFY2016,False,0.836992,6975,17593.67,baseline_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Dir Dawa,EFY2017,False,0.88,15482.428265920002,17593.668484,target_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Addis Ababa,EFY2011,True,1.05,85211,81153.34,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Addis Ababa,EFY2012,True,1.05,87341,83182.17,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Addis Ababa,EFY2013,True,1.05,89525,85261.73,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Addis Ababa,EFY2014,True,1.05,91763,87393.27,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Addis Ababa,EFY2015,True,1.05,94057,89578.1,synthetic_history
+6,Proportion of surviving infants vaccinated for measles (MCV1),Addis Ababa,EFY2016,False,1.601272,70538,91817.55,baseline_actual
+6,Proportion of surviving infants vaccinated for measles (MCV1),Addis Ababa,EFY2017,False,1,91817.553216,91817.553216,target_actual
+7,Proportion of surviving infants who received MCV2,Tigray,EFY2016,False,,,,baseline_missing_in_source
+7,Proportion of surviving infants who received MCV2,Tigray,EFY2017,False,0.51,,,target_actual
+7,Proportion of surviving infants who received MCV2,Afar,EFY2011,True,0.319813,16417,51333.89,synthetic_history
+7,Proportion of surviving infants who received MCV2,Afar,EFY2012,True,0.377685,19873,52617.23,synthetic_history
+7,Proportion of surviving infants who received MCV2,Afar,EFY2013,True,0.351615,18964,53932.67,synthetic_history
+7,Proportion of surviving infants who received MCV2,Afar,EFY2014,True,0.471664,26074,55280.98,synthetic_history
+7,Proportion of surviving infants who received MCV2,Afar,EFY2015,True,0.47807,27089,56663.01,synthetic_history
+7,Proportion of surviving infants who received MCV2,Afar,EFY2016,False,0.51471,14355,58079.58,baseline_actual
+7,Proportion of surviving infants who received MCV2,Afar,EFY2017,False,0.57,33105.3614892,58079.58156,target_actual
+7,Proportion of surviving infants who received MCV2,Amhara,EFY2011,True,0.573089,376637,657205.5,synthetic_history
+7,Proportion of surviving infants who received MCV2,Amhara,EFY2012,True,0.61417,413727,673635.64,synthetic_history
+7,Proportion of surviving infants who received MCV2,Amhara,EFY2013,True,0.602552,416048,690476.53,synthetic_history
+7,Proportion of surviving infants who received MCV2,Amhara,EFY2014,True,0.717355,507700,707738.44,synthetic_history
+7,Proportion of surviving infants who received MCV2,Amhara,EFY2015,True,0.783361,568275,725431.9,synthetic_history
+7,Proportion of surviving infants who received MCV2,Amhara,EFY2016,False,0.848311,306741,743567.7,baseline_actual
+7,Proportion of surviving infants who received MCV2,Amhara,EFY2017,False,0.9,669210.9321189601,743567.7023544001,target_actual
+7,Proportion of surviving infants who received MCV2,Oromia,EFY2011,True,0.585888,711100,1213712.98,synthetic_history
+7,Proportion of surviving infants who received MCV2,Oromia,EFY2012,True,0.662646,824369,1244055.8,synthetic_history
+7,Proportion of surviving infants who received MCV2,Oromia,EFY2013,True,0.605337,771899,1275157.2,synthetic_history
+7,Proportion of surviving infants who received MCV2,Oromia,EFY2014,True,0.769319,1005528,1307036.13,synthetic_history
+7,Proportion of surviving infants who received MCV2,Oromia,EFY2015,True,0.829196,1110884,1339712.03,synthetic_history
+7,Proportion of surviving infants who received MCV2,Oromia,EFY2016,False,0.865764,569292,1373204.83,baseline_actual
+7,Proportion of surviving infants who received MCV2,Oromia,EFY2017,False,0.92,1263348.445745808,1373204.8323324,target_actual
+7,Proportion of surviving infants who received MCV2,Somali,EFY2011,True,0.404543,73031,180527.55,synthetic_history
+7,Proportion of surviving infants who received MCV2,Somali,EFY2012,True,0.423639,78390,185040.74,synthetic_history
+7,Proportion of surviving infants who received MCV2,Somali,EFY2013,True,0.4495,85255,189666.76,synthetic_history
+7,Proportion of surviving infants who received MCV2,Somali,EFY2014,True,0.516519,100416,194408.43,synthetic_history
+7,Proportion of surviving infants who received MCV2,Somali,EFY2015,True,0.602625,120084,199268.64,synthetic_history
+7,Proportion of surviving infants who received MCV2,Somali,EFY2016,False,0.633723,61926,204250.35,baseline_actual
+7,Proportion of surviving infants who received MCV2,Somali,EFY2017,False,0.72,147060.254050272,204250.3528476,target_actual
+7,Proportion of surviving infants who received MCV2,B/Gumuz,EFY2011,True,0.35001,12360,35313.29,synthetic_history
+7,Proportion of surviving infants who received MCV2,B/Gumuz,EFY2012,True,0.413316,14960,36196.12,synthetic_history
+7,Proportion of surviving infants who received MCV2,B/Gumuz,EFY2013,True,0.418079,15511,37101.02,synthetic_history
+7,Proportion of surviving infants who received MCV2,B/Gumuz,EFY2014,True,0.472416,17965,38028.55,synthetic_history
+7,Proportion of surviving infants who received MCV2,B/Gumuz,EFY2015,True,0.503313,19619,38979.26,synthetic_history
+7,Proportion of surviving infants who received MCV2,B/Gumuz,EFY2016,False,0.557779,10579,39953.74,baseline_actual
+7,Proportion of surviving infants who received MCV2,B/Gumuz,EFY2017,False,0.7,27967.61975161,39953.7425023,target_actual
+7,Proportion of surviving infants who received MCV2,Souther E,EFY2011,True,0.666742,148860,223264.8,synthetic_history
+7,Proportion of surviving infants who received MCV2,Souther E,EFY2012,True,0.755123,172807,228846.42,synthetic_history
+7,Proportion of surviving infants who received MCV2,Souther E,EFY2013,True,0.732058,171717,234567.58,synthetic_history
+7,Proportion of surviving infants who received MCV2,Souther E,EFY2014,True,0.935855,225009,240431.77,synthetic_history
+7,Proportion of surviving infants who received MCV2,Souther E,EFY2015,True,0.962375,237170,246442.56,synthetic_history
+7,Proportion of surviving infants who received MCV2,Souther E,EFY2016,False,1.042629,232002,252603.63,baseline_actual
+7,Proportion of surviving infants who received MCV2,Souther E,EFY2017,False,1,252603.62559721177,252603.62559721177,target_actual
+7,Proportion of surviving infants who received MCV2,Central E,EFY2011,True,0.706195,131397,186063.47,synthetic_history
+7,Proportion of surviving infants who received MCV2,Central E,EFY2012,True,0.803811,153299,190715.06,synthetic_history
+7,Proportion of surviving infants who received MCV2,Central E,EFY2013,True,0.743907,145421,195482.93,synthetic_history
+7,Proportion of surviving infants who received MCV2,Central E,EFY2014,True,0.941042,188557,200370.01,synthetic_history
+7,Proportion of surviving infants who received MCV2,Central E,EFY2015,True,0.97944,201157,205379.26,synthetic_history
+7,Proportion of surviving infants who received MCV2,Central E,EFY2016,False,1.047682,77668,210513.74,baseline_actual
+7,Proportion of surviving infants who received MCV2,Central E,EFY2017,False,1,210513.73683217165,210513.73683217165,target_actual
+7,Proportion of surviving infants who received MCV2,Sidama,EFY2011,True,0.772609,106161,137405.27,synthetic_history
+7,Proportion of surviving infants who received MCV2,Sidama,EFY2012,True,0.836334,117790,140840.4,synthetic_history
+7,Proportion of surviving infants who received MCV2,Sidama,EFY2013,True,0.80916,116812,144361.41,synthetic_history
+7,Proportion of surviving infants who received MCV2,Sidama,EFY2014,True,0.940446,139158,147970.45,synthetic_history
+7,Proportion of surviving infants who received MCV2,Sidama,EFY2015,True,0.966635,146609,151669.71,synthetic_history
+7,Proportion of surviving infants who received MCV2,Sidama,EFY2016,False,1.047682,77668,155461.45,baseline_actual
+7,Proportion of surviving infants who received MCV2,Sidama,EFY2017,False,1,155461.45202193854,155461.45202193854,target_actual
+7,Proportion of surviving infants who received MCV2,Sout West,EFY2011,True,0.56879,56642,99584.0,synthetic_history
+7,Proportion of surviving infants who received MCV2,Sout West,EFY2012,True,0.606283,61886,102073.6,synthetic_history
+7,Proportion of surviving infants who received MCV2,Sout West,EFY2013,True,0.547403,57272,104625.44,synthetic_history
+7,Proportion of surviving infants who received MCV2,Sout West,EFY2014,True,0.690328,74032,107241.08,synthetic_history
+7,Proportion of surviving infants who received MCV2,Sout West,EFY2015,True,0.711203,78177,109922.11,synthetic_history
+7,Proportion of surviving infants who received MCV2,Sout West,EFY2016,False,0.750096,40301,112670.16,baseline_actual
+7,Proportion of surviving infants who received MCV2,Sout West,EFY2017,False,0.82,92389.52957006787,112670.1580122779,target_actual
+7,Proportion of surviving infants who received MCV2,Gambela,EFY2011,True,0.520621,7186,13802.64,synthetic_history
+7,Proportion of surviving infants who received MCV2,Gambela,EFY2012,True,0.596891,8445,14147.71,synthetic_history
+7,Proportion of surviving infants who received MCV2,Gambela,EFY2013,True,0.555891,8061,14501.4,synthetic_history
+7,Proportion of surviving infants who received MCV2,Gambela,EFY2014,True,0.688919,10240,14863.94,synthetic_history
+7,Proportion of surviving infants who received MCV2,Gambela,EFY2015,True,0.755356,11508,15235.53,synthetic_history
+7,Proportion of surviving infants who received MCV2,Gambela,EFY2016,False,0.78688,5790,15616.42,baseline_actual
+7,Proportion of surviving infants who received MCV2,Gambela,EFY2017,False,0.84,13117.7947824,15616.42236,target_actual
+7,Proportion of surviving infants who received MCV2,Harrari,EFY2011,True,0.637371,4818,7559.03,synthetic_history
+7,Proportion of surviving infants who received MCV2,Harrari,EFY2012,True,0.694105,5378,7748.01,synthetic_history
+7,Proportion of surviving infants who received MCV2,Harrari,EFY2013,True,0.646708,5136,7941.71,synthetic_history
+7,Proportion of surviving infants who received MCV2,Harrari,EFY2014,True,0.740404,6027,8140.25,synthetic_history
+7,Proportion of surviving infants who received MCV2,Harrari,EFY2015,True,0.764207,6376,8343.76,synthetic_history
+7,Proportion of surviving infants who received MCV2,Harrari,EFY2016,False,0.816317,3339,8552.35,baseline_actual
+7,Proportion of surviving infants who received MCV2,Harrari,EFY2017,False,0.87,7440.5477016,8552.35368,target_actual
+7,Proportion of surviving infants who received MCV2,Dir Dawa,EFY2011,True,1.05,16328,15550.24,synthetic_history
+7,Proportion of surviving infants who received MCV2,Dir Dawa,EFY2012,True,1.05,16736,15939.0,synthetic_history
+7,Proportion of surviving infants who received MCV2,Dir Dawa,EFY2013,True,1.05,17154,16337.47,synthetic_history
+7,Proportion of surviving infants who received MCV2,Dir Dawa,EFY2014,True,1.05,17583,16745.91,synthetic_history
+7,Proportion of surviving infants who received MCV2,Dir Dawa,EFY2015,True,1.05,18023,17164.55,synthetic_history
+7,Proportion of surviving infants who received MCV2,Dir Dawa,EFY2016,False,1.741303,14511,17593.67,baseline_actual
+7,Proportion of surviving infants who received MCV2,Dir Dawa,EFY2017,False,1,17593.668484,17593.668484,target_actual
+7,Proportion of surviving infants who received MCV2,Addis Ababa,EFY2011,True,1.033265,83853,81153.34,synthetic_history
+7,Proportion of surviving infants who received MCV2,Addis Ababa,EFY2012,True,1.05,87341,83182.17,synthetic_history
+7,Proportion of surviving infants who received MCV2,Addis Ababa,EFY2013,True,1.05,89525,85261.73,synthetic_history
+7,Proportion of surviving infants who received MCV2,Addis Ababa,EFY2014,True,1.05,91763,87393.27,synthetic_history
+7,Proportion of surviving infants who received MCV2,Addis Ababa,EFY2015,True,1.05,94057,89578.1,synthetic_history
+7,Proportion of surviving infants who received MCV2,Addis Ababa,EFY2016,False,1.516484,66803,91817.55,baseline_actual
+7,Proportion of surviving infants who received MCV2,Addis Ababa,EFY2017,False,1,91817.553216,91817.553216,target_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Tigray,EFY2016,False,,,,baseline_missing_in_source
+9,Proportion of surviving infants vaccinated for PCV-3,Tigray,EFY2017,False,0.79,,,target_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Afar,EFY2011,True,0.565697,29039,51333.89,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Afar,EFY2012,True,0.64308,33837,52617.23,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Afar,EFY2013,True,0.645655,34822,53932.67,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Afar,EFY2014,True,0.736822,40732,55280.98,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Afar,EFY2015,True,0.803548,45531,56663.01,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Afar,EFY2016,False,0.861866,24037,58079.58,baseline_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Afar,EFY2017,False,0.96,55756.3982976,58079.58156,target_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,EFY2011,True,0.785967,516542,657205.5,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,EFY2012,True,0.816411,549963,673635.64,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,EFY2013,True,0.73644,508495,690476.53,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,EFY2014,True,0.87831,621614,707738.44,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,EFY2015,True,0.92901,673933,725431.9,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,EFY2016,False,0.980261,354453,743567.7,baseline_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Amhara,EFY2017,False,1,743567.7023544001,743567.7023544001,target_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,EFY2011,True,0.655621,795736,1213712.98,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,EFY2012,True,0.740286,920957,1244055.8,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,EFY2013,True,0.719895,917979,1275157.2,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,EFY2014,True,0.893072,1167278,1307036.13,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,EFY2015,True,0.949586,1272172,1339712.03,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,EFY2016,False,1.049326,690936,1373204.83,baseline_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Oromia,EFY2017,False,1,1373204.8323324,1373204.8323324,target_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Somali,EFY2011,True,0.696745,125782,180527.55,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Somali,EFY2012,True,0.721296,133469,185040.74,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Somali,EFY2013,True,0.689222,130722,189666.76,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Somali,EFY2014,True,0.794544,154466,194408.43,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Somali,EFY2015,True,0.817935,162989,199268.64,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Somali,EFY2016,False,0.883861,86369,204250.35,baseline_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Somali,EFY2017,False,1,204250.3528476,204250.3528476,target_actual
+9,Proportion of surviving infants vaccinated for PCV-3,B/Gumuz,EFY2011,True,0.399825,14119,35313.29,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,B/Gumuz,EFY2012,True,0.494935,17915,36196.12,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,B/Gumuz,EFY2013,True,0.416461,15451,37101.02,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,B/Gumuz,EFY2014,True,0.531535,20214,38028.55,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,B/Gumuz,EFY2015,True,0.552875,21551,38979.26,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,B/Gumuz,EFY2016,False,0.634178,12028,39953.74,baseline_actual
+9,Proportion of surviving infants vaccinated for PCV-3,B/Gumuz,EFY2017,False,0.9,35958.36825207,39953.7425023,target_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Souther E,EFY2011,True,0.877279,195866,223264.8,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Souther E,EFY2012,True,0.897593,205411,228846.42,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Souther E,EFY2013,True,0.822099,192838,234567.58,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Souther E,EFY2014,True,0.991949,238496,240431.77,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Souther E,EFY2015,True,1.03137,254174,246442.56,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Souther E,EFY2016,False,1.064839,236944,252603.63,baseline_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Souther E,EFY2017,False,1,252603.62559721177,252603.62559721177,target_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Central E,EFY2011,True,0.011685,2174,186063.47,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Central E,EFY2012,True,0.0,0,190715.06,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Central E,EFY2013,True,0.030156,5895,195482.93,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Central E,EFY2014,True,0.004265,855,200370.01,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Central E,EFY2015,True,0.002863,588,205379.26,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Central E,EFY2016,False,0.0,0,210513.74,baseline_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Central E,EFY2017,False,1,210513.73683217165,210513.73683217165,target_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Sidama,EFY2011,True,0.84337,115883,137405.27,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Sidama,EFY2012,True,0.920067,129583,140840.4,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Sidama,EFY2013,True,0.874352,126223,144361.41,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Sidama,EFY2014,True,0.979173,144889,147970.45,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Sidama,EFY2015,True,1.034462,156897,151669.71,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Sidama,EFY2016,False,1.073744,79600,155461.45,baseline_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Sidama,EFY2017,False,1,155461.45202193854,155461.45202193854,target_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Sout West,EFY2011,True,0.678712,67589,99584.0,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Sout West,EFY2012,True,0.664823,67861,102073.6,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Sout West,EFY2013,True,0.693771,72586,104625.44,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Sout West,EFY2014,True,0.804619,86288,107241.08,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Sout West,EFY2015,True,0.855837,94075,109922.11,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Sout West,EFY2016,False,0.900279,48370,112670.16,baseline_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Sout West,EFY2017,False,0.99,111543.45643215512,112670.1580122779,target_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Gambela,EFY2011,True,0.644731,8899,13802.64,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Gambela,EFY2012,True,0.717826,10156,14147.71,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Gambela,EFY2013,True,0.640282,9285,14501.4,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Gambela,EFY2014,True,0.850322,12639,14863.94,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Gambela,EFY2015,True,0.871907,13284,15235.53,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Gambela,EFY2016,False,0.94711,6969,15616.42,baseline_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Gambela,EFY2017,False,1,15616.42236,15616.42236,target_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Harrari,EFY2011,True,0.900468,6807,7559.03,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Harrari,EFY2012,True,0.955335,7402,7748.01,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Harrari,EFY2013,True,0.934421,7421,7941.71,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Harrari,EFY2014,True,1.05,8547,8140.25,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Harrari,EFY2015,True,1.05,8761,8343.76,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Harrari,EFY2016,False,1.203084,4921,8552.35,baseline_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Harrari,EFY2017,False,1,8552.35368,8552.35368,target_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Dir Dawa,EFY2011,True,0.657051,10217,15550.24,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Dir Dawa,EFY2012,True,0.726153,11574,15939.0,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Dir Dawa,EFY2013,True,0.629328,10282,16337.47,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Dir Dawa,EFY2014,True,0.813687,13626,16745.91,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Dir Dawa,EFY2015,True,0.831039,14264,17164.55,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Dir Dawa,EFY2016,False,0.878871,7324,17593.67,baseline_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Dir Dawa,EFY2017,False,1,17593.668484,17593.668484,target_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Addis Ababa,EFY2011,True,1.05,85211,81153.34,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Addis Ababa,EFY2012,True,1.05,87341,83182.17,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Addis Ababa,EFY2013,True,1.05,89525,85261.73,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Addis Ababa,EFY2014,True,1.05,91763,87393.27,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Addis Ababa,EFY2015,True,1.05,94057,89578.1,synthetic_history
+9,Proportion of surviving infants vaccinated for PCV-3,Addis Ababa,EFY2016,False,1.670192,73574,91817.55,baseline_actual
+9,Proportion of surviving infants vaccinated for PCV-3,Addis Ababa,EFY2017,False,1,91817.553216,91817.553216,target_actual
+10,Proportion of infants fully immunized,Tigray,EFY2016,False,,,,baseline_missing_in_source
+10,Proportion of infants fully immunized,Tigray,EFY2017,False,0.75,,,target_actual
+10,Proportion of infants fully immunized,Afar,EFY2011,True,0.43661,22413,51333.89,synthetic_history
+10,Proportion of infants fully immunized,Afar,EFY2012,True,0.527963,27780,52617.23,synthetic_history
+10,Proportion of infants fully immunized,Afar,EFY2013,True,0.48642,26234,53932.67,synthetic_history
+10,Proportion of infants fully immunized,Afar,EFY2014,True,0.610706,33760,55280.98,synthetic_history
+10,Proportion of infants fully immunized,Afar,EFY2015,True,0.607601,34429,56663.01,synthetic_history
+10,Proportion of infants fully immunized,Afar,EFY2016,False,0.69173,19292,58079.58,baseline_actual
+10,Proportion of infants fully immunized,Afar,EFY2017,False,0.75,43559.68617,58079.58156,target_actual
+10,Proportion of infants fully immunized,Amhara,EFY2011,True,0.623717,409910,657205.5,synthetic_history
+10,Proportion of infants fully immunized,Amhara,EFY2012,True,0.647703,436316,673635.64,synthetic_history
+10,Proportion of infants fully immunized,Amhara,EFY2013,True,0.695154,479988,690476.53,synthetic_history
+10,Proportion of infants fully immunized,Amhara,EFY2014,True,0.783516,554525,707738.44,synthetic_history
+10,Proportion of infants fully immunized,Amhara,EFY2015,True,0.846999,614440,725431.9,synthetic_history
+10,Proportion of infants fully immunized,Amhara,EFY2016,False,0.899205,325144,743567.7,baseline_actual
+10,Proportion of infants fully immunized,Amhara,EFY2017,False,0.94,698953.640213136,743567.7023544001,target_actual
+10,Proportion of infants fully immunized,Oromia,EFY2011,True,0.592582,719225,1213712.98,synthetic_history
+10,Proportion of infants fully immunized,Oromia,EFY2012,True,0.692011,860901,1244055.8,synthetic_history
+10,Proportion of infants fully immunized,Oromia,EFY2013,True,0.675279,861086,1275157.2,synthetic_history
+10,Proportion of infants fully immunized,Oromia,EFY2014,True,0.8126,1062097,1307036.13,synthetic_history
+10,Proportion of infants fully immunized,Oromia,EFY2015,True,0.853919,1144006,1339712.03,synthetic_history
+10,Proportion of infants fully immunized,Oromia,EFY2016,False,0.931932,613637,1373204.83,baseline_actual
+10,Proportion of infants fully immunized,Oromia,EFY2017,False,0.96,1318276.6390391039,1373204.8323324,target_actual
+10,Proportion of infants fully immunized,Somali,EFY2011,True,0.485464,87640,180527.55,synthetic_history
+10,Proportion of infants fully immunized,Somali,EFY2012,True,0.538577,99659,185040.74,synthetic_history
+10,Proportion of infants fully immunized,Somali,EFY2013,True,0.461797,87588,189666.76,synthetic_history
+10,Proportion of infants fully immunized,Somali,EFY2014,True,0.602083,117050,194408.43,synthetic_history
+10,Proportion of infants fully immunized,Somali,EFY2015,True,0.630923,125723,199268.64,synthetic_history
+10,Proportion of infants fully immunized,Somali,EFY2016,False,0.655407,64045,204250.35,baseline_actual
+10,Proportion of infants fully immunized,Somali,EFY2017,False,0.73,149102.757578748,204250.3528476,target_actual
+10,Proportion of infants fully immunized,B/Gumuz,EFY2011,True,0.372268,13146,35313.29,synthetic_history
+10,Proportion of infants fully immunized,B/Gumuz,EFY2012,True,0.395744,14324,36196.12,synthetic_history
+10,Proportion of infants fully immunized,B/Gumuz,EFY2013,True,0.395365,14668,37101.02,synthetic_history
+10,Proportion of infants fully immunized,B/Gumuz,EFY2014,True,0.489482,18614,38028.55,synthetic_history
+10,Proportion of infants fully immunized,B/Gumuz,EFY2015,True,0.531464,20716,38979.26,synthetic_history
+10,Proportion of infants fully immunized,B/Gumuz,EFY2016,False,0.592894,11245,39953.74,baseline_actual
+10,Proportion of infants fully immunized,B/Gumuz,EFY2017,False,0.86,34360.218551978,39953.7425023,target_actual
+10,Proportion of infants fully immunized,Souther E,EFY2011,True,0.688224,153656,223264.8,synthetic_history
+10,Proportion of infants fully immunized,Souther E,EFY2012,True,0.741456,169680,228846.42,synthetic_history
+10,Proportion of infants fully immunized,Souther E,EFY2013,True,0.718715,168587,234567.58,synthetic_history
+10,Proportion of infants fully immunized,Souther E,EFY2014,True,0.873031,209904,240431.77,synthetic_history
+10,Proportion of infants fully immunized,Souther E,EFY2015,True,0.898364,221395,246442.56,synthetic_history
+10,Proportion of infants fully immunized,Souther E,EFY2016,False,0.984935,219164,252603.63,baseline_actual
+10,Proportion of infants fully immunized,Souther E,EFY2017,False,1,252603.62559721177,252603.62559721177,target_actual
+10,Proportion of infants fully immunized,Central E,EFY2011,True,0.008755,1629,186063.47,synthetic_history
+10,Proportion of infants fully immunized,Central E,EFY2012,True,0.016878,3219,190715.06,synthetic_history
+10,Proportion of infants fully immunized,Central E,EFY2013,True,0.0,0,195482.93,synthetic_history
+10,Proportion of infants fully immunized,Central E,EFY2014,True,0.011576,2320,200370.01,synthetic_history
+10,Proportion of infants fully immunized,Central E,EFY2015,True,0.000716,147,205379.26,synthetic_history
+10,Proportion of infants fully immunized,Central E,EFY2016,False,0.0,0,210513.74,baseline_actual
+10,Proportion of infants fully immunized,Central E,EFY2017,False,1,210513.73683217165,210513.73683217165,target_actual
+10,Proportion of infants fully immunized,Sidama,EFY2011,True,0.767582,105470,137405.27,synthetic_history
+10,Proportion of infants fully immunized,Sidama,EFY2012,True,0.773679,108965,140840.4,synthetic_history
+10,Proportion of infants fully immunized,Sidama,EFY2013,True,0.785157,113346,144361.41,synthetic_history
+10,Proportion of infants fully immunized,Sidama,EFY2014,True,0.883703,130762,147970.45,synthetic_history
+10,Proportion of infants fully immunized,Sidama,EFY2015,True,0.970497,147195,151669.71,synthetic_history
+10,Proportion of infants fully immunized,Sidama,EFY2016,False,1.004193,74444,155461.45,baseline_actual
+10,Proportion of infants fully immunized,Sidama,EFY2017,False,1,155461.45202193854,155461.45202193854,target_actual
+10,Proportion of infants fully immunized,Sout West,EFY2011,True,0.567731,56537,99584.0,synthetic_history
+10,Proportion of infants fully immunized,Sout West,EFY2012,True,0.648998,66246,102073.6,synthetic_history
+10,Proportion of infants fully immunized,Sout West,EFY2013,True,0.557962,58377,104625.44,synthetic_history
+10,Proportion of infants fully immunized,Sout West,EFY2014,True,0.691906,74201,107241.08,synthetic_history
+10,Proportion of infants fully immunized,Sout West,EFY2015,True,0.772415,84905,109922.11,synthetic_history
+10,Proportion of infants fully immunized,Sout West,EFY2016,False,0.80048,43008,112670.16,baseline_actual
+10,Proportion of infants fully immunized,Sout West,EFY2017,False,0.88,99149.73905080455,112670.1580122779,target_actual
+10,Proportion of infants fully immunized,Gambela,EFY2011,True,0.684357,9446,13802.64,synthetic_history
+10,Proportion of infants fully immunized,Gambela,EFY2012,True,0.712586,10081,14147.71,synthetic_history
+10,Proportion of infants fully immunized,Gambela,EFY2013,True,0.683828,9916,14501.4,synthetic_history
+10,Proportion of infants fully immunized,Gambela,EFY2014,True,0.800617,11900,14863.94,synthetic_history
+10,Proportion of infants fully immunized,Gambela,EFY2015,True,0.874173,13318,15235.53,synthetic_history
+10,Proportion of infants fully immunized,Gambela,EFY2016,False,0.881197,6484,15616.42,baseline_actual
+10,Proportion of infants fully immunized,Gambela,EFY2017,False,0.94,14679.4370184,15616.42236,target_actual
+10,Proportion of infants fully immunized,Harrari,EFY2011,True,0.653181,4937,7559.03,synthetic_history
+10,Proportion of infants fully immunized,Harrari,EFY2012,True,0.723982,5609,7748.01,synthetic_history
+10,Proportion of infants fully immunized,Harrari,EFY2013,True,0.676491,5372,7941.71,synthetic_history
+10,Proportion of infants fully immunized,Harrari,EFY2014,True,0.908431,7395,8140.25,synthetic_history
+10,Proportion of infants fully immunized,Harrari,EFY2015,True,0.96748,8072,8343.76,synthetic_history
+10,Proportion of infants fully immunized,Harrari,EFY2016,False,1.031704,4220,8552.35,baseline_actual
+10,Proportion of infants fully immunized,Harrari,EFY2017,False,1,8552.35368,8552.35368,target_actual
+10,Proportion of infants fully immunized,Dir Dawa,EFY2011,True,0.568493,8840,15550.24,synthetic_history
+10,Proportion of infants fully immunized,Dir Dawa,EFY2012,True,0.627763,10006,15939.0,synthetic_history
+10,Proportion of infants fully immunized,Dir Dawa,EFY2013,True,0.594636,9715,16337.47,synthetic_history
+10,Proportion of infants fully immunized,Dir Dawa,EFY2014,True,0.726822,12171,16745.91,synthetic_history
+10,Proportion of infants fully immunized,Dir Dawa,EFY2015,True,0.766908,13164,17164.55,synthetic_history
+10,Proportion of infants fully immunized,Dir Dawa,EFY2016,False,0.834112,6951,17593.67,baseline_actual
+10,Proportion of infants fully immunized,Dir Dawa,EFY2017,False,0.91,16010.238320440001,17593.668484,target_actual
+10,Proportion of infants fully immunized,Addis Ababa,EFY2011,True,1.05,85211,81153.34,synthetic_history
+10,Proportion of infants fully immunized,Addis Ababa,EFY2012,True,1.05,87341,83182.17,synthetic_history
+10,Proportion of infants fully immunized,Addis Ababa,EFY2013,True,1.05,89525,85261.73,synthetic_history
+10,Proportion of infants fully immunized,Addis Ababa,EFY2014,True,1.05,91763,87393.27,synthetic_history
+10,Proportion of infants fully immunized,Addis Ababa,EFY2015,True,1.05,94057,89578.1,synthetic_history
+10,Proportion of infants fully immunized,Addis Ababa,EFY2016,False,1.527721,67298,91817.55,baseline_actual
+10,Proportion of infants fully immunized,Addis Ababa,EFY2017,False,1,91817.553216,91817.553216,target_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Tigray,EFY2016,False,,,,baseline_missing_in_source
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Tigray,EFY2017,False,0.72,,,target_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Afar,EFY2011,True,0.543007,27875,51333.89,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Afar,EFY2012,True,0.543127,28578,52617.23,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Afar,EFY2013,True,0.528681,28513,53932.67,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Afar,EFY2014,True,0.651803,36032,55280.98,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Afar,EFY2015,True,0.673186,38145,56663.01,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Afar,EFY2016,False,0.720594,20097,58079.58,baseline_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Afar,EFY2017,False,0.9,52271.623404,58079.58156,target_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,EFY2011,True,0.678865,446154,657205.5,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,EFY2012,True,0.768726,517841,673635.64,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,EFY2013,True,0.714355,493245,690476.53,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,EFY2014,True,0.83845,593403,707738.44,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,EFY2015,True,0.909133,659514,725431.9,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,EFY2016,False,0.964249,348663,743567.7,baseline_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Amhara,EFY2017,False,1,743567.7023544001,743567.7023544001,target_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,EFY2011,True,0.81875,993728,1213712.98,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,EFY2012,True,0.867482,1079196,1244055.8,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,EFY2013,True,0.871394,1111165,1275157.2,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,EFY2014,True,0.956024,1249558,1307036.13,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,EFY2015,True,0.979997,1312913,1339712.03,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,EFY2016,False,1.038918,684083,1373204.83,baseline_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Oromia,EFY2017,False,1,1373204.8323324,1373204.8323324,target_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Somali,EFY2011,True,0.557934,100722,180527.55,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Somali,EFY2012,True,0.6312,116798,185040.74,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Somali,EFY2013,True,0.600347,113866,189666.76,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Somali,EFY2014,True,0.740954,144048,194408.43,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Somali,EFY2015,True,0.830091,165411,199268.64,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Somali,EFY2016,False,0.88293,86278,204250.35,baseline_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Somali,EFY2017,False,0.98,200165.345790648,204250.3528476,target_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,B/Gumuz,EFY2011,True,0.481112,16990,35313.29,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,B/Gumuz,EFY2012,True,0.499233,18070,36196.12,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,B/Gumuz,EFY2013,True,0.479737,17799,37101.02,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,B/Gumuz,EFY2014,True,0.580293,22068,38028.55,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,B/Gumuz,EFY2015,True,0.616514,24031,38979.26,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,B/Gumuz,EFY2016,False,0.630276,11954,39953.74,baseline_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,B/Gumuz,EFY2017,False,0.85,33960.681126955,39953.7425023,target_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Souther E,EFY2011,True,0.740308,165285,223264.8,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Souther E,EFY2012,True,0.802251,183592,228846.42,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Souther E,EFY2013,True,0.719813,168845,234567.58,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Souther E,EFY2014,True,0.912263,219337,240431.77,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Souther E,EFY2015,True,1.002217,246989,246442.56,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Souther E,EFY2016,False,1.048862,233389,252603.63,baseline_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Souther E,EFY2017,False,1,252603.62559721177,252603.62559721177,target_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Central E,EFY2011,True,0.723377,134594,186063.47,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Central E,EFY2012,True,0.805736,153666,190715.06,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Central E,EFY2013,True,0.754977,147585,195482.93,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Central E,EFY2014,True,0.902297,180793,200370.01,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Central E,EFY2015,True,0.996175,204594,205379.26,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Central E,EFY2016,False,1.070682,79373,210513.74,baseline_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Central E,EFY2017,False,1,210513.73683217165,210513.73683217165,target_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Sidama,EFY2011,True,0.807528,110959,137405.27,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Sidama,EFY2012,True,0.859321,121027,140840.4,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Sidama,EFY2013,True,0.758992,109569,144361.41,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Sidama,EFY2014,True,0.994613,147173,147970.45,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Sidama,EFY2015,True,1.018218,154433,151669.71,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Sidama,EFY2016,False,1.070682,79373,155461.45,baseline_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Sidama,EFY2017,False,1,155461.45202193854,155461.45202193854,target_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Sout West,EFY2011,True,0.628278,62566,99584.0,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Sout West,EFY2012,True,0.662647,67639,102073.6,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Sout West,EFY2013,True,0.658424,68888,104625.44,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Sout West,EFY2014,True,0.796909,85461,107241.08,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Sout West,EFY2015,True,0.82175,90329,109922.11,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Sout West,EFY2016,False,0.914518,49135,112670.16,baseline_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Sout West,EFY2017,False,1,112670.1580122779,112670.1580122779,target_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Gambela,EFY2011,True,0.574231,7926,13802.64,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Gambela,EFY2012,True,0.602456,8523,14147.71,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Gambela,EFY2013,True,0.643924,9338,14501.4,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Gambela,EFY2014,True,0.752627,11187,14863.94,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Gambela,EFY2015,True,0.841319,12818,15235.53,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Gambela,EFY2016,False,0.925501,6810,15616.42,baseline_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Gambela,EFY2017,False,0.98,15304.0939128,15616.42236,target_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Harrari,EFY2011,True,0.884346,6685,7559.03,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Harrari,EFY2012,True,0.953704,7389,7748.01,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Harrari,EFY2013,True,0.860609,6835,7941.71,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Harrari,EFY2014,True,1.043651,8496,8140.25,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Harrari,EFY2015,True,1.05,8761,8343.76,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Harrari,EFY2016,False,1.166901,4773,8552.35,baseline_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Harrari,EFY2017,False,1,8552.35368,8552.35368,target_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Dir Dawa,EFY2011,True,0.617815,9607,15550.24,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Dir Dawa,EFY2012,True,0.660598,10529,15939.0,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Dir Dawa,EFY2013,True,0.639982,10456,16337.47,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Dir Dawa,EFY2014,True,0.741444,12416,16745.91,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Dir Dawa,EFY2015,True,0.844369,14493,17164.55,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Dir Dawa,EFY2016,False,0.885831,7382,17593.67,baseline_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Dir Dawa,EFY2017,False,1,17593.668484,17593.668484,target_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Addis Ababa,EFY2011,True,1.048919,85123,81153.34,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Addis Ababa,EFY2012,True,1.05,87341,83182.17,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Addis Ababa,EFY2013,True,1.05,89525,85261.73,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Addis Ababa,EFY2014,True,1.05,91763,87393.27,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Addis Ababa,EFY2015,True,1.05,94057,89578.1,synthetic_history
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Addis Ababa,EFY2016,False,1.652894,72812,91817.55,baseline_actual
+11,Proportion of surviving infants who received two doses of Rotavirus vaccine,Addis Ababa,EFY2017,False,1,91817.553216,91817.553216,target_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Tigray,EFY2016,False,,,,baseline_missing_in_source
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Tigray,EFY2017,False,0.83,,,target_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Afar,EFY2011,True,0.446097,24466,54843.9,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Afar,EFY2012,True,0.486178,27330,56214.99,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Afar,EFY2013,True,0.481923,27769,57620.37,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Afar,EFY2014,True,0.546439,32273,59060.88,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Afar,EFY2015,True,0.594445,35986,60537.4,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Afar,EFY2016,False,0.612792,15397,62050.83,baseline_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Afar,EFY2017,False,0.94,58327.7849,62050.835,target_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,EFY2011,True,0.687778,489190,711261.37,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,EFY2012,True,0.74347,542022,729042.9,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,EFY2013,True,0.723233,540450,747268.97,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,EFY2014,True,0.845818,647855,765950.7,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,EFY2015,True,0.898991,705797,785099.46,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,EFY2016,False,0.982418,355233,804726.95,baseline_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Amhara,EFY2017,False,1,804726.9506,804726.9506,target_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,EFY2011,True,0.65955,863543,1309291.24,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,EFY2012,True,0.772546,1036775,1342023.52,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,EFY2013,True,0.74524,1025132,1375574.11,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,EFY2014,True,0.926173,1305870,1409963.46,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,EFY2015,True,0.990605,1431635,1445212.55,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,EFY2016,False,1.062887,695390,1481342.86,baseline_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Oromia,EFY2017,False,1,1481342.8612000002,1481342.8612000002,target_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Somali,EFY2011,True,0.442361,85962,194324.6,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Somali,EFY2012,True,0.487246,97051,199182.71,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Somali,EFY2013,True,0.444316,90713,204162.28,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Somali,EFY2014,True,0.538413,112672,209266.34,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Somali,EFY2015,True,0.588577,126249,214497.99,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Somali,EFY2016,False,0.612263,59829,219860.44,baseline_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Somali,EFY2017,False,0.96,211066.026624,219860.4444,target_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),B/Gumuz,EFY2011,True,0.409501,16085,39280.63,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),B/Gumuz,EFY2012,True,0.499605,20115,40262.65,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),B/Gumuz,EFY2013,True,0.452154,18660,41269.21,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),B/Gumuz,EFY2014,True,0.53032,22433,42300.94,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),B/Gumuz,EFY2015,True,0.626592,27168,43358.47,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),B/Gumuz,EFY2016,False,0.637447,12090,44442.43,baseline_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),B/Gumuz,EFY2017,False,0.99,43998.003423,44442.4277,target_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Souther E,EFY2011,True,0.736539,178355,242152.71,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Souther E,EFY2012,True,0.800945,198800,248206.53,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Souther E,EFY2013,True,0.754907,192057,254411.69,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Souther E,EFY2014,True,0.991272,258496,260771.98,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Souther E,EFY2015,True,1.04464,279223,267291.28,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Souther E,EFY2016,False,1.103717,245595,273973.56,baseline_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Souther E,EFY2017,False,1,273973.5635544596,273973.5635544596,target_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Central E,EFY2011,True,0.830395,167577,201804.2,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Central E,EFY2012,True,0.91723,189728,206849.3,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Central E,EFY2013,True,0.859812,182298,212020.53,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Central E,EFY2014,True,1.025512,222865,217321.05,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Central E,EFY2015,True,1.027667,228917,222754.07,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Central E,EFY2016,False,1.098798,81412,228322.92,baseline_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Central E,EFY2017,False,1,228322.9249806634,228322.9249806634,target_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Sidama,EFY2011,True,0.697298,103918,149029.58,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Sidama,EFY2012,True,0.774597,118324,152755.32,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Sidama,EFY2013,True,0.81191,127124,156574.2,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Sidama,EFY2014,True,0.919444,147560,160488.56,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Sidama,EFY2015,True,1.05,172726,164500.77,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Sidama,EFY2016,False,1.098798,81412,168613.29,baseline_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Sidama,EFY2017,False,1,168613.2885270483,168613.2885270483,target_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Sout West,EFY2011,True,0.614014,66319,108008.68,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Sout West,EFY2012,True,0.662082,73298,110708.9,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Sout West,EFY2013,True,0.666979,75687,113476.62,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Sout West,EFY2014,True,0.766052,89102,116313.53,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Sout West,EFY2015,True,0.846406,100910,119221.37,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Sout West,EFY2016,False,0.937988,50396,122201.91,baseline_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Sout West,EFY2017,False,1,122201.90673782853,122201.90673782853,target_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Gambela,EFY2011,True,0.73772,11020,14937.92,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Gambela,EFY2012,True,0.789936,12095,15311.37,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Gambela,EFY2013,True,0.743491,11668,15694.16,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Gambela,EFY2014,True,0.854358,13744,16086.51,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Gambela,EFY2015,True,0.941543,15525,16488.67,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Gambela,EFY2016,False,0.961651,7076,16900.89,baseline_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Gambela,EFY2017,False,1,16900.89,16900.89,target_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Harrari,EFY2011,True,0.836154,6753,8075.89,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Harrari,EFY2012,True,0.914964,7574,8277.79,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Harrari,EFY2013,True,0.824778,6998,8484.73,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Harrari,EFY2014,True,1.05,9132,8696.85,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Harrari,EFY2015,True,1.05,9360,8914.27,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Harrari,EFY2016,False,1.208899,4945,9137.13,baseline_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Harrari,EFY2017,False,1,9137.130000000001,9137.130000000001,target_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Dir Dawa,EFY2011,True,0.643954,10653,16542.81,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Dir Dawa,EFY2012,True,0.653346,11078,16956.38,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Dir Dawa,EFY2013,True,0.690262,11997,17380.29,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Dir Dawa,EFY2014,True,0.767687,13676,17814.79,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Dir Dawa,EFY2015,True,0.819221,14959,18260.16,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Dir Dawa,EFY2016,False,0.896511,7471,18716.67,baseline_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Dir Dawa,EFY2017,False,1,18716.6686,18716.6686,target_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Addis Ababa,EFY2011,True,1.05,88761,84534.73,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Addis Ababa,EFY2012,True,1.05,90981,86648.1,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Addis Ababa,EFY2013,True,1.05,93255,88814.3,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Addis Ababa,EFY2014,True,1.05,95586,91034.66,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Addis Ababa,EFY2015,True,1.05,97976,93310.52,synthetic_history
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Addis Ababa,EFY2016,False,1.786961,78360,95643.28,baseline_actual
+12,Proportion of infants protected at birth against neonatal tetanus (PAB),Addis Ababa,EFY2017,False,1,95643.2846,95643.2846,target_actual
+14,Proportion of girls (14yo) who received HPV1,Tigray,EFY2016,False,,,,baseline_missing_in_source
+14,Proportion of girls (14yo) who received HPV1,Tigray,EFY2017,False,0.7,,,target_actual
+14,Proportion of girls (14yo) who received HPV1,Afar,EFY2011,True,0.0,0,31339.37,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Afar,EFY2012,True,0.0,0,32122.85,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Afar,EFY2013,True,0.0,0,32925.93,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Afar,EFY2014,True,0.007277,246,33749.07,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Afar,EFY2015,True,0.021831,755,34592.8,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Afar,EFY2016,False,0.048512,826,35457.62,baseline_actual
+14,Proportion of girls (14yo) who received HPV1,Afar,EFY2017,False,0.1,3545.7620000000006,35457.62,target_actual
+14,Proportion of girls (14yo) who received HPV1,Amhara,EFY2011,True,0.0,0,256433.99,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Amhara,EFY2012,True,0.0,0,262844.84,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Amhara,EFY2013,True,0.0,0,269415.96,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Amhara,EFY2014,True,0.00015,41,276151.36,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Amhara,EFY2015,True,0.00045,127,283055.15,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Amhara,EFY2016,False,0.000999,141,290131.53,baseline_actual
+14,Proportion of girls (14yo) who received HPV1,Amhara,EFY2017,False,0.06,17407.891602,290131.5267,target_actual
+14,Proportion of girls (14yo) who received HPV1,Oromia,EFY2011,True,0.0,0,460704.5,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Oromia,EFY2012,True,0.0,0,472222.11,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Oromia,EFY2013,True,0.0,0,484027.66,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Oromia,EFY2014,True,0.00088,437,496128.35,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Oromia,EFY2015,True,0.002639,1342,508531.56,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Oromia,EFY2016,False,0.005865,1464,521244.85,baseline_actual
+14,Proportion of girls (14yo) who received HPV1,Oromia,EFY2017,False,0.07,36487.139581200005,521244.85116,target_actual
+14,Proportion of girls (14yo) who received HPV1,Somali,EFY2011,True,0.0,0,71518.83,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Somali,EFY2012,True,0.0,0,73306.8,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Somali,EFY2013,True,0.0,0,75139.47,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Somali,EFY2014,True,0.018192,1401,77017.96,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Somali,EFY2015,True,0.054575,4308,78943.41,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Somali,EFY2016,False,0.121279,4695,80916.99,baseline_actual
+14,Proportion of girls (14yo) who received HPV1,Somali,EFY2017,False,0.18,14565.058680599997,80916.99266999999,target_actual
+14,Proportion of girls (14yo) who received HPV1,B/Gumuz,EFY2011,True,0.0,0,14756.15,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,B/Gumuz,EFY2012,True,0.0,0,15125.06,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,B/Gumuz,EFY2013,True,0.0,0,15503.18,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,B/Gumuz,EFY2014,True,0.0,0,15890.76,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,B/Gumuz,EFY2015,True,0.0,0,16288.03,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,B/Gumuz,EFY2016,False,0.0,0,16695.23,baseline_actual
+14,Proportion of girls (14yo) who received HPV1,B/Gumuz,EFY2017,False,0.07,1168.6664199000002,16695.23457,target_actual
+14,Proportion of girls (14yo) who received HPV1,Souther E,EFY2011,True,0.0,0,86923.02,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Souther E,EFY2012,True,0.0,0,89096.1,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Souther E,EFY2013,True,0.0,0,91323.5,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Souther E,EFY2014,True,0.001411,132,93606.59,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Souther E,EFY2015,True,0.004233,406,95946.75,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Souther E,EFY2016,False,0.009408,815,98345.42,baseline_actual
+14,Proportion of girls (14yo) who received HPV1,Souther E,EFY2017,False,0.08,7867.633894442518,98345.42368053147,target_actual
+14,Proportion of girls (14yo) who received HPV1,Central E,EFY2011,True,0.0,0,72439.54,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Central E,EFY2012,True,0.0,0,74250.53,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Central E,EFY2013,True,0.0,0,76106.79,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Central E,EFY2014,True,0.00013,10,78009.46,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Central E,EFY2015,True,0.00039,31,79959.7,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Central E,EFY2016,False,0.000866,25,81958.69,baseline_actual
+14,Proportion of girls (14yo) who received HPV1,Central E,EFY2017,False,0.08,6556.695325456277,81958.69156820346,target_actual
+14,Proportion of girls (14yo) who received HPV1,Sidama,EFY2011,True,0.0,0,53495.59,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Sidama,EFY2012,True,0.0,0,54832.98,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Sidama,EFY2013,True,0.0,0,56203.8,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Sidama,EFY2014,True,0.00013,7,57608.9,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Sidama,EFY2015,True,0.00039,23,59049.12,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Sidama,EFY2016,False,0.000866,25,60525.35,baseline_actual
+14,Proportion of girls (14yo) who received HPV1,Sidama,EFY2017,False,0.08,4842.027846256509,60525.34807820636,target_actual
+14,Proportion of girls (14yo) who received HPV1,Sout West,EFY2011,True,0.0,0,38770.75,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Sout West,EFY2012,True,0.0,0,39740.01,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Sout West,EFY2013,True,0.0,0,40733.51,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Sout West,EFY2014,True,0.000459,19,41751.85,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Sout West,EFY2015,True,0.001377,59,42795.65,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Sout West,EFY2016,False,0.00306,64,43865.54,baseline_actual
+14,Proportion of girls (14yo) who received HPV1,Sout West,EFY2017,False,0.08,3509.2431946446945,43865.53993305868,target_actual
+14,Proportion of girls (14yo) who received HPV1,Gambela,EFY2011,True,0.0,0,5930.36,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Gambela,EFY2012,True,0.0,0,6078.61,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Gambela,EFY2013,True,0.0,0,6230.58,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Gambela,EFY2014,True,0.000332,2,6386.34,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Gambela,EFY2015,True,0.000996,7,6546.0,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Gambela,EFY2016,False,0.002214,7,6709.65,baseline_actual
+14,Proportion of girls (14yo) who received HPV1,Gambela,EFY2017,False,0.07,469.67573310000006,6709.65333,target_actual
+14,Proportion of girls (14yo) who received HPV1,Harrari,EFY2011,True,0.0,0,3042.18,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Harrari,EFY2012,True,0.0,0,3118.24,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Harrari,EFY2013,True,0.0,0,3196.19,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Harrari,EFY2014,True,0.0,0,3276.1,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Harrari,EFY2015,True,0.0,0,3358.0,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Harrari,EFY2016,False,0.0,0,3441.95,baseline_actual
+14,Proportion of girls (14yo) who received HPV1,Harrari,EFY2017,False,0.07,240.93636,3441.948,target_actual
+14,Proportion of girls (14yo) who received HPV1,Dir Dawa,EFY2011,True,0.0,0,6072.55,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Dir Dawa,EFY2012,True,0.0,0,6224.36,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Dir Dawa,EFY2013,True,0.0,0,6379.97,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Dir Dawa,EFY2014,True,0.000784,5,6539.47,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Dir Dawa,EFY2015,True,0.002351,16,6702.95,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Dir Dawa,EFY2016,False,0.005224,17,6870.53,baseline_actual
+14,Proportion of girls (14yo) who received HPV1,Dir Dawa,EFY2017,False,0.08,549.6422928000001,6870.52866,target_actual
+14,Proportion of girls (14yo) who received HPV1,Addis Ababa,EFY2011,True,0.0,0,47129.02,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Addis Ababa,EFY2012,True,0.0,0,48307.24,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Addis Ababa,EFY2013,True,0.0,0,49514.92,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Addis Ababa,EFY2014,True,0.002492,126,50752.8,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Addis Ababa,EFY2015,True,0.007476,389,52021.62,synthetic_history
+14,Proportion of girls (14yo) who received HPV1,Addis Ababa,EFY2016,False,0.016613,425,53322.16,baseline_actual
+14,Proportion of girls (14yo) who received HPV1,Addis Ababa,EFY2017,False,0.1,5332.215738,53322.15738,target_actual
+15,Proportion of neonatal death in the institution,Tigray,EFY2016,False,,,,baseline_missing_in_source
+15,Proportion of neonatal death in the institution,Tigray,EFY2017,False,0.05,6435.598164800001,128711.963296,target_actual
+15,Proportion of neonatal death in the institution,Afar,EFY2011,True,0.04122,904,21937.56,synthetic_history
+15,Proportion of neonatal death in the institution,Afar,EFY2012,True,0.037076,834,22486.0,synthetic_history
+15,Proportion of neonatal death in the institution,Afar,EFY2013,True,0.037021,853,23048.15,synthetic_history
+15,Proportion of neonatal death in the institution,Afar,EFY2014,True,0.028787,680,23624.35,synthetic_history
+15,Proportion of neonatal death in the institution,Afar,EFY2015,True,0.024643,597,24214.96,synthetic_history
+15,Proportion of neonatal death in the institution,Afar,EFY2016,False,0.020499,165,24820.33,baseline_actual
+15,Proportion of neonatal death in the institution,Afar,EFY2017,False,0.01,248.20334000000003,24820.334000000003,target_actual
+15,Proportion of neonatal death in the institution,Amhara,EFY2011,True,0.015527,7510,483657.73,synthetic_history
+15,Proportion of neonatal death in the institution,Amhara,EFY2012,True,0.013926,6904,495749.17,synthetic_history
+15,Proportion of neonatal death in the institution,Amhara,EFY2013,True,0.013362,6790,508142.9,synthetic_history
+15,Proportion of neonatal death in the institution,Amhara,EFY2014,True,0.010723,5585,520846.47,synthetic_history
+15,Proportion of neonatal death in the institution,Amhara,EFY2015,True,0.009121,4869,533867.64,synthetic_history
+15,Proportion of neonatal death in the institution,Amhara,EFY2016,False,0.00752,1724,547214.33,baseline_actual
+15,Proportion of neonatal death in the institution,Amhara,EFY2017,False,0.006,3283.2859584480007,547214.3264080001,target_actual
+15,Proportion of neonatal death in the institution,Oromia,EFY2011,True,0.008756,8713,995061.34,synthetic_history
+15,Proportion of neonatal death in the institution,Oromia,EFY2012,True,0.007904,8062,1019937.88,synthetic_history
+15,Proportion of neonatal death in the institution,Oromia,EFY2013,True,0.008016,8380,1045436.32,synthetic_history
+15,Proportion of neonatal death in the institution,Oromia,EFY2014,True,0.006202,6646,1071572.23,synthetic_history
+15,Proportion of neonatal death in the institution,Oromia,EFY2015,True,0.005351,5877,1098361.54,synthetic_history
+15,Proportion of neonatal death in the institution,Oromia,EFY2016,False,0.004499,2339,1125820.57,baseline_actual
+15,Proportion of neonatal death in the institution,Oromia,EFY2017,False,0.003,3377.4617235360006,1125820.5745120002,target_actual
+15,Proportion of neonatal death in the institution,Somali,EFY2011,True,0.010361,1168,112708.27,synthetic_history
+15,Proportion of neonatal death in the institution,Somali,EFY2012,True,0.009495,1097,115525.97,synthetic_history
+15,Proportion of neonatal death in the institution,Somali,EFY2013,True,0.009719,1151,118414.12,synthetic_history
+15,Proportion of neonatal death in the institution,Somali,EFY2014,True,0.007763,942,121374.47,synthetic_history
+15,Proportion of neonatal death in the institution,Somali,EFY2015,True,0.006897,858,124408.84,synthetic_history
+15,Proportion of neonatal death in the institution,Somali,EFY2016,False,0.006031,319,127519.06,baseline_actual
+15,Proportion of neonatal death in the institution,Somali,EFY2017,False,0.004,510.076231008,127519.057752,target_actual
+15,Proportion of neonatal death in the institution,B/Gumuz,EFY2011,True,0.026335,517,19640.32,synthetic_history
+15,Proportion of neonatal death in the institution,B/Gumuz,EFY2012,True,0.023897,481,20131.32,synthetic_history
+15,Proportion of neonatal death in the institution,B/Gumuz,EFY2013,True,0.024413,504,20634.61,synthetic_history
+15,Proportion of neonatal death in the institution,B/Gumuz,EFY2014,True,0.019021,402,21150.47,synthetic_history
+15,Proportion of neonatal death in the institution,B/Gumuz,EFY2015,True,0.016583,360,21679.23,synthetic_history
+15,Proportion of neonatal death in the institution,B/Gumuz,EFY2016,False,0.014145,108,22221.21,baseline_actual
+15,Proportion of neonatal death in the institution,B/Gumuz,EFY2017,False,0.009,199.99092464999998,22221.21385,target_actual
+15,Proportion of neonatal death in the institution,Souther E,EFY2011,True,0.006375,1359,213094.38,synthetic_history
+15,Proportion of neonatal death in the institution,Souther E,EFY2012,True,0.005847,1277,218421.74,synthetic_history
+15,Proportion of neonatal death in the institution,Souther E,EFY2013,True,0.005972,1337,223882.29,synthetic_history
+15,Proportion of neonatal death in the institution,Souther E,EFY2014,True,0.00479,1099,229479.34,synthetic_history
+15,Proportion of neonatal death in the institution,Souther E,EFY2015,True,0.004261,1002,235216.33,synthetic_history
+15,Proportion of neonatal death in the institution,Souther E,EFY2016,False,0.003733,749,241096.74,baseline_actual
+15,Proportion of neonatal death in the institution,Souther E,EFY2017,False,0.003,723.2902077837733,241096.73592792446,target_actual
+15,Proportion of neonatal death in the institution,Central E,EFY2011,True,0.00742,1318,177587.69,synthetic_history
+15,Proportion of neonatal death in the institution,Central E,EFY2012,True,0.006812,1240,182027.38,synthetic_history
+15,Proportion of neonatal death in the institution,Central E,EFY2013,True,0.006623,1236,186578.07,synthetic_history
+15,Proportion of neonatal death in the institution,Central E,EFY2014,True,0.005596,1070,191242.52,synthetic_history
+15,Proportion of neonatal death in the institution,Central E,EFY2015,True,0.004988,978,196023.58,synthetic_history
+15,Proportion of neonatal death in the institution,Central E,EFY2016,False,0.004381,297,200924.17,baseline_actual
+15,Proportion of neonatal death in the institution,Central E,EFY2017,False,0.003,602.7725219489514,200924.1739829838,target_actual
+15,Proportion of neonatal death in the institution,Sidama,EFY2011,True,0.007933,1064,134126.62,synthetic_history
+15,Proportion of neonatal death in the institution,Sidama,EFY2012,True,0.007223,993,137479.79,synthetic_history
+15,Proportion of neonatal death in the institution,Sidama,EFY2013,True,0.006955,980,140916.78,synthetic_history
+15,Proportion of neonatal death in the institution,Sidama,EFY2014,True,0.005802,838,144439.7,synthetic_history
+15,Proportion of neonatal death in the institution,Sidama,EFY2015,True,0.005091,754,148050.69,synthetic_history
+15,Proportion of neonatal death in the institution,Sidama,EFY2016,False,0.004381,297,151751.96,baseline_actual
+15,Proportion of neonatal death in the institution,Sidama,EFY2017,False,0.003,455.2558790230305,151751.9596743435,target_actual
+15,Proportion of neonatal death in the institution,Sout West,EFY2011,True,0.009948,731,73445.9,synthetic_history
+15,Proportion of neonatal death in the institution,Sout West,EFY2012,True,0.009171,690,75282.05,synthetic_history
+15,Proportion of neonatal death in the institution,Sout West,EFY2013,True,0.009133,705,77164.1,synthetic_history
+15,Proportion of neonatal death in the institution,Sout West,EFY2014,True,0.007618,603,79093.2,synthetic_history
+15,Proportion of neonatal death in the institution,Sout West,EFY2015,True,0.006841,555,81070.53,synthetic_history
+15,Proportion of neonatal death in the institution,Sout West,EFY2016,False,0.006064,205,83097.3,baseline_actual
+15,Proportion of neonatal death in the institution,Sout West,EFY2017,False,0.004,332.38918632689365,83097.2965817234,target_actual
+15,Proportion of neonatal death in the institution,Gambela,EFY2011,True,0.039924,316,7917.1,synthetic_history
+15,Proportion of neonatal death in the institution,Gambela,EFY2012,True,0.035877,291,8115.03,synthetic_history
+15,Proportion of neonatal death in the institution,Gambela,EFY2013,True,0.036393,303,8317.9,synthetic_history
+15,Proportion of neonatal death in the institution,Gambela,EFY2014,True,0.027783,237,8525.85,synthetic_history
+15,Proportion of neonatal death in the institution,Gambela,EFY2015,True,0.023736,207,8739.0,synthetic_history
+15,Proportion of neonatal death in the institution,Gambela,EFY2016,False,0.019689,62,8957.47,baseline_actual
+15,Proportion of neonatal death in the institution,Gambela,EFY2017,False,0.015,134.3620755,8957.4717,target_actual
+15,Proportion of neonatal death in the institution,Harrari,EFY2011,True,0.04251,343,8075.89,synthetic_history
+15,Proportion of neonatal death in the institution,Harrari,EFY2012,True,0.038231,316,8277.79,synthetic_history
+15,Proportion of neonatal death in the institution,Harrari,EFY2013,True,0.037192,316,8484.73,synthetic_history
+15,Proportion of neonatal death in the institution,Harrari,EFY2014,True,0.029671,258,8696.85,synthetic_history
+15,Proportion of neonatal death in the institution,Harrari,EFY2015,True,0.025392,226,8914.27,synthetic_history
+15,Proportion of neonatal death in the institution,Harrari,EFY2016,False,0.021112,123,9137.13,baseline_actual
+15,Proportion of neonatal death in the institution,Harrari,EFY2017,False,0.016,146.19408,9137.130000000001,target_actual
+15,Proportion of neonatal death in the institution,Dir Dawa,EFY2011,True,0.019515,274,14061.39,synthetic_history
+15,Proportion of neonatal death in the institution,Dir Dawa,EFY2012,True,0.017641,254,14412.92,synthetic_history
+15,Proportion of neonatal death in the institution,Dir Dawa,EFY2013,True,0.016591,245,14773.24,synthetic_history
+15,Proportion of neonatal death in the institution,Dir Dawa,EFY2014,True,0.013894,210,15142.58,synthetic_history
+15,Proportion of neonatal death in the institution,Dir Dawa,EFY2015,True,0.01202,187,15521.14,synthetic_history
+15,Proportion of neonatal death in the institution,Dir Dawa,EFY2016,False,0.010146,68,15909.17,baseline_actual
+15,Proportion of neonatal death in the institution,Dir Dawa,EFY2017,False,0.006,95.45500986,15909.168310000001,target_actual
+15,Proportion of neonatal death in the institution,Addis Ababa,EFY2011,True,0.022805,1928,84534.73,synthetic_history
+15,Proportion of neonatal death in the institution,Addis Ababa,EFY2012,True,0.020453,1772,86648.1,synthetic_history
+15,Proportion of neonatal death in the institution,Addis Ababa,EFY2013,True,0.01913,1699,88814.3,synthetic_history
+15,Proportion of neonatal death in the institution,Addis Ababa,EFY2014,True,0.01575,1434,91034.66,synthetic_history
+15,Proportion of neonatal death in the institution,Addis Ababa,EFY2015,True,0.013399,1250,93310.52,synthetic_history
+15,Proportion of neonatal death in the institution,Addis Ababa,EFY2016,False,0.011047,830,95643.28,baseline_actual
+15,Proportion of neonatal death in the institution,Addis Ababa,EFY2017,False,0.008,765.1462768,95643.2846,target_actual

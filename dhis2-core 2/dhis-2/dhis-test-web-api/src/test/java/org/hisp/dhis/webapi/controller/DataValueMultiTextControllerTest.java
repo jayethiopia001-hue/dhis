@@ -1,0 +1,152 @@
+/*
+ * Copyright (c) 2004-2022, University of Oslo
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors 
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.hisp.dhis.webapi.controller;
+
+import static java.lang.String.format;
+import static org.hisp.dhis.http.HttpAssertions.assertStatus;
+import static org.hisp.dhis.test.webapi.Assertions.assertWebMessage;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.List;
+import java.util.stream.Stream;
+import org.hisp.dhis.common.ValueType;
+import org.hisp.dhis.feedback.ErrorCode;
+import org.hisp.dhis.http.HttpStatus;
+import org.hisp.dhis.jsontree.JsonArray;
+import org.hisp.dhis.test.webapi.json.domain.JsonImportConflict;
+import org.hisp.dhis.test.webapi.json.domain.JsonWebMessage;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
+
+/**
+ * Tests data value validation for {@link org.hisp.dhis.common.ValueType#MULTI_TEXT}.
+ *
+ * @author Jan Bernitt
+ */
+@TestInstance(Lifecycle.PER_CLASS)
+class DataValueMultiTextControllerTest extends AbstractDataValueControllerTest {
+  private String multiTextDataElementId;
+
+  @Override
+  protected List<String> setUpAdditionalDataElements() {
+    String optionSetId = addOptionSet("MultiSelectSet", ValueType.MULTI_TEXT);
+    addOptions(optionSetId, "A", "B", "C");
+    multiTextDataElementId =
+        addDataElement("MultiSelectDE", "MSDE", ValueType.MULTI_TEXT, optionSetId, categoryComboId);
+    return List.of(multiTextDataElementId);
+  }
+
+  @Test
+  void testAddDataValue_MultiText() {
+    assertDoesNotThrow(
+        () -> addDataValue("2021-01", "A,B", "", false, multiTextDataElementId, orgUnitId));
+    JsonArray values = getDataValues(multiTextDataElementId, "2021-01", orgUnitId);
+    assertEquals(1, values.size());
+    assertEquals("A,B", values.getString(0).string());
+  }
+
+  @Test
+  void testAddDataValue_MultiText_NoSuchOption() {
+    assertWebMessage(
+        "Conflict",
+        409,
+        "ERROR",
+        format(
+            "Failed to upsert data value: Value #0 value `D` is no valid option for data element `%s`",
+            multiTextDataElementId),
+        postNewDataValue("2021-01", "A,D", "", false, multiTextDataElementId, orgUnitId)
+            .content(HttpStatus.CONFLICT));
+  }
+
+  @Test
+  void testAddDataElement_MultiText_RequiresOptionSet() {
+    String optionSetId = addOptionSet("MultiSelectSet2", ValueType.TEXT);
+    assertWebMessage(
+        "Conflict",
+        409,
+        "ERROR",
+        "Data element value type must match option set value type: `TEXT`",
+        postNewDataElement(
+                "MultiSelectDE2", "MSDE2", ValueType.MULTI_TEXT, optionSetId, categoryComboId)
+            .content(HttpStatus.CONFLICT));
+  }
+
+  @Test
+  void testAddDataElement_MultiText_OptionSetValueTypeMismatch() {
+    assertWebMessage(
+        "Conflict",
+        409,
+        "ERROR",
+        "Data element of value type multi-text must have an option set: `null`",
+        postNewDataElement("MultiSelectDE2", "MSDE2", ValueType.MULTI_TEXT, null, categoryComboId)
+            .content(HttpStatus.CONFLICT));
+  }
+
+  @Test
+  void testPostJsonDataValueSet_MultiText_NoSuchOption() {
+    String body =
+        format(
+            "{'dataValues':[{"
+                + "'period':'202101',"
+                + "'orgUnit':'%s',"
+                + "'dataElement':'%s',"
+                + "'categoryOptionCombo':'%s',"
+                + "'value':'A,D'"
+                + "}]}",
+            orgUnitId, multiTextDataElementId, categoryOptionComboId);
+    JsonWebMessage message =
+        POST("/38/dataValueSets/", body).content(HttpStatus.CONFLICT).as(JsonWebMessage.class);
+    JsonImportConflict conflict = message.findImportConflict(ErrorCode.E8123);
+    assertEquals(
+        format(
+            "Value #0 value `D` is no valid option for data element `%s`", multiTextDataElementId),
+        conflict.value());
+  }
+
+  private String addOptionSet(String name, ValueType valueType) {
+    return assertStatus(
+        HttpStatus.CREATED,
+        POST("/optionSets/", format("{'name': '%s', 'valueType':'%s'}", name, valueType)));
+  }
+
+  private void addOptions(String optionSet, String... codes) {
+    Stream.of(codes).forEach(code -> addOption(optionSet, code));
+  }
+
+  private void addOption(String optionSet, String code) {
+    assertStatus(
+        HttpStatus.CREATED,
+        POST(
+            "/options/",
+            format("{'name':'%s', 'code':'%s', 'optionSet':{'id':'%s'}}", code, code, optionSet)));
+  }
+}

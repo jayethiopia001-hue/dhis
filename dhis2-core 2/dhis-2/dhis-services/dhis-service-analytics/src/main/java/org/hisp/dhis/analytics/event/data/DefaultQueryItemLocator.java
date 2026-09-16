@@ -1,0 +1,504 @@
+/*
+ * Copyright (c) 2004-2022, University of Oslo
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors 
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.hisp.dhis.analytics.event.data;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+import static org.hisp.dhis.analytics.TimeField.EVENT_DATE;
+import static org.hisp.dhis.analytics.TimeField.SCHEDULED_DATE;
+import static org.hisp.dhis.analytics.util.AnalyticsUtils.illegalQueryExSupplier;
+import static org.hisp.dhis.analytics.util.AnalyticsUtils.throwIllegalQueryEx;
+import static org.hisp.dhis.common.DimensionConstants.COMPLETED;
+import static org.hisp.dhis.common.DimensionConstants.CREATED;
+import static org.hisp.dhis.common.DimensionConstants.DIMENSION_IDENTIFIER_SEP;
+import static org.hisp.dhis.common.DimensionConstants.ENROLLMENT_DATE;
+import static org.hisp.dhis.common.DimensionConstants.INCIDENT_DATE;
+import static org.hisp.dhis.common.DimensionConstants.ITEM_SEP;
+import static org.hisp.dhis.common.DimensionConstants.LAST_UPDATED;
+import static org.hisp.dhis.feedback.ErrorCode.E7224;
+
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
+import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
+import org.hisp.dhis.analytics.AggregationType;
+import org.hisp.dhis.analytics.DataQueryService;
+import org.hisp.dhis.analytics.EventOutputType;
+import org.hisp.dhis.analytics.common.ColumnHeader;
+import org.hisp.dhis.analytics.event.QueryItemLocator;
+import org.hisp.dhis.analytics.table.EnrollmentAnalyticsColumnName;
+import org.hisp.dhis.analytics.table.EventAnalyticsColumnName;
+import org.hisp.dhis.analytics.util.RepeatableStageParamsHelper;
+import org.hisp.dhis.common.AnalyticsCustomHeader;
+import org.hisp.dhis.common.BaseDimensionalItemObject;
+import org.hisp.dhis.common.IdScheme;
+import org.hisp.dhis.common.IdentifiableObject;
+import org.hisp.dhis.common.PrimaryKeyObject;
+import org.hisp.dhis.common.QueryItem;
+import org.hisp.dhis.common.RepeatableStageParams;
+import org.hisp.dhis.common.ValueType;
+import org.hisp.dhis.dataelement.DataElement;
+import org.hisp.dhis.dataelement.DataElementService;
+import org.hisp.dhis.feedback.ErrorCode;
+import org.hisp.dhis.legend.LegendSet;
+import org.hisp.dhis.legend.LegendSetService;
+import org.hisp.dhis.program.Program;
+import org.hisp.dhis.program.ProgramIndicator;
+import org.hisp.dhis.program.ProgramIndicatorService;
+import org.hisp.dhis.program.ProgramStage;
+import org.hisp.dhis.program.ProgramStageService;
+import org.hisp.dhis.relationship.RelationshipType;
+import org.hisp.dhis.relationship.RelationshipTypeService;
+import org.hisp.dhis.trackedentity.TrackedEntityAttribute;
+import org.hisp.dhis.trackedentity.TrackedEntityAttributeService;
+import org.springframework.stereotype.Component;
+
+/**
+ * @author Luciano Fiandesio
+ */
+@Component
+@RequiredArgsConstructor
+public class DefaultQueryItemLocator implements QueryItemLocator {
+  private static final String EVENT_DATE_DIMENSION = "EVENT_DATE";
+
+  private final ProgramStageService programStageService;
+
+  private final DataElementService dataElementService;
+
+  private final TrackedEntityAttributeService attributeService;
+
+  private final ProgramIndicatorService programIndicatorService;
+
+  private final LegendSetService legendSetService;
+
+  private final RelationshipTypeService relationshipTypeService;
+
+  private final DataQueryService dataQueryService;
+
+  @Override
+  public QueryItem getQueryItemFromDimension(
+      String dimension, Program program, EventOutputType type) {
+    checkNotNull(program, "Program can not be null");
+
+    LegendSet legendSet = getLegendSet(dimension);
+
+    // Try each resolver in order until one returns a QueryItem.
+    List<Supplier<Optional<QueryItem>>> resolvers =
+        List.of(
+            () -> getDataElement(dimension, program, legendSet, type),
+            () -> getTrackedEntityAttribute(dimension, program, legendSet),
+            () -> getProgramIndicator(dimension, program, legendSet),
+            () -> getEventDate(dimension, program, legendSet),
+            () -> getScheduledDate(dimension, program, legendSet),
+            () -> getEventStatus(dimension, program, legendSet),
+            () -> getProgramStageOrgUnit(dimension, program, legendSet),
+            () -> getStaticDateDimension(dimension, program, legendSet, type),
+            () -> getDynamicDimension(dimension));
+
+    for (Supplier<Optional<QueryItem>> resolver : resolvers) {
+      Optional<QueryItem> result = resolver.get();
+      if (result.isPresent()) {
+        return result.get();
+      }
+    }
+
+    throw illegalQueryExSupplier(E7224, dimension).get();
+  }
+
+  private Optional<QueryItem> getProgramStageOrgUnit(
+      String dimension, Program program, LegendSet legendSet) {
+    if (EventAnalyticsColumnName.OU_COLUMN_NAME.equals(getSecondElement(dimension))) {
+      ProgramStage programStage = getProgramStageOrFail(dimension);
+
+      if (programStage != null) {
+        BaseDimensionalItemObject item =
+            new BaseDimensionalItemObject(EventAnalyticsColumnName.OU_COLUMN_NAME);
+        QueryItem qi =
+            new QueryItem(
+                    item,
+                    program,
+                    legendSet,
+                    ValueType.ORGANISATION_UNIT,
+                    AggregationType.NONE,
+                    null)
+                .withCustomHeader(AnalyticsCustomHeader.forOrgUnit(programStage));
+        qi.setProgramStage(programStage);
+        return Optional.of(qi);
+      }
+    }
+    return Optional.empty();
+  }
+
+  private Optional<QueryItem> getEventDate(String dimension, Program program, LegendSet legendSet) {
+    if (EVENT_DATE.name().equals(getSecondElement(dimension))) {
+      ProgramStage programStage = getProgramStageOrFail(dimension);
+
+      if (programStage != null) {
+        BaseDimensionalItemObject item =
+            new BaseDimensionalItemObject(EventAnalyticsColumnName.OCCURRED_DATE_COLUMN_NAME);
+        QueryItem qi =
+            new QueryItem(item, program, legendSet, ValueType.DATE, AggregationType.NONE, null)
+                .withCustomHeader(AnalyticsCustomHeader.forEventDate(programStage));
+        qi.setProgramStage(programStage);
+        return Optional.of(qi);
+      }
+    }
+    return Optional.empty();
+  }
+
+  private Optional<QueryItem> getScheduledDate(
+      String dimension, Program program, LegendSet legendSet) {
+    if (SCHEDULED_DATE.name().equals(getSecondElement(dimension))) {
+      ProgramStage programStage = getProgramStageOrFail(dimension);
+
+      if (programStage != null) {
+        BaseDimensionalItemObject item =
+            new BaseDimensionalItemObject(EventAnalyticsColumnName.SCHEDULED_DATE_COLUMN_NAME);
+        QueryItem qi =
+            new QueryItem(item, program, legendSet, ValueType.DATE, AggregationType.NONE, null)
+                .withCustomHeader(AnalyticsCustomHeader.forScheduledDate(programStage));
+        qi.setProgramStage(programStage);
+        return Optional.of(qi);
+      }
+    }
+    return Optional.empty();
+  }
+
+  private Optional<QueryItem> getEventStatus(
+      String dimension, Program program, LegendSet legendSet) {
+    if (ColumnHeader.EVENT_STATUS.name().equals(getSecondElement(dimension))) {
+      ProgramStage programStage = getProgramStageOrFail(dimension);
+
+      if (programStage != null) {
+        BaseDimensionalItemObject item =
+            new BaseDimensionalItemObject(EventAnalyticsColumnName.EVENT_STATUS_COLUMN_NAME);
+        QueryItem qi =
+            new QueryItem(item, program, legendSet, ValueType.TEXT, AggregationType.NONE, null)
+                .withCustomHeader(AnalyticsCustomHeader.forEventStatus(programStage));
+        qi.setProgramStage(programStage);
+        return Optional.of(qi);
+      }
+    }
+    return Optional.empty();
+  }
+
+  private Optional<QueryItem> getStaticDateDimension(
+      String dimension, Program program, LegendSet legendSet, EventOutputType type) {
+    if (hasProgramStageScope(dimension)) {
+      return Optional.empty();
+    }
+
+    String dim = getFirstElement(dimension);
+
+    if (ENROLLMENT_DATE.equals(dim)) {
+      return Optional.of(newDateQueryItem(program, legendSet, getEnrollmentDateColumn(type)));
+    }
+
+    if (INCIDENT_DATE.equals(dim)) {
+      return Optional.of(newDateQueryItem(program, legendSet, getIncidentDateColumn(type)));
+    }
+
+    if (LAST_UPDATED.equals(dim)) {
+      return Optional.of(newDateQueryItem(program, legendSet, getLastUpdatedColumn(type)));
+    }
+
+    if (CREATED.equals(dim)) {
+      return Optional.of(newDateQueryItem(program, legendSet, getCreatedDateColumn(type)));
+    }
+
+    if (COMPLETED.equals(dim)) {
+      return Optional.of(newDateQueryItem(program, legendSet, getCompletedDateColumn(type)));
+    }
+
+    if (EVENT_DATE_DIMENSION.equals(dim)) {
+      return Optional.of(
+          newDateQueryItem(program, legendSet, EventAnalyticsColumnName.OCCURRED_DATE_COLUMN_NAME));
+    }
+
+    if (org.hisp.dhis.common.DimensionConstants.SCHEDULED_DATE.equals(dim)) {
+      if (EventOutputType.ENROLLMENT == type) {
+        return Optional.empty();
+      }
+      return Optional.of(newDateQueryItem(program, legendSet, getScheduledDateColumn()));
+    }
+
+    return Optional.empty();
+  }
+
+  /**
+   * Given a UID representing a dimension, tries to check if it exists, and if true, returns a
+   * QueryItem using the passed UID
+   *
+   * @param dimension an UID representing a dimension
+   * @return a query item wrapping the specified dimension.
+   */
+  private Optional<QueryItem> getDynamicDimension(String dimension) {
+    return Optional.ofNullable(
+            dataQueryService.getDimension(
+                dimension,
+                Collections.emptyList(),
+                (Date) null,
+                Collections.emptyList(),
+                true,
+                null,
+                IdScheme.UID))
+        .map(PrimaryKeyObject::getUid)
+        .map(BaseDimensionalItemObject::new)
+        .map(QueryItem::new);
+  }
+
+  private LegendSet getLegendSet(String dimension) {
+    dimension = RepeatableStageParamsHelper.removeRepeatableStageParams(dimension);
+
+    String[] legendSplit = dimension.split(ITEM_SEP);
+
+    return legendSplit.length > 1 && legendSplit[1] != null
+        ? legendSetService.getLegendSet(legendSplit[1])
+        : null;
+  }
+
+  private String getElement(String dimension, int pos) {
+
+    String dim =
+        StringUtils.substringBefore(
+            RepeatableStageParamsHelper.removeRepeatableStageParams(dimension), ITEM_SEP);
+
+    String[] dimSplit = dim.split("\\" + DIMENSION_IDENTIFIER_SEP);
+
+    return dimSplit.length == 1 ? dimSplit[0] : dimSplit[pos];
+  }
+
+  private String getFirstElement(String dimension) {
+    return getElement(dimension, 0);
+  }
+
+  private String getSecondElement(String dimension) {
+    return getElement(dimension, 1);
+  }
+
+  private Optional<QueryItem> getDataElement(
+      String dimension, Program program, LegendSet legendSet, EventOutputType type) {
+    QueryItem qi = null;
+
+    ProgramStage programStage = getProgramStageOrFail(dimension);
+
+    DataElement de = dataElementService.getDataElement(getSecondElement(dimension));
+
+    if (de != null && program.containsDataElement(de)) {
+      ValueType valueType = legendSet != null ? ValueType.TEXT : de.getValueType();
+
+      qi =
+          new QueryItem(
+              de, program, legendSet, valueType, de.getAggregationType(), de.getOptionSet());
+
+      if (programStage != null) {
+        qi.setProgramStage(programStage);
+
+        qi.setRepeatableStageParams(getRepeatableStageParams(dimension));
+      } else if (type != null && type.equals(EventOutputType.ENROLLMENT)) {
+        throwIllegalQueryEx(ErrorCode.E7225, dimension);
+      }
+    }
+
+    return Optional.ofNullable(qi);
+  }
+
+  private Optional<QueryItem> getTrackedEntityAttribute(
+      String dimension, Program program, LegendSet legendSet) {
+    QueryItem qi = null;
+
+    TrackedEntityAttribute at =
+        attributeService.getTrackedEntityAttribute(getSecondElement(dimension));
+
+    if (at != null && program.containsAttribute(at)) {
+      ValueType valueType = legendSet != null ? ValueType.TEXT : at.getValueType();
+
+      qi =
+          new QueryItem(
+              at, program, legendSet, valueType, at.getAggregationType(), at.getOptionSet());
+
+      ProgramStage programStage = getProgramStageOrFail(dimension);
+
+      if (programStage != null) {
+        qi.setProgramStage(programStage);
+      }
+    }
+
+    return Optional.ofNullable(qi);
+  }
+
+  /**
+   * Returns a QueryItem for a TrackedEntityAttribute
+   *
+   * @param dimension the uid of the TrackedEntityAttribute
+   * @return a QueryItem for a TrackedEntityAttribute
+   */
+  @Override
+  public Optional<QueryItem> getQueryItemForTrackedEntityAttribute(String dimension) {
+    return Optional.ofNullable(dimension)
+        .map(attributeService::getTrackedEntityAttribute)
+        .map(attribute -> new QueryItem(attribute, getLegendSet(dimension)));
+  }
+
+  private Optional<QueryItem> getProgramIndicator(
+      String dimension, Program program, LegendSet legendSet) {
+    QueryItem qi = null;
+
+    RelationshipType relationshipType = getRelationshipTypeOrFail(dimension);
+
+    ProgramIndicator pi =
+        programIndicatorService.getProgramIndicatorByUid(getSecondElement(dimension));
+
+    // Only allow a program indicator from a different program to be added
+    // when a relationship type is present
+
+    if (pi != null) {
+      ProgramStage programStage = getProgramStageOrFail(dimension);
+
+      if (relationshipType != null) {
+        qi =
+            new QueryItem(
+                pi,
+                program,
+                legendSet,
+                ValueType.NUMBER,
+                pi.getAggregationType(),
+                null,
+                relationshipType);
+      } else {
+        if (program.getProgramIndicators().contains(pi)) {
+          qi =
+              new QueryItem(
+                  pi, program, legendSet, ValueType.NUMBER, pi.getAggregationType(), null);
+        }
+      }
+
+      if (qi != null && programStage != null) {
+        qi.setProgramStage(programStage);
+      }
+    }
+
+    return Optional.ofNullable(qi);
+  }
+
+  private ProgramStage getProgramStageOrFail(String dimension) {
+    IdentifiableObject baseIdentifiableObject = getIdObjectOrFail(dimension);
+
+    return (baseIdentifiableObject instanceof ProgramStage
+        ? (ProgramStage) baseIdentifiableObject
+        : null);
+  }
+
+  private static RepeatableStageParams getRepeatableStageParams(String dimension) {
+    return RepeatableStageParamsHelper.getRepeatableStageParams(dimension);
+  }
+
+  private RelationshipType getRelationshipTypeOrFail(String dimension) {
+    IdentifiableObject baseIdentifiableObject = getIdObjectOrFail(dimension);
+    return (baseIdentifiableObject instanceof RelationshipType
+        ? (RelationshipType) baseIdentifiableObject
+        : null);
+  }
+
+  private IdentifiableObject getIdObjectOrFail(String dimension) {
+    Stream<Supplier<IdentifiableObject>> fetchers =
+        Stream.of(
+            () -> relationshipTypeService.getRelationshipType(getFirstElement(dimension)),
+            () -> programStageService.getProgramStage(getFirstElement(dimension)));
+
+    boolean requiresIdObject = dimension.split("\\" + DIMENSION_IDENTIFIER_SEP).length > 1;
+
+    Optional<IdentifiableObject> found =
+        fetchers.map(Supplier::get).filter(Objects::nonNull).findFirst();
+
+    if (requiresIdObject && found.isEmpty()) {
+      throwIllegalQueryEx(ErrorCode.E7226, dimension);
+    }
+
+    return found.orElse(null);
+  }
+
+  private QueryItem newDateQueryItem(Program program, LegendSet legendSet, String columnName) {
+    return new QueryItem(
+        new BaseDimensionalItemObject(columnName),
+        program,
+        legendSet,
+        ValueType.DATE,
+        AggregationType.NONE,
+        null);
+  }
+
+  private boolean hasProgramStageScope(String dimension) {
+    return dimension.split("\\" + DIMENSION_IDENTIFIER_SEP).length > 1;
+  }
+
+  private String getEnrollmentDateColumn(EventOutputType type) {
+    if (EventOutputType.ENROLLMENT == type) {
+      return EnrollmentAnalyticsColumnName.ENROLLMENT_DATE_COLUMN_NAME;
+    }
+    return EventAnalyticsColumnName.ENROLLMENT_DATE_COLUMN_NAME;
+  }
+
+  private String getIncidentDateColumn(EventOutputType type) {
+    if (EventOutputType.ENROLLMENT == type) {
+      return EnrollmentAnalyticsColumnName.OCCURRED_DATE_COLUMN_NAME;
+    }
+    return EventAnalyticsColumnName.OCCURRED_DATE_COLUMN_NAME;
+  }
+
+  private String getLastUpdatedColumn(EventOutputType type) {
+    if (EventOutputType.ENROLLMENT == type) {
+      return EnrollmentAnalyticsColumnName.LAST_UPDATED_COLUMN_NAME;
+    }
+    return EventAnalyticsColumnName.LAST_UPDATED_COLUMN_NAME;
+  }
+
+  private String getCreatedDateColumn(EventOutputType type) {
+    if (EventOutputType.ENROLLMENT == type) {
+      return EventAnalyticsColumnName.CREATED_DATE_COLUMN_NAME;
+    }
+    return EventAnalyticsColumnName.CREATED_DATE_COLUMN_NAME;
+  }
+
+  private String getCompletedDateColumn(EventOutputType type) {
+    if (EventOutputType.ENROLLMENT == type) {
+      return EnrollmentAnalyticsColumnName.COMPLETED_DATE_COLUMN_NAME;
+    }
+    return EventAnalyticsColumnName.COMPLETED_DATE_COLUMN_NAME;
+  }
+
+  private String getScheduledDateColumn() {
+    return EventAnalyticsColumnName.SCHEDULED_DATE_COLUMN_NAME;
+  }
+}

@@ -1,0 +1,286 @@
+/*
+ * Copyright (c) 2004-2022, University of Oslo
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors 
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.hisp.dhis.dataintegrity;
+
+import static java.util.stream.Collectors.toList;
+import static org.hisp.dhis.dataintegrity.DataIntegrityYamlReader.ResourceLocation.CLASS_PATH;
+import static org.hisp.dhis.dataintegrity.DataIntegrityYamlReader.ResourceLocation.FILE_SYSTEM;
+import static org.hisp.dhis.dataintegrity.DataIntegrityYamlReader.readDataIntegrityYaml;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.networknt.schema.ValidationMessage;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.function.Predicate;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
+import org.hisp.dhis.dataintegrity.DataIntegrityDetails.DataIntegrityIssue;
+import org.hisp.dhis.jsonschema.JsonSchemaValidator;
+import org.junit.jupiter.api.Test;
+import org.springframework.core.io.ClassPathResource;
+
+/**
+ * Tests the {@link DataIntegrityYamlReader}.
+ *
+ * @author Jan Bernitt
+ */
+class DataIntegrityYamlReaderTest {
+  @Test
+  void testAllChecksMatchSchema() throws Exception {
+    ObjectMapper yaml = new ObjectMapper(new YAMLFactory());
+
+    try (InputStream is = new ClassPathResource("data-integrity-checks.yaml").getInputStream()) {
+      JsonNode checksList = yaml.readTree(is).get("checks");
+
+      for (JsonNode checkPath : checksList) {
+        String relativePath = checkPath.asText();
+        String resourcePath = "data-integrity-checks/" + relativePath;
+
+        try (InputStream checkStream = new ClassPathResource(resourcePath).getInputStream()) {
+          JsonNode checkJson = yaml.readValue(checkStream, JsonNode.class);
+          Set<ValidationMessage> validationMessages =
+              JsonSchemaValidator.validateDataIntegrityCheck(checkJson);
+
+          assertTrue(
+              validationMessages.isEmpty(),
+              "Data integrity check `"
+                  + relativePath
+                  + "` failed schema validation: "
+                  + validationMessages);
+        }
+      }
+    }
+  }
+
+  @Test
+  void testReadDataIntegrityYaml() {
+
+    List<DataIntegrityCheck> checks = new ArrayList<>();
+    readYaml(checks, "data-integrity-checks.yaml", "data-integrity-checks", CLASS_PATH);
+    assertEquals(95, checks.size());
+
+    // Names should be unique
+    List<String> allNames = checks.stream().map(DataIntegrityCheck::getName).toList();
+    assertEquals(allNames.size(), Set.copyOf(allNames).size());
+
+    // Config checks and Java checks should not have any of the same names
+    List<String> nonYamlChecks =
+        Stream.of(DataIntegrityCheckType.values())
+            .map(e -> e.getName().toLowerCase())
+            .collect(toList());
+    assertTrue(nonYamlChecks.size() > 0);
+    nonYamlChecks.retainAll(allNames);
+    assertEquals(0, nonYamlChecks.size());
+
+    // Assert that all "codes" are unique.
+    List<String> codeList = checks.stream().map(DataIntegrityCheck::getCode).sorted().toList();
+    assertEquals(codeList.size(), Set.copyOf(codeList).size());
+
+    // Assert that all the descriptions are unique.
+    List<String> nameList =
+        checks.stream().map(DataIntegrityCheck::getDescription).sorted().toList();
+    assertEquals(nameList.size(), Set.copyOf(nameList).size());
+
+    // Assert that codes consist of upper case letter and numbers only
+    String regEx = "^[A-Z0-9]+$";
+    Predicate<String> IS_NOT_CAPS = Pattern.compile(regEx).asPredicate().negate();
+    List<String> badCodes = codeList.stream().filter(IS_NOT_CAPS).toList();
+    assertEquals(0, badCodes.size());
+
+    DataIntegrityCheck check = checks.get(0);
+    assertEquals("categories_no_options", check.getName());
+    assertEquals("Categories with no category options", check.getDescription());
+    assertEquals("Categories", check.getSection());
+    assertEquals("categories", check.getIssuesIdType());
+    assertEquals(DataIntegritySeverity.WARNING, check.getSeverity());
+    assertEquals(
+        "Categories should always have at least one category option.", check.getIntroduction());
+    assertEquals(
+        "Any categories without category options should either be removed from the"
+            + " system if they are not in use. Otherwise, appropriate category options"
+            + " should be added to the category.",
+        check.getRecommendation());
+    assertFalse(check.isSlow());
+    assertTrue(
+        check
+            .getRunDetailsCheck()
+            .apply(check)
+            .getIssues()
+            .get(0)
+            .getComment()
+            .startsWith("SELECT uid,name from category"));
+  }
+
+  @Test
+  void testWithValidChecksFile() {
+    List<DataIntegrityCheck> checks = new ArrayList<>();
+    readYaml(checks, "test-data-integrity-checks.yaml", "test-data-integrity-checks", CLASS_PATH);
+    assertEquals(1, checks.size());
+  }
+
+  @Test
+  void testWithInvalidChecksFile() {
+    List<DataIntegrityCheck> checks = new ArrayList<>();
+    readYaml(checks, "invalid-file-checks.yaml", "test-data-integrity-checks", CLASS_PATH);
+    assertEquals(0, checks.size());
+  }
+
+  @Test
+  void testWithInvalidChecksDirectory() {
+    List<DataIntegrityCheck> checks = new ArrayList<>();
+    readYaml(checks, "test-data-integrity-checks.yaml", "invalid-integrity-checks", CLASS_PATH);
+    assertEquals(0, checks.size());
+  }
+
+  @Test
+  void testWithInvalidChecksDirectoryFromFileSystem() {
+    List<DataIntegrityCheck> checks = new ArrayList<>();
+    readYaml(checks, "data-integrity-checks.yaml", "invalid-integrity-checks", FILE_SYSTEM);
+    assertEquals(0, checks.size());
+  }
+
+  @Test
+  void testWithInvalidYamlFormat() {
+    List<DataIntegrityCheck> checks = new ArrayList<>();
+    readYaml(
+        checks, "test-data-integrity-checks.yaml", "test-data-integrity-checks.yaml", FILE_SYSTEM);
+    assertEquals(0, checks.size());
+  }
+
+  @Test
+  void testChecksHaveTranslations() {
+    ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n_global");
+
+    List<String> translationsSuffix = new ArrayList<>();
+    /* Require the name only for now, but we can add the other translations strings later when needed.
+    e.g. description, introduction, recommendation, section
+     */
+    translationsSuffix.add("name");
+
+    List<DataIntegrityCheck> checks = new ArrayList<>();
+    readYaml(checks, "data-integrity-checks.yaml", "data-integrity-checks", CLASS_PATH);
+    // Check for names
+    for (DataIntegrityCheck check : checks) {
+      for (String suffix : translationsSuffix) {
+        String translationKey = "data_integrity." + check.getName() + "." + suffix;
+        assertTrue(
+            resourceBundle.containsKey(translationKey),
+            "data integrity check translations should contain " + translationKey);
+      }
+    }
+  }
+
+  @Test
+  void testTranslationsAreNotDuplicated() {
+    ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n_global");
+
+    List<String> translationsSuffix = new ArrayList<>();
+    /* Require the name only for now, but we can add the other translations strings later when needed.
+    e.g. description, introduction, recommendation, section
+     */
+    translationsSuffix.add("name");
+
+    List<DataIntegrityCheck> checks = new ArrayList<>();
+    readYaml(checks, "data-integrity-checks.yaml", "data-integrity-checks", CLASS_PATH);
+    // Check for names
+    for (DataIntegrityCheck check : checks) {
+      for (String suffix : translationsSuffix) {
+        String translationKey = "data_integrity." + check.getName() + "." + suffix;
+        // Get the translation from the key
+        String translation = resourceBundle.getString(translationKey);
+        // Count the number of times the translation appears in the resource bundle
+        long count =
+            resourceBundle.keySet().stream()
+                .filter(key -> resourceBundle.getString(key).equals(translation))
+                .count();
+        // If the translation appears more than once, fail the test
+        assertEquals(1, count, "Duplicate translation found for " + translationKey);
+      }
+    }
+
+    // Assert that all the keys and strings are unique
+    List<String> keys =
+        resourceBundle.keySet().stream()
+            .filter(key -> key.startsWith("data_integrity") && key.endsWith("name"))
+            .toList();
+    assertEquals(keys.size(), Set.copyOf(keys).size());
+    assertEquals(
+        keys.size(), Set.copyOf(keys.stream().map(resourceBundle::getString).toList()).size());
+  }
+
+  @Test
+  void testTranslationsAreEqualToCheckDescriptions() {
+    ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n_global");
+
+    List<DataIntegrityCheck> checks = new ArrayList<>();
+    readYaml(checks, "data-integrity-checks.yaml", "data-integrity-checks", CLASS_PATH);
+    // Check for names
+    for (DataIntegrityCheck check : checks) {
+      String translationKey = "data_integrity." + check.getName() + ".name";
+      String translation = resourceBundle.getString(translationKey);
+      assertEquals(
+          check.getDescription(),
+          translation,
+          "Data integrity check description should match translation for key " + translationKey);
+    }
+  }
+
+  private void readYaml(
+      List<DataIntegrityCheck> checks,
+      String fileChecks,
+      String checksDirectory,
+      DataIntegrityYamlReader.ResourceLocation resourceLocation) {
+    readDataIntegrityYaml(
+        new DefaultDataIntegrityService.DataIntegrityRecord(
+            resourceLocation,
+            fileChecks,
+            checksDirectory,
+            checks::add,
+            (property, defaultValue) -> defaultValue,
+            sql -> check -> new DataIntegritySummary(check, new Date(), new Date(), null, 1, 100d),
+            sql ->
+                check ->
+                    new DataIntegrityDetails(
+                        check,
+                        new Date(),
+                        new Date(),
+                        null,
+                        List.of(new DataIntegrityIssue("id", "name", sql, List.of())))));
+  }
+}

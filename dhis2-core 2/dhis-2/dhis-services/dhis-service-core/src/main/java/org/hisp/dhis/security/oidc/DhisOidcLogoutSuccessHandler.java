@@ -1,0 +1,188 @@
+/*
+ * Copyright (c) 2004-2022, University of Oslo
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors 
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.hisp.dhis.security.oidc;
+
+import static com.google.common.base.Strings.isNullOrEmpty;
+import static org.hisp.dhis.external.conf.ConfigurationKey.LINKED_ACCOUNTS_ENABLED;
+import static org.hisp.dhis.external.conf.ConfigurationKey.LINKED_ACCOUNTS_LOGOUT_URL;
+import static org.hisp.dhis.external.conf.ConfigurationKey.LINKED_ACCOUNTS_RELOGIN_URL;
+import static org.hisp.dhis.external.conf.ConfigurationKey.OIDC_LOGOUT_REDIRECT_URL;
+import static org.hisp.dhis.external.conf.ConfigurationKey.OIDC_OAUTH2_LOGIN_ENABLED;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.regex.Pattern;
+import javax.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
+import org.hisp.dhis.commons.util.TextUtils;
+import org.hisp.dhis.external.conf.DhisConfigurationProvider;
+import org.hisp.dhis.setting.SystemSettingsProvider;
+import org.hisp.dhis.user.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.oidc.web.logout.OidcClientInitiatedLogoutSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
+import org.springframework.stereotype.Component;
+
+/**
+ * Spring {@link LogoutSuccessHandler} that drives the redirect after a DHIS2 user logs out of a
+ * session backed by an OIDC Identity Provider.
+ *
+ * <p>Pick logic in {@link #init()}:
+ *
+ * <ul>
+ *   <li>When {@code oidc.oauth2.login.enabled=on} and the selected provider exposes an {@code
+ *       end_session_endpoint} ({@code oidc.provider.<id>.end_session_endpoint}) with {@code
+ *       enable_logout=on}, the handler becomes a Spring {@link
+ *       OidcClientInitiatedLogoutSuccessHandler} that redirects the browser to the IdP's
+ *       RP-initiated logout endpoint using {@code oidc.logout.redirect_url} as the post-logout
+ *       redirect URI.
+ *   <li>When the linked-accounts feature is enabled ({@code linked_accounts.enabled=on}), or when
+ *       OIDC login is disabled, logout falls back to a {@link SimpleUrlLogoutSuccessHandler}
+ *       targeting {@code oidc.logout.redirect_url} (or {@code /} when unset).
+ * </ul>
+ *
+ * <p>In addition, {@link #onLogoutSuccess} supports a {@code redirect_uri} query parameter used by
+ * the Android Capture app's deep-link logout flow (e.g. {@code dhis2oauth://oauth}). The value is
+ * accepted only if it matches the configured device-enrollment redirect allowlist, to prevent
+ * open-redirect abuse. When the linked-accounts feature is active and a {@code switch} parameter is
+ * present, the handler switches active linked account via {@code
+ * UserService.setActiveLinkedAccounts} and redirects to {@code linked_accounts.relogin_url};
+ * otherwise it redirects to {@code linked_accounts.logout_url}.
+ *
+ * @author Morten Svanæs <msvanaes@dhis2.org>
+ */
+@Component
+@RequiredArgsConstructor
+public class DhisOidcLogoutSuccessHandler implements LogoutSuccessHandler {
+
+  private final DhisConfigurationProvider config;
+  private final DhisOidcProviderRepository dhisOidcProviderRepository;
+  private final UserService userService;
+  private final SystemSettingsProvider settingsProvider;
+
+  private SimpleUrlLogoutSuccessHandler handler;
+
+  @PostConstruct
+  public void init() {
+    if (config.isEnabled(OIDC_OAUTH2_LOGIN_ENABLED)) {
+      setOidcLogoutUrl();
+    } else {
+      this.handler = new SimpleUrlLogoutSuccessHandler();
+      this.handler.setDefaultTargetUrl("/");
+    }
+  }
+
+  private void setOidcLogoutUrl() {
+    String logoutUri = config.getPropertyOrDefault(OIDC_LOGOUT_REDIRECT_URL, "/");
+
+    if (config.isEnabled(LINKED_ACCOUNTS_ENABLED)) {
+      this.handler = new SimpleUrlLogoutSuccessHandler();
+      this.handler.setDefaultTargetUrl(logoutUri);
+    } else {
+      OidcClientInitiatedLogoutSuccessHandler oidcHandler =
+          new OidcClientInitiatedLogoutSuccessHandler(dhisOidcProviderRepository);
+      oidcHandler.setPostLogoutRedirectUri(logoutUri);
+      this.handler = oidcHandler;
+      this.handler.setDefaultTargetUrl(logoutUri);
+    }
+  }
+
+  @Override
+  public void onLogoutSuccess(
+      HttpServletRequest request, HttpServletResponse response, Authentication authentication)
+      throws IOException, ServletException {
+    // Support custom redirect URI for mobile app deep links (e.g., dhis2oauth://oauth).
+    // Validated against the device enrollment redirect allowlist to prevent open redirects.
+    String redirectUri = request.getParameter("redirect_uri");
+    if (!isNullOrEmpty(redirectUri) && isRedirectUriAllowed(redirectUri)) {
+      response.sendRedirect(redirectUri);
+      return;
+    }
+
+    if (config.isEnabled(OIDC_OAUTH2_LOGIN_ENABLED) && config.isEnabled(LINKED_ACCOUNTS_ENABLED)) {
+      handleLinkedAccountsLogout(request, response, authentication);
+      return;
+    }
+
+    handler.onLogoutSuccess(request, response, authentication);
+  }
+
+  private void handleLinkedAccountsLogout(
+      HttpServletRequest request, HttpServletResponse response, Authentication authentication)
+      throws IOException, ServletException {
+
+    String usernameToSwitchTo = request.getParameter("switch");
+    String linkedAccountsLogoutUrl = config.getProperty(LINKED_ACCOUNTS_LOGOUT_URL);
+    if (isNullOrEmpty(linkedAccountsLogoutUrl)) {
+      // Fallback if not defined in config
+      linkedAccountsLogoutUrl = "/";
+    }
+
+    if (isNullOrEmpty(usernameToSwitchTo)) {
+      // No switch parameter present: redirect to linked_accounts.logout_url
+      this.handler.setDefaultTargetUrl(linkedAccountsLogoutUrl);
+    } else {
+      // switch parameter present: switch accounts and then redirect to re-login URL
+      String currentUsername = request.getParameter("current");
+      if (!isNullOrEmpty(currentUsername)) {
+        userService.setActiveLinkedAccounts(currentUsername, usernameToSwitchTo);
+      }
+      this.handler.setDefaultTargetUrl(config.getProperty(LINKED_ACCOUNTS_RELOGIN_URL));
+    }
+
+    handler.onLogoutSuccess(request, response, authentication);
+  }
+
+  /**
+   * Check if the provided redirect URI is allowed based on the device enrollment redirect allowlist
+   * from system settings. Uses case-insensitive glob-to-regex matching, consistent with {@link
+   * org.hisp.dhis.commons.util.TextUtils#createRegexFromGlob}.
+   *
+   * @param redirectUri the redirect URI to check
+   * @return true if the redirect URI matches an entry in the allowlist, false otherwise
+   */
+  private boolean isRedirectUriAllowed(String redirectUri) {
+    if (redirectUri == null || redirectUri.isBlank()) return false;
+    String allowlist = settingsProvider.getCurrentSettings().getDeviceEnrollmentRedirectAllowlist();
+    if (allowlist == null || allowlist.isBlank()) return false;
+    for (String entry : allowlist.split(",")) {
+      String trimmed = entry.trim();
+      if (trimmed.isEmpty()) continue;
+      String regex = TextUtils.createRegexFromGlob(trimmed);
+      if (Pattern.compile(regex, Pattern.CASE_INSENSITIVE).matcher(redirectUri).matches()) {
+        return true;
+      }
+    }
+    return false;
+  }
+}

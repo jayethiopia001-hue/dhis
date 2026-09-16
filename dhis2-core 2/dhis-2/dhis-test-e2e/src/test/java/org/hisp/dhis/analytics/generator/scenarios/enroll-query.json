@@ -1,0 +1,200 @@
+{
+  "scenarios": [
+    {
+      "name": "someDimensionsWithFilter",
+      "query": "/api/analytics/enrollments/query/ur1Edk5Oe2n.json?dimension=ou:O6uvpzGd5pu,J5jldMd8OHv,w75KJ2mc4zz,cejWyOfXge6:IN:Female,GUOBQt5K2WI:LIKE:Cape,ZkbAXlQUYJG.U5ubm6PPYrM,lZGmxYbs97q,OvY4VVhSDeJ:LE:45:NE:NV:!EQ:44&headers=ouname,J5jldMd8OHv,w75KJ2mc4zz,cejWyOfXge6,GUOBQt5K2WI,ZkbAXlQUYJG.U5ubm6PPYrM,lZGmxYbs97q,OvY4VVhSDeJ,lastupdated,createdbydisplayname,lastupdatedbydisplayname,enrollmentdate,programstatus&totalPages=false&rowContext=true&lastUpdated=LAST_10_YEARS&programStatus=ACTIVE&displayProperty=NAME&pageSize=100&page=1&includeMetadataDetails=true&outputType=ENROLLMENT&asc=OvY4VVhSDeJ&relativePeriodDate=2022-07-01",
+      "version": {
+        "min": 39
+      }
+    },
+    {
+      "name": "financialYear2022Sep",
+      "query": "/api/42/analytics/enrollments/query/IpHINAT79UW.json?dimension=ou:USER_ORGUNIT,GxdhnY5wmHq&headers=ouname,GxdhnY5wmHq,lastupdated&totalPages=false&rowContext=true&lastUpdated=2022Sep&displayProperty=NAME&pageSize=100&page=1&includeMetadataDetails=true&outputType=ENROLLMENT",
+      "version": {
+        "min": 42
+      }
+    },
+    {
+      "name": "programIndicatorWeightGainBetweenBirthAndLastPostnatal",
+      "query": "/api/42/analytics/enrollments/query/IpHINAT79UW.json?dimension=ou:USER_ORGUNIT,qhTkqwAJLMv:EQ:NV&headers=ouname,lastupdated,qhTkqwAJLMv&totalPages=false&rowContext=true&lastUpdated=LAST_6_MONTHS&displayProperty=NAME&pageSize=10&page=1&includeMetadataDetails=true&outputType=ENROLLMENT&desc=lastupdated&relativePeriodDate=2019-02-01",
+      "version": {
+        "min": 41
+      }
+    },
+    {
+      "name": "programIndicatorWomenWithLowHbVisitWithinOneYear",
+      "query": "/api/42/analytics/enrollments/query/WSGAb5XwJ3Y.json?dimension=EDp0b79Rbx9,ou:USER_ORGUNIT&headers=ouname,lastupdated,EDp0b79Rbx9,programstatus,enrollmentdate&totalPages=false&rowContext=true&lastUpdated=LAST_12_MONTHS&displayProperty=NAME&pageSize=100&page=1&includeMetadataDetails=true&outputType=ENROLLMENT&relativePeriodDate=2019-02-01&desc=lastupdated",
+      "version": {
+        "min": 41
+      }
+    },
+    {
+      "name": "programIndicatorMalariaCaseComplex",
+      "query": "/api/analytics/enrollments/query/qDkgAbB5Jlk.json?dimension=NL89wvU7Rqa:NE:NV:GE:76:LE:80,ou:USER_ORGUNIT&headers=ouname,lastupdated,NL89wvU7Rqa&totalPages=false&rowContext=true&lastUpdated=LAST_10_YEARS&displayProperty=NAME&pageSize=100&page=1&includeMetadataDetails=true&outputType=ENROLLMENT&asc=NL89wvU7Rqa&relativePeriodDate=2025-01-20",
+      "version": {
+        "min": 42
+      }
+    },
+    {
+      "name": "programIndicatorTBProgramComplex",
+      "query": "/api/analytics/enrollments/query/ur1Edk5Oe2n.json?dimension=ou:USER_ORGUNIT,hgTNuHSqBmL:GT:404:NE:NV&headers=ouname,hgTNuHSqBmL,lastupdated&totalPages=false&rowContext=true&lastUpdated=LAST_10_YEARS&displayProperty=NAME&pageSize=100&page=1&includeMetadataDetails=true&outputType=ENROLLMENT&asc=hgTNuHSqBmL&relativePeriodDate=2025-01-20",
+      "version": {
+        "min": 42
+      }
+    },
+    {
+      "name": "programIndicatorChildProgramComplex",
+      "query": "/api/analytics/enrollments/query/IpHINAT79UW.json?dimension=ou:USER_ORGUNIT,qZOBw051LSf&headers=ouname,lastupdated,qZOBw051LSf,programstatus&totalPages=false&rowContext=true&lastUpdated=LAST_10_YEARS&programStatus=COMPLETED&displayProperty=NAME&pageSize=100&page=1&includeMetadataDetails=true&outputType=ENROLLMENT&desc=lastupdated&relativePeriodDate=2025-01-20",
+      "version": {
+        "min": 42
+      }
+    },
+    {
+      "name": "metadataForDataElementOfTypeOrgUnitFilterEq",
+      "query": "/api/analytics/enrollments/query/WSGAb5XwJ3Y.json?dimension=PFDfvmGpsR3.n1rtSHYf6O6:EQ:OI0BQUurVFS,ou:USER_ORGUNIT&headers=ouname,PFDfvmGpsR3.n1rtSHYf6O6&totalPages=false&rowContext=true&displayProperty=NAME&pageSize=100&page=1&includeMetadataDetails=true&outputType=ENROLLMENT",
+      "version": {
+        "min": 42
+      }
+    },
+    {
+      "name": "metadataForDataElementOfTypeOrgUnitFilterIn",
+      "query": "/api/analytics/enrollments/query/WSGAb5XwJ3Y.json?dimension=PFDfvmGpsR3.n1rtSHYf6O6:IN:OI0BQUurVFS;LEVEL-H1KlN4QIauv;USER_ORGUNIT_GRANDCHILDREN,ou:USER_ORGUNIT&headers=ouname,PFDfvmGpsR3.n1rtSHYf6O6&totalPages=false&rowContext=true&displayProperty=NAME&pageSize=100&page=1&includeMetadataDetails=true&outputType=ENROLLMENT",
+      "version": {
+        "min": 42
+      }
+    },
+    {
+      "name": "queryRandomquery12",
+      "query": "/api/analytics/enrollments/query/M3xtLkYBlKI.json?includeMetadataDetails=true&displayProperty=NAME&totalPages=false&rowContext=true&pageSize=100&outputType=ENROLLMENT&page=1&dimension=ou:USER_ORGUNIT,pe:LAST_YEAR,CWaAcQYKVpq[-1].fyjPqlHE7Dn&skipRounding=true&relativePeriodDate=2022-01-01&desc=incidentdate",
+      "version": {
+        "min": 42
+      }
+    },
+    {
+      "name": "queryWithProgramAndProgramStageWhenTotalPagesIsFalse",
+      "query": "/api/analytics/enrollments/query/IpHINAT79UW.json?dimension=pe:LAST_12_MONTHS,ou:ImspTQPwCqd,A03MvHHogjR.UXz7xuGCEhU&stage=A03MvHHogjR&displayProperty=NAME&outputType=ENROLLMENT&asc=A03MvHHogjR.UXz7xuGCEhU,lastupdated&totalPages=false&pageSize=100&page=1&relativePeriodDate=2022-09-27",
+      "version": {
+        "min": 42
+      }
+    },
+    {
+      "name": "queryProgramIndicatorCreationDate",
+      "query": "/api/43/analytics/enrollments/query/IpHINAT79UW.json?dimension=Z7uM5fNRxCb,ou%3ADiszpKrYNg8%3Bg8upMTyEZGZ&headers=ouname,enrollmentdate,Z7uM5fNRxCb&totalPages=false&rowContext=true&displayProperty=NAME&pageSize=100&page=1&includeMetadataDetails=true&outputType=ENROLLMENT&asc=enrollmentdate,ouname",
+      "version": {
+        "min": 42
+      }
+    },
+    {
+      "name": "queryProgramIndicatorEventStatusFilter",
+      "query": "/api/43/analytics/enrollments/query/IpHINAT79UW.json?dimension=ou%3ADiszpKrYNg8%3Bg8upMTyEZGZ%3BjNb63DIHuwU,v595RQPKxw3&headers=ouname,v595RQPKxw3,enrollmentdate&totalPages=false&rowContext=true&enrollmentDate=LAST_10_YEARS&displayProperty=NAME&pageSize=100&page=1&includeMetadataDetails=true&outputType=ENROLLMENT&asc=enrollmentdate,ouname",
+      "version": {
+        "min": 42
+      }
+    },
+    {
+      "name": "queryCountIfValue",
+      "query": "/api/analytics/enrollments/query/ur1Edk5Oe2n.json?dimension=nkpoWBaUHDK:GE:1,ou:DiszpKrYNg8;g8upMTyEZGZ;jNb63DIHuwU;ImspTQPwCqd&headers=ouname,enrollmentdate,nkpoWBaUHDK&totalPages=false&rowContext=true&enrollmentDate=LAST_5_YEARS&displayProperty=NAME&pageSize=100&page=1&includeMetadataDetails=true&outputType=ENROLLMENT&asc=enrollmentdate,ouname",
+      "version": {
+        "min": 42
+      }
+    },
+    {
+      "name": "multipoleOffsets",
+      "query": "/api/analytics/enrollments/query/M3xtLkYBlKI?dimension=uvMKOn1oWvd[0].DX4LVYeP7bw,uvMKOn1oWvd[1].DX4LVYeP7bw,ou:USER_ORGUNIT&headers=ouname,uvMKOn1oWvd[1].DX4LVYeP7bw,uvMKOn1oWvd[0].DX4LVYeP7bw&totalPages=false&rowContext=true&displayProperty=NAME&pageSize=100&page=1&includeMetadataDetails=true&outputType=ENROLLMENT",
+      "version": {
+        "min": 42
+      }
+    },
+    {
+      "name": "stageAndEventDate2021",
+      "query": "/api/analytics/enrollments/query/IpHINAT79UW.json?includeMetadataDetails=true&headers=ouname,enrollmentdate,A03MvHHogjR.eventdate&displayProperty=NAME&totalPages=false&outputType=ENROLLMENT&pageSize=100&page=1&dimension=ou:ImspTQPwCqd&dimension=A03MvHHogjR.EVENT_DATE:2021&desc=enrollmentdate,ouname",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndScheduledDate",
+      "query": "/api/analytics/enrollments/query/IpHINAT79UW.json?includeMetadataDetails=true&headers=ouname,enrollmentdate,A03MvHHogjR.scheduleddate&displayProperty=NAME&totalPages=false&outputType=ENROLLMENT&pageSize=100&page=1&dimension=ou:ImspTQPwCqd&dimension=A03MvHHogjR.SCHEDULED_DATE:2021&desc=enrollmentdate,ouname",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndSimpleOu",
+      "query": "/api/analytics/enrollments/query/IpHINAT79UW.json?includeMetadataDetails=true&headers=ouname,enrollmentdate,ZzYYXq4fJie.ouname&displayProperty=NAME&totalPages=false&pageSize=100&page=1&dimension=ZzYYXq4fJie.ou:DiszpKrYNg8,pe:202301&desc=enrollmentdate,ouname",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndSimpleOuWithoutHeaders",
+      "query": "/api/analytics/enrollments/query/IpHINAT79UW.json?includeMetadataDetails=true&headers=ouname,enrollmentdate&displayProperty=NAME&totalPages=false&pageSize=100&page=1&dimension=ZzYYXq4fJie.ou:DiszpKrYNg8,pe:202301&desc=enrollmentdate,ouname",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndMultipleOu",
+      "query": "/api/analytics/enrollments/query/IpHINAT79UW.json?includeMetadataDetails=true&headers=ouname,enrollmentdate,ZzYYXq4fJie.ou&displayProperty=NAME&totalPages=false&pageSize=100&page=1&dimension=ZzYYXq4fJie.ou:DiszpKrYNg8;PMa2VCrupOd,pe:202301&desc=enrollmentdate,ouname",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndLevelAndUserOrg",
+      "query": "/api/analytics/enrollments/query/IpHINAT79UW.json?includeMetadataDetails=true&headers=ouname,enrollmentdate,ZzYYXq4fJie.oucode,ZzYYXq4fJie.ouname&displayProperty=NAME&totalPages=false&pageSize=100&page=1&dimension=ZzYYXq4fJie.ou:LEVEL-tTUf91fCytl;USER_ORGUNIT;cgqkFdShPzg,pe:202301&desc=enrollmentdate,ouname",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndOuGroup",
+      "query": "/api/analytics/enrollments/query/IpHINAT79UW.json?includeMetadataDetails=true&headers=ouname,enrollmentdate,ZzYYXq4fJie.ouname,ZzYYXq4fJie.oucode&displayProperty=NAME&totalPages=false&pageSize=100&page=1&dimension=ZzYYXq4fJie.ou:OU_GROUP-CXw2yu5fodb,pe:202301&desc=enrollmentdate,ouname",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndEventStatusActiveAndEventDate2021",
+      "query": "/api/analytics/enrollments/query/IpHINAT79UW.json?includeMetadataDetails=true&headers=ouname,enrollmentdate,ZzYYXq4fJie.eventstatus,A03MvHHogjR.eventdate&displayProperty=NAME&totalPages=false&outputType=ENROLLMENT&pageSize=100&page=1&dimension=ZzYYXq4fJie.EVENT_STATUS:ACTIVE&dimension=A03MvHHogjR.EVENT_DATE:2021&desc=enrollmentdate,ouname",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndEventStatusHeaderOnly",
+      "query": "/api/analytics/enrollments/query/IpHINAT79UW.json?includeMetadataDetails=true&headers=ouname,enrollmentdate,ZzYYXq4fJie.eventstatus,A03MvHHogjR.eventdate&displayProperty=NAME&totalPages=false&outputType=ENROLLMENT&pageSize=100&page=1&dimension=A03MvHHogjR.EVENT_DATE:2021&desc=enrollmentdate,ouname",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "fixedPeriod2017Feb",
+      "query": "/api/analytics/enrollments/query/IpHINAT79UW.json?dimension=ou:ImspTQPwCqd&headers=ouname,lastupdated&totalPages=false&rowContext=true&lastUpdated=2017Feb&displayProperty=NAME&pageSize=100&page=1&includeMetadataDetails=true&outputType=ENROLLMENT&desc=lastupdated",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "validateStagePrefixedOuNameHeaderAlongsideEnrollmentOuName",
+      "query": "/api/analytics/enrollments/query/IpHINAT79UW.json?includeMetadataDetails=true&headers=enrollmentdate,ZzYYXq4fJie.ouname&displayProperty=NAME&totalPages=false&pageSize=100&page=1&dimension=pe:202301&desc=enrollmentdate,ouname",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "validateStagePrefixedEventDateHeaderWithoutDimension",
+      "query": "/api/analytics/enrollments/query/IpHINAT79UW.json?includeMetadataDetails=true&headers=A03MvHHogjR.eventdate,enrollmentdate,ouname&displayProperty=NAME&totalPages=false&pageSize=20&page=1&desc=enrollmentdate,ouname",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "ouMultipleLevels",
+      "query": "/api/analytics/enrollments/query/IpHINAT79UW.json?dimension=ou:USER_ORGUNIT;LEVEL-wjP19dkFeIk;LEVEL-tTUf91fCytl;LEVEL-m9lBJogzE95&headers=ouname,lastupdated&totalPages=false&rowContext=true&lastUpdated=201707&displayProperty=NAME&pageSize=100&page=1&includeMetadataDetails=true&outputType=ENROLLMENT",
+      "version": {
+        "min": 41
+      }
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+/*
+ * Copyright (c) 2004-2022, University of Oslo
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors 
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.hisp.dhis.security.oidc;
+
+import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
+import org.hisp.dhis.user.User;
+import org.hisp.dhis.user.UserDetails;
+import org.hisp.dhis.user.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.core.OAuth2Error;
+import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
+import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.stereotype.Service;
+
+/**
+ * DHIS2 extension of Spring Security's {@link OidcUserService} that runs after a successful
+ * authorization-code exchange against an OIDC Identity Provider. It reads the claim configured by
+ * {@code mapping_claim} on the provider (default {@code email} for external providers, {@code
+ * username} for the internal DHIS2 provider) from the ID token and userinfo response, then resolves
+ * that value to a local DHIS2 user via {@code UserService.getUserByOpenId}.
+ *
+ * <p>The matched DHIS2 user must have the "External authentication only (OpenID or LDAP)" flag set
+ * ({@code isExternalAuth()}), must not be disabled, and must not have an expired account; otherwise
+ * authentication fails with an {@link OAuth2AuthenticationException}. The lookup supports the
+ * linked-accounts feature: when a single IdP claim value maps to multiple DHIS2 users, {@code
+ * getUserByOpenId} returns the most recently signed-in account.
+ *
+ * <p>On success the method returns a {@link DhisOidcUser} wrapping the DHIS2 {@code UserDetails}
+ * together with the raw OIDC claims and the validated ID token.
+ *
+ * @author Morten Svanæs <msvanaes@dhis2.org>
+ */
+@Slf4j
+@Service
+public class DhisOidcUserService extends OidcUserService {
+  @Autowired public UserService userService;
+
+  @Autowired private DhisOidcProviderRepository clientRegistrationRepository;
+
+  /**
+   * Delegates to {@link OidcUserService#loadUser(OidcUserRequest)} to fetch the OIDC user and then
+   * maps the provider's {@code mapping_claim} value to a local DHIS2 user. Throws {@link
+   * OAuth2AuthenticationException} if the claim is missing, no matching DHIS2 user exists, the
+   * DHIS2 user is not flagged for external authentication, or the account is disabled or expired.
+   *
+   * @param userRequest the OIDC user request produced after the code-for-token exchange
+   * @return a {@link DhisOidcUser} bound to the resolved DHIS2 user
+   * @throws OAuth2AuthenticationException if the claim cannot be mapped to a valid DHIS2 user
+   */
+  @Override
+  public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
+    OidcUser oidcUser = super.loadUser(userRequest);
+
+    ClientRegistration clientRegistration = userRequest.getClientRegistration();
+
+    DhisOidcClientRegistration oidcClientRegistration =
+        clientRegistrationRepository.getDhisOidcClientRegistration(
+            clientRegistration.getRegistrationId());
+
+    String mappingClaimKey = oidcClientRegistration.getMappingClaimKey();
+    Map<String, Object> attributes = oidcUser.getAttributes();
+    Object claimValue = attributes.get(mappingClaimKey);
+    OidcUserInfo userInfo = oidcUser.getUserInfo();
+    if (claimValue == null && userInfo != null) {
+      claimValue = userInfo.getClaim(mappingClaimKey);
+    }
+
+    if (log.isDebugEnabled()) {
+      log.debug(
+          String.format(
+              "Trying to look up DHIS2 user with OidcUser mapping mappingClaimKey='%s', claim value='%s'",
+              mappingClaimKey, claimValue));
+    }
+
+    if (claimValue != null) {
+      User user = userService.getUserByOpenId((String) claimValue);
+      if (user != null && user.isExternalAuth()) {
+        if (user.isDisabled() || !user.isAccountNonExpired()) {
+          throw new OAuth2AuthenticationException(
+              new OAuth2Error("user_disabled"), "User is disabled");
+        }
+
+        UserDetails userDetails = userService.createUserDetails(user);
+
+        return new DhisOidcUser(
+            userDetails, attributes, IdTokenClaimNames.SUB, oidcUser.getIdToken());
+      }
+    }
+
+    String errorMessage =
+        String.format(
+            "Failed to look up DHIS2 user with OidcUser mapping mapping; mappingClaimKey='%s', claimValue='%s'",
+            mappingClaimKey, claimValue);
+
+    if (log.isDebugEnabled()) {
+      log.debug(errorMessage);
+    }
+
+    OAuth2Error oauth2Error =
+        new OAuth2Error("could_not_map_oidc_user_to_dhis2_user", errorMessage, null);
+
+    throw new OAuth2AuthenticationException(oauth2Error, oauth2Error.toString());
+  }
+}

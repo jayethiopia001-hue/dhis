@@ -1,0 +1,551 @@
+/*
+ * Copyright (c) 2004-2023, University of Oslo
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors 
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.hisp.dhis.util;
+
+import static org.hisp.dhis.common.DimensionConstants.PERIOD_DIM_ID;
+import static org.hisp.dhis.period.RelativePeriodEnum.LAST_3_DAYS;
+import static org.hisp.dhis.period.RelativePeriodEnum.LAST_5_YEARS;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import org.hisp.dhis.common.EnrollmentAnalyticsQueryCriteria;
+import org.hisp.dhis.common.EventsAnalyticsQueryCriteria;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+/** Unit tests for {@link PeriodCriteriaUtils}. */
+class PeriodCriteriaUtilsTest {
+  @Test
+  void testDefineDefaultPeriodDimensionCriteriaWithOrderBy_Event_forRelativePeriod() {
+    // given
+    EventsAnalyticsQueryCriteria eventsAnalyticsQueryCriteria =
+        configureEventsAnalyticsQueryCriteriaWithPeriod(LAST_5_YEARS.name());
+
+    // when
+    PeriodCriteriaUtils.addDefaultPeriodIfAbsent(eventsAnalyticsQueryCriteria, LAST_5_YEARS);
+
+    // then
+    assertTrue(eventsAnalyticsQueryCriteria.getDimension().stream().findFirst().isPresent());
+    assertTrue(eventsAnalyticsQueryCriteria.getDesc().isEmpty());
+    assertEquals(
+        PERIOD_DIM_ID + ":" + LAST_5_YEARS,
+        eventsAnalyticsQueryCriteria.getDimension().stream().findFirst().get());
+  }
+
+  @Test
+  void testDefineDefaultPeriodDimensionCriteriaWithOrderBy_Event_forNoRelativePeriod() {
+    // given
+    EventsAnalyticsQueryCriteria eventsAnalyticsQueryCriteria =
+        configureEventsAnalyticsQueryCriteriaWithPeriod(null);
+
+    // when
+    PeriodCriteriaUtils.addDefaultPeriodIfAbsent(eventsAnalyticsQueryCriteria, LAST_5_YEARS);
+
+    // then
+    assertTrue(eventsAnalyticsQueryCriteria.getDimension().stream().findFirst().isPresent());
+    assertTrue(eventsAnalyticsQueryCriteria.getDesc().isEmpty());
+    assertEquals(
+        PERIOD_DIM_ID + ":" + LAST_5_YEARS,
+        eventsAnalyticsQueryCriteria.getDimension().stream().findFirst().get());
+  }
+
+  @Test
+  void testDefineDefaultPeriodDimensionCriteriaWithOrderBy_Event_forNoRelativePeriod_andFilter() {
+    // given
+    EventsAnalyticsQueryCriteria eventsAnalyticsQueryCriteria =
+        configureEventsAnalyticsQueryCriteriaWithFilter(PERIOD_DIM_ID + ":" + LAST_3_DAYS.name());
+
+    // when
+    // then
+    assertFalse(eventsAnalyticsQueryCriteria.getDimension().stream().findFirst().isPresent());
+    assertTrue(eventsAnalyticsQueryCriteria.getFilter().stream().findFirst().isPresent());
+    assertEquals(
+        PERIOD_DIM_ID + ":" + LAST_3_DAYS,
+        eventsAnalyticsQueryCriteria.getFilter().stream().findFirst().get());
+  }
+
+  @Test
+  void
+      testDefineDefaultPeriodDimensionCriteriaWithOrderBy_Enrollment_forNoRelativePeriod_andFilter() {
+    // given
+    EnrollmentAnalyticsQueryCriteria enrollmentAnalyticsQueryCriteria =
+        configureEnrollmentsAnalyticsQueryCriteriaWithFilter(
+            PERIOD_DIM_ID + ":" + LAST_3_DAYS.name());
+
+    // when
+    // then
+    assertFalse(enrollmentAnalyticsQueryCriteria.getDimension().stream().findFirst().isPresent());
+    assertTrue(enrollmentAnalyticsQueryCriteria.getFilter().stream().findFirst().isPresent());
+    assertEquals(
+        PERIOD_DIM_ID + ":" + LAST_3_DAYS,
+        enrollmentAnalyticsQueryCriteria.getFilter().stream().findFirst().get());
+  }
+
+  @Test
+  void testDefineDefaultPeriodDimensionCriteriaWithOrderBy_Event_forStartAndEndDate() {
+    // given
+    EventsAnalyticsQueryCriteria eventsAnalyticsQueryCriteria =
+        configureEventsAnalyticsQueryCriteriaWithDateRange(new Date(), new Date());
+
+    // when
+    PeriodCriteriaUtils.addDefaultPeriodIfAbsent(eventsAnalyticsQueryCriteria, LAST_5_YEARS);
+
+    // then
+    assertFalse(eventsAnalyticsQueryCriteria.getDimension().stream().findFirst().isPresent());
+    assertTrue(eventsAnalyticsQueryCriteria.getDesc().isEmpty());
+  }
+
+  @Test
+  void testDefineDefaultPeriodDimensionCriteriaWithOrderBy_Event_forEventDate() {
+    // given
+    EventsAnalyticsQueryCriteria eventsAnalyticsQueryCriteria =
+        configureEventsAnalyticsQueryCriteriaWithEventDate();
+
+    // when
+    PeriodCriteriaUtils.addDefaultPeriodIfAbsent(eventsAnalyticsQueryCriteria, LAST_5_YEARS);
+
+    // then
+    assertFalse(eventsAnalyticsQueryCriteria.getDimension().stream().findFirst().isPresent());
+    assertTrue(eventsAnalyticsQueryCriteria.getDesc().isEmpty());
+  }
+
+  @Test
+  void testDefineDefaultPeriodDimensionCriteriaWithOrderBy_Enrollment_forRelativePeriod() {
+    // given
+    EnrollmentAnalyticsQueryCriteria enrollmentsAnalyticsQueryCriteria =
+        configureEnrollmentAnalyticsQueryCriteriaWithPeriod(LAST_5_YEARS.name());
+
+    // when
+    PeriodCriteriaUtils.addDefaultPeriodIfAbsent(enrollmentsAnalyticsQueryCriteria, LAST_5_YEARS);
+
+    // then
+    assertTrue(enrollmentsAnalyticsQueryCriteria.getDimension().stream().findFirst().isPresent());
+    assertTrue(enrollmentsAnalyticsQueryCriteria.getDesc().isEmpty());
+    assertEquals(
+        enrollmentsAnalyticsQueryCriteria.getDimension().stream().findFirst().get(),
+        PERIOD_DIM_ID + ":" + LAST_5_YEARS);
+  }
+
+  @Test
+  void testDefineDefaultPeriodDimensionCriteriaWithOrderBy_Enrollment_forNoRelativePeriod() {
+    // given
+    EnrollmentAnalyticsQueryCriteria enrollmentAnalyticsQueryCriteria =
+        configureEnrollmentAnalyticsQueryCriteriaWithPeriod(null);
+
+    // when
+    PeriodCriteriaUtils.addDefaultPeriodIfAbsent(enrollmentAnalyticsQueryCriteria, LAST_5_YEARS);
+
+    // then
+    assertTrue(enrollmentAnalyticsQueryCriteria.getDimension().stream().findFirst().isPresent());
+    assertTrue(enrollmentAnalyticsQueryCriteria.getDesc().isEmpty());
+    assertEquals(
+        enrollmentAnalyticsQueryCriteria.getDimension().stream().findFirst().get(),
+        PERIOD_DIM_ID + ":" + LAST_5_YEARS);
+  }
+
+  @Test
+  void testDefineDefaultPeriodDimensionCriteriaWithOrderBy_Enrollment_forStartAndEndDate() {
+    // given
+    EnrollmentAnalyticsQueryCriteria enrollmentAnalyticsQueryCriteria =
+        configureEnrollmentsAnalyticsQueryCriteriaWithDateRange(new Date(), new Date());
+
+    // when
+    PeriodCriteriaUtils.addDefaultPeriodIfAbsent(enrollmentAnalyticsQueryCriteria, LAST_5_YEARS);
+
+    // then
+    assertFalse(enrollmentAnalyticsQueryCriteria.getDimension().stream().findFirst().isPresent());
+    assertTrue(enrollmentAnalyticsQueryCriteria.getDesc().isEmpty());
+  }
+
+  @Test
+  void testDefineDefaultPeriodDimensionCriteriaWithOrderBy_Enrollment_forEventDate() {
+    // given
+    EnrollmentAnalyticsQueryCriteria enrollmentsAnalyticsQueryCriteria =
+        configureEnrollmentAnalyticsQueryCriteriaWithEventDate();
+
+    // when
+    PeriodCriteriaUtils.addDefaultPeriodIfAbsent(enrollmentsAnalyticsQueryCriteria, LAST_5_YEARS);
+
+    // then
+    assertFalse(enrollmentsAnalyticsQueryCriteria.getDimension().stream().findFirst().isPresent());
+    assertTrue(enrollmentsAnalyticsQueryCriteria.getDesc().isEmpty());
+  }
+
+  @Test
+  void testCriteriaHasPeriodWhenDimensionNotSet() {
+    // given
+    EventsAnalyticsQueryCriteria criteria = getDefaultEventsAnalyticsQueryCriteria();
+
+    // when
+    criteria.setEventDate("2020-12-01");
+
+    // then
+    assertTrue(PeriodCriteriaUtils.hasPeriod(criteria));
+  }
+
+  @Test
+  void testCriteriaHasPeriodWhenDimensionAndPeriodNotSet() {
+    // given
+    EventsAnalyticsQueryCriteria criteria = getDefaultEventsAnalyticsQueryCriteria();
+
+    // when
+    // then
+    assertFalse(PeriodCriteriaUtils.hasPeriod(criteria) && criteria.getDimension().isEmpty());
+  }
+
+  @Test
+  void testHasPeriodEnrollment_whenDimensionContainsPeriodDim() {
+    EnrollmentAnalyticsQueryCriteria c = getDefaultEnrollmentsAnalyticsQueryCriteria();
+    c.getDimension().add(PERIOD_DIM_ID + ":LAST_3_DAYS");
+    assertTrue(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @Test
+  void testHasPeriodEnrollment_whenFilterContainsPeriodDim() {
+    EnrollmentAnalyticsQueryCriteria c = getDefaultEnrollmentsAnalyticsQueryCriteria();
+    c.getFilter().add(PERIOD_DIM_ID + ":LAST_12_MONTHS");
+    assertTrue(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @Test
+  void testHasPeriodEnrollment_whenEnrollmentDateIsSet() {
+    EnrollmentAnalyticsQueryCriteria c = getDefaultEnrollmentsAnalyticsQueryCriteria();
+    c.setEnrollmentDate("2020-01-01:2020-12-31");
+    assertTrue(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @Test
+  void testHasPeriodEnrollment_whenStartAndEndDateAreSet() {
+    EnrollmentAnalyticsQueryCriteria c = getDefaultEnrollmentsAnalyticsQueryCriteria();
+    c.setStartDate(new Date());
+    c.setEndDate(new Date());
+    assertTrue(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @Test
+  void testHasPeriodEnrollment_false_whenOnlyStartDateIsSet() {
+    EnrollmentAnalyticsQueryCriteria c = getDefaultEnrollmentsAnalyticsQueryCriteria();
+    c.setStartDate(new Date());
+    assertFalse(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @Test
+  void testHasPeriodEnrollment_false_whenOnlyEndDateIsSet() {
+    EnrollmentAnalyticsQueryCriteria c = getDefaultEnrollmentsAnalyticsQueryCriteria();
+    c.setEndDate(new Date());
+    assertFalse(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @Test
+  void testHasPeriodEnrollment_whenIncidentDateIsSet() {
+    EnrollmentAnalyticsQueryCriteria c = getDefaultEnrollmentsAnalyticsQueryCriteria();
+    c.setIncidentDate("2020-01-01:2020-12-31");
+    assertTrue(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @Test
+  void testHasPeriodEnrollment_whenOccurredDateIsSet() {
+    EnrollmentAnalyticsQueryCriteria c = getDefaultEnrollmentsAnalyticsQueryCriteria();
+    c.setOccurredDate("2020-03-01:2020-03-31");
+    assertTrue(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @Test
+  void testHasPeriodEnrollment_whenLastUpdatedIsSet() {
+    EnrollmentAnalyticsQueryCriteria c = getDefaultEnrollmentsAnalyticsQueryCriteria();
+    c.setLastUpdated("2021-06-01:2021-06-30");
+    assertTrue(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @Test
+  void testHasPeriodEnrollment_whenRelativePeriodDateIsSet() {
+    EnrollmentAnalyticsQueryCriteria c = getDefaultEnrollmentsAnalyticsQueryCriteria();
+    c.setRelativePeriodDate(new Date());
+    assertTrue(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @Test
+  void testHasPeriodEnrollment_false_whenNoPeriodInformationPresent() {
+    EnrollmentAnalyticsQueryCriteria c = getDefaultEnrollmentsAnalyticsQueryCriteria();
+    assertFalse(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @Test
+  void testHasPeriodEvent_whenDimensionContainsEnrollmentDate() {
+    EventsAnalyticsQueryCriteria c = getDefaultEventsAnalyticsQueryCriteria();
+    c.getDimension().add("ENROLLMENT_DATE:2021");
+    assertTrue(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @Test
+  void testHasPeriodEvent_whenDimensionContainsIncidentDate() {
+    EventsAnalyticsQueryCriteria c = getDefaultEventsAnalyticsQueryCriteria();
+    c.getDimension().add("INCIDENT_DATE:THIS_YEAR");
+    assertTrue(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @Test
+  void testHasPeriodEvent_whenFilterContainsEnrollmentDate() {
+    EventsAnalyticsQueryCriteria c = getDefaultEventsAnalyticsQueryCriteria();
+    Set<String> filters = new HashSet<>();
+    filters.add("ENROLLMENT_DATE:2021");
+    c.setFilter(filters);
+    assertTrue(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @Test
+  void testHasPeriodEnrollment_whenDimensionContainsEnrollmentDateDim() {
+    EnrollmentAnalyticsQueryCriteria c = getDefaultEnrollmentsAnalyticsQueryCriteria();
+    c.getDimension().add("ENROLLMENT_DATE:2021");
+    assertTrue(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @Test
+  void testHasPeriodEnrollment_whenDimensionContainsIncidentDateDim() {
+    EnrollmentAnalyticsQueryCriteria c = getDefaultEnrollmentsAnalyticsQueryCriteria();
+    c.getDimension().add("INCIDENT_DATE:LAST_12_MONTHS");
+    assertTrue(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @Test
+  void testHasPeriodEnrollment_whenEventDateParameterIsPresent() {
+    EnrollmentAnalyticsQueryCriteria c = getDefaultEnrollmentsAnalyticsQueryCriteria();
+    c.setEventDate("2022Sep");
+    assertTrue(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @Test
+  void testHasPeriodEnrollment_whenDimensionContainsStageDotEventDate() {
+    EnrollmentAnalyticsQueryCriteria c = getDefaultEnrollmentsAnalyticsQueryCriteria();
+    c.getDimension().add("ZkbAXlQUYJG.EVENT_DATE:THIS_YEAR");
+    assertTrue(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @Test
+  void testHasPeriodEnrollment_whenFilterContainsStageDotScheduledDate() {
+    EnrollmentAnalyticsQueryCriteria c = getDefaultEnrollmentsAnalyticsQueryCriteria();
+    Set<String> filters = new HashSet<>();
+    filters.add("A03MvHHogjR.SCHEDULED_DATE:201910");
+    c.setFilter(filters);
+    assertTrue(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @Test
+  void testHasPeriodEvent_whenDimensionContainsStageDotEventDate() {
+    EventsAnalyticsQueryCriteria c = getDefaultEventsAnalyticsQueryCriteria();
+    c.getDimension().add("ZkbAXlQUYJG.EVENT_DATE:THIS_YEAR");
+    assertTrue(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @Test
+  void testHasPeriodEvent_whenFilterContainsStageDotEventDate() {
+    EventsAnalyticsQueryCriteria c = getDefaultEventsAnalyticsQueryCriteria();
+    Set<String> filters = new HashSet<>();
+    filters.add("ZkbAXlQUYJG.EVENT_DATE:202301");
+    c.setFilter(filters);
+    assertTrue(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @Test
+  void testHasPeriodEvent_whenDimensionContainsStageDotScheduledDate() {
+    EventsAnalyticsQueryCriteria c = getDefaultEventsAnalyticsQueryCriteria();
+    c.getDimension().add("A03MvHHogjR.SCHEDULED_DATE:LAST_12_MONTHS");
+    assertTrue(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @Test
+  void testHasPeriodEvent_whenFilterContainsStageDotScheduledDate() {
+    EventsAnalyticsQueryCriteria c = getDefaultEventsAnalyticsQueryCriteria();
+    Set<String> filters = new HashSet<>();
+    filters.add("A03MvHHogjR.SCHEDULED_DATE:201910");
+    c.setFilter(filters);
+    assertTrue(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @ParameterizedTest
+  @ValueSource(
+      strings = {"ENROLLMENT_DATE", "INCIDENT_DATE", "LAST_UPDATED", "CREATED", "COMPLETED"})
+  void testHasPeriodEvent_whenDimensionContainsStaticDateDimension(String staticDim) {
+    EventsAnalyticsQueryCriteria c = getDefaultEventsAnalyticsQueryCriteria();
+    c.getDimension().add(staticDim + ":THIS_YEAR");
+    assertTrue(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @ParameterizedTest
+  @ValueSource(
+      strings = {"ENROLLMENT_DATE", "INCIDENT_DATE", "LAST_UPDATED", "CREATED", "COMPLETED"})
+  void testHasPeriodEvent_whenFilterContainsStaticDateDimension(String staticDim) {
+    EventsAnalyticsQueryCriteria c = getDefaultEventsAnalyticsQueryCriteria();
+    c.getFilter().add(staticDim + ":THIS_YEAR");
+    assertTrue(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @ParameterizedTest
+  @ValueSource(
+      strings = {"ENROLLMENT_DATE", "INCIDENT_DATE", "LAST_UPDATED", "CREATED", "COMPLETED"})
+  void testHasPeriodEnrollment_whenDimensionContainsStaticDateDimension(String staticDim) {
+    EnrollmentAnalyticsQueryCriteria c = getDefaultEnrollmentsAnalyticsQueryCriteria();
+    c.getDimension().add(staticDim + ":THIS_YEAR");
+    assertTrue(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @ParameterizedTest
+  @ValueSource(
+      strings = {"ENROLLMENT_DATE", "INCIDENT_DATE", "LAST_UPDATED", "CREATED", "COMPLETED"})
+  void testHasPeriodEnrollment_whenFilterContainsStaticDateDimension(String staticDim) {
+    EnrollmentAnalyticsQueryCriteria c = getDefaultEnrollmentsAnalyticsQueryCriteria();
+    c.getFilter().add(staticDim + ":THIS_YEAR");
+    assertTrue(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  @Test
+  void testHasPeriodEvent_whenDimensionContainsOldStaticDateDimension_returnsFalse() {
+    EventsAnalyticsQueryCriteria c = getDefaultEventsAnalyticsQueryCriteria();
+    c.getDimension().add("CREATED_DATE:THIS_YEAR");
+    assertFalse(PeriodCriteriaUtils.hasPeriod(c));
+  }
+
+  private EventsAnalyticsQueryCriteria configureEventsAnalyticsQueryCriteriaWithPeriod(
+      String period) {
+    EventsAnalyticsQueryCriteria eventsAnalyticsQueryCriteria =
+        getDefaultEventsAnalyticsQueryCriteria();
+
+    if (period != null) {
+      eventsAnalyticsQueryCriteria.getDimension().add(period);
+    }
+
+    return eventsAnalyticsQueryCriteria;
+  }
+
+  private EventsAnalyticsQueryCriteria configureEventsAnalyticsQueryCriteriaWithFilter(
+      String period) {
+    EventsAnalyticsQueryCriteria eventsAnalyticsQueryCriteria =
+        getDefaultEventsAnalyticsQueryCriteria();
+
+    if (period != null) {
+      Set<String> filters = new HashSet<>();
+      filters.add(period);
+      eventsAnalyticsQueryCriteria.setFilter(filters);
+      eventsAnalyticsQueryCriteria.getFilter().add(period);
+    }
+
+    return eventsAnalyticsQueryCriteria;
+  }
+
+  private EnrollmentAnalyticsQueryCriteria configureEnrollmentsAnalyticsQueryCriteriaWithFilter(
+      String period) {
+    EnrollmentAnalyticsQueryCriteria enrollmentAnalyticsQueryCriteria =
+        getDefaultEnrollmentsAnalyticsQueryCriteria();
+
+    if (period != null) {
+      Set<String> filters = new HashSet<>();
+      filters.add(period);
+      enrollmentAnalyticsQueryCriteria.setFilter(filters);
+      enrollmentAnalyticsQueryCriteria.getFilter().add(period);
+    }
+
+    return enrollmentAnalyticsQueryCriteria;
+  }
+
+  private EventsAnalyticsQueryCriteria configureEventsAnalyticsQueryCriteriaWithEventDate() {
+    EventsAnalyticsQueryCriteria eventsAnalyticsQueryCriteria =
+        getDefaultEventsAnalyticsQueryCriteria();
+
+    eventsAnalyticsQueryCriteria.setEventDate("eventDate");
+
+    return eventsAnalyticsQueryCriteria;
+  }
+
+  private EventsAnalyticsQueryCriteria configureEventsAnalyticsQueryCriteriaWithDateRange(
+      Date startDate, Date endDate) {
+    EventsAnalyticsQueryCriteria eventsAnalyticsQueryCriteria =
+        getDefaultEventsAnalyticsQueryCriteria();
+
+    eventsAnalyticsQueryCriteria.setStartDate(startDate);
+    eventsAnalyticsQueryCriteria.setEndDate(endDate);
+
+    return eventsAnalyticsQueryCriteria;
+  }
+
+  private EnrollmentAnalyticsQueryCriteria configureEnrollmentAnalyticsQueryCriteriaWithPeriod(
+      String period) {
+    EnrollmentAnalyticsQueryCriteria enrollmentsAnalyticsQueryCriteria =
+        getDefaultEnrollmentsAnalyticsQueryCriteria();
+
+    if (period != null) {
+      enrollmentsAnalyticsQueryCriteria.getDimension().add(period);
+    }
+
+    return enrollmentsAnalyticsQueryCriteria;
+  }
+
+  private EnrollmentAnalyticsQueryCriteria
+      configureEnrollmentAnalyticsQueryCriteriaWithEventDate() {
+    EnrollmentAnalyticsQueryCriteria enrollmentsAnalyticsQueryCriteria =
+        getDefaultEnrollmentsAnalyticsQueryCriteria();
+
+    enrollmentsAnalyticsQueryCriteria.setEnrollmentDate("eventDate");
+
+    return enrollmentsAnalyticsQueryCriteria;
+  }
+
+  private EnrollmentAnalyticsQueryCriteria configureEnrollmentsAnalyticsQueryCriteriaWithDateRange(
+      Date startDate, Date endDate) {
+    EnrollmentAnalyticsQueryCriteria enrollmentsAnalyticsQueryCriteria =
+        getDefaultEnrollmentsAnalyticsQueryCriteria();
+
+    enrollmentsAnalyticsQueryCriteria.setStartDate(startDate);
+    enrollmentsAnalyticsQueryCriteria.setEndDate(endDate);
+
+    return enrollmentsAnalyticsQueryCriteria;
+  }
+
+  private EventsAnalyticsQueryCriteria getDefaultEventsAnalyticsQueryCriteria() {
+    EventsAnalyticsQueryCriteria eventsAnalyticsQueryCriteria = new EventsAnalyticsQueryCriteria();
+    Set<String> dimensions = new HashSet<>();
+    eventsAnalyticsQueryCriteria.setDimension(dimensions);
+
+    return eventsAnalyticsQueryCriteria;
+  }
+
+  private EnrollmentAnalyticsQueryCriteria getDefaultEnrollmentsAnalyticsQueryCriteria() {
+    EnrollmentAnalyticsQueryCriteria enrollmentsAnalyticsQueryCriteria =
+        new EnrollmentAnalyticsQueryCriteria();
+    Set<String> dimensions = new HashSet<>();
+    enrollmentsAnalyticsQueryCriteria.setDimension(dimensions);
+
+    return enrollmentsAnalyticsQueryCriteria;
+  }
+}

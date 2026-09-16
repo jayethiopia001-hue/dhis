@@ -1,0 +1,138 @@
+# DO NOT use this Docker Compose file in production! 
+# See the production oriented example under development instead - https://github.com/dhis2/docker-deployment
+
+x-web-base: &web-base
+  image: "${DHIS2_IMAGE:-dhis2/core-dev:local}"
+  volumes:
+    - ./docker/log4j2.xml:/opt/dhis2/log4j2.xml
+  environment:
+    # JAVA_TOOL_OPTIONS: Standard JVM environment variable, works with all image types
+    # (both tomcat-based dhis2/core-dev:latest and distroless dhis2/core-dev:local)
+    JAVA_TOOL_OPTIONS:
+      "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8081 \
+      -Dlog4j2.configurationFile=/opt/dhis2/log4j2.xml
+      -Dcom.sun.management.jmxremote \
+      -Dcom.sun.management.jmxremote.port=9011 \
+      -Dcom.sun.management.jmxremote.local.only=false \
+      -Dcom.sun.management.jmxremote.authenticate=false \
+      -Dcom.sun.management.jmxremote.ssl=false"
+    DB_HOSTNAME: ${DB_HOSTNAME:-db}
+    DB_NAME: ${DB_NAME:-dhis}
+    DB_USERNAME: ${DB_USERNAME}
+    DB_PASSWORD: ${DB_PASSWORD}
+
+x-db-base: &db-base
+  image: ghcr.io/baosystems/postgis:12-3.3
+  # uncomment to enable query logging
+  # command:
+  #   ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]
+  volumes:
+    - db-dump:/docker-entrypoint-initdb.d/
+    - db-data:/var/lib/postgresql/data
+  environment:
+    POSTGRES_USER: ${DB_USERNAME}
+    POSTGRES_DB: ${DB_NAME:-dhis}
+    POSTGRES_PASSWORD: &postgres_password ${DB_USERNAME}
+    PGPASSWORD: *postgres_password # needed by psql in healthcheck
+  healthcheck:
+    test:
+      [
+        "CMD-SHELL",
+        'psql --no-password --quiet --username $$POSTGRES_USER postgres://127.0.0.1/$$POSTGRES_DB -p 5432 --command "SELECT ''ok''" > /dev/null',
+      ]
+    start_period: 120s
+    interval: 1s
+    timeout: 3s
+    retries: 5
+  depends_on:
+    db-dump:
+      condition: service_completed_successfully # make sure the DB dump has been downloaded
+
+services:
+  web:
+    <<: *web-base
+    volumes:
+      - ./docker/log4j2.xml:/opt/dhis2/log4j2.xml
+      - ./docker/dhis.conf:/opt/dhis2/dhis.conf
+      - dhis2-files:/opt/dhis2/files
+    ports:
+      - "127.0.0.1:8080:8080" # DHIS2
+      - "127.0.0.1:8081:8081" # Debugger: connect using commandline flag -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8081
+      - "127.0.0.1:9011:9011" # JMX port (for example for VisualVM)
+    depends_on:
+      db:
+        condition: service_healthy
+      app-installer:
+        condition: service_completed_successfully
+
+  # Copies the NextGen Planning app into the shared dhis2-files volume before DHIS2 starts
+  app-installer:
+    image: busybox
+    command: sh -c "mkdir -p /files/apps/nextgen-planning && cp -r /app/. /files/apps/nextgen-planning/ && chmod -R 777 /files/apps"
+    volumes:
+      - ./dhis2-ai-backend/dhis2-app:/app:ro
+      - dhis2-files:/files
+
+  db:
+    <<: *db-base
+    ports:
+      - "127.0.0.1:5432:5432"
+
+  # Test synchronizing data and metadata between two DHIS2 instances
+  # Run
+  #   docker compose --profile sync up
+
+  web-sync:
+    <<: *web-base
+    volumes:
+      - ./docker/log4j2.xml:/opt/dhis2/log4j2.xml:ro
+      - ./docker/dhis-sync.conf:/opt/dhis2/dhis.conf:ro
+    profiles: [sync]
+    ports:
+      - "127.0.0.1:8082:8080" # DHIS2
+      - "127.0.0.1:8083:8081" # Debugger: connect using commandline flag -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8083
+      - "127.0.0.1:9012:9010" # JMX port (for example for VisualVM)
+    depends_on:
+      db-sync:
+        condition: service_healthy
+
+  db-sync:
+    <<: *db-base
+    profiles: [sync]
+    ports:
+      - "127.0.0.1:5434:5432"
+
+  # AI backend — FastAPI microservice for NextGen Planning / AI features
+  # Copy dhis2-ai-backend/.env.example to dhis2-ai-backend/.env and fill in credentials before starting
+  ai-backend:
+    build:
+      context: ./dhis2-ai-backend
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:8000:8000"
+    env_file:
+      - ./dhis2-ai-backend/.env
+    environment:
+      DHIS2_BASE_URL: "http://web:8080"
+      GOOGLE_APPLICATION_CREDENTIALS: /root/.config/gcloud/application_default_credentials.json
+      SSL_CERT_FILE: /usr/local/lib/python3.12/site-packages/certifi/cacert.pem
+    volumes:
+      - ~/.config/gcloud:/root/.config/gcloud:ro
+    depends_on:
+      web:
+        condition: service_started
+    restart: unless-stopped
+
+  db-dump:
+    image: busybox # busybox wget version does not have --no-clobber, so we need to do the [ -f ] test
+    command: sh -c '[ -f dump.sql.gz ] && echo "dump.sql.gz exists" || wget --output-document dump.sql.gz $$DHIS2_DB_DUMP_URL' # only download file if it does not exist
+    environment:
+      DHIS2_DB_DUMP_URL: "${DHIS2_DB_DUMP_URL:-https://databases.dhis2.org/sierra-leone/dev/dhis2-db-sierra-leone.sql.gz}"
+    working_dir: /opt/dump
+    volumes:
+      - db-dump:/opt/dump
+
+volumes:
+  db-dump: {}
+  db-data: {}
+  dhis2-files: {}

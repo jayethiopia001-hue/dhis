@@ -1,0 +1,260 @@
+/*
+ * Copyright (c) 2004-2022, University of Oslo
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors 
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.hisp.dhis.dxf2.metadata.objectbundle.hooks;
+
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+import static org.hisp.dhis.common.collection.CollectionUtils.isEmpty;
+import static org.hisp.dhis.config.HibernateEncryptionConfig.AES_128_STRING_ENCRYPTOR;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Consumer;
+import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
+import org.hisp.dhis.common.DimensionService;
+import org.hisp.dhis.common.DimensionalItemObject;
+import org.hisp.dhis.common.IdScheme;
+import org.hisp.dhis.dataexchange.aggregate.AggregateDataExchange;
+import org.hisp.dhis.dataexchange.aggregate.Api;
+import org.hisp.dhis.dataexchange.aggregate.SourceRequest;
+import org.hisp.dhis.dataexchange.aggregate.TargetType;
+import org.hisp.dhis.dxf2.metadata.objectbundle.ObjectBundle;
+import org.hisp.dhis.feedback.ErrorCode;
+import org.hisp.dhis.feedback.ErrorReport;
+import org.hisp.dhis.period.PeriodDimension;
+import org.hisp.dhis.period.PeriodType;
+import org.hisp.dhis.period.RelativePeriodEnum;
+import org.hisp.dhis.period.RelativePeriods;
+import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
+/**
+ * @author Lars Helge Overland
+ */
+@RequiredArgsConstructor
+@Component
+public class AggregateDataExchangeObjectBundleHook
+    extends AbstractObjectBundleHook<AggregateDataExchange> {
+  private static final int SOURCE_REQUEST_NAME_MAX_LENGTH = 50;
+
+  @Qualifier(AES_128_STRING_ENCRYPTOR)
+  private final PooledPBEStringEncryptor encryptor;
+
+  private final DimensionService dimensionService;
+
+  @Override
+  public void validate(
+      AggregateDataExchange exchange, ObjectBundle bundle, Consumer<ErrorReport> addReports) {
+    validateSource(exchange, addReports);
+    validateTarget(exchange, addReports);
+  }
+
+  @Override
+  public void preCreate(AggregateDataExchange exchange, ObjectBundle bundle) {
+    encryptApiSecrets(exchange);
+  }
+
+  @Override
+  public void preUpdate(
+      AggregateDataExchange exchange,
+      AggregateDataExchange persistedExchange,
+      ObjectBundle bundle) {
+    encryptApiSecrets(exchange);
+  }
+
+  /**
+   * Validates the data exchange source.
+   *
+   * @param exchange the {@link AggregateDataExchange}.
+   * @param addReports the list of {@link ErrorReport}.
+   */
+  private void validateSource(AggregateDataExchange exchange, Consumer<ErrorReport> addReports) {
+    if (isEmpty(exchange.getSource().getRequests())) {
+      addReports.accept(
+          new ErrorReport(AggregateDataExchange.class, ErrorCode.E6302, exchange.getUid()));
+    }
+
+    for (SourceRequest request : exchange.getSource().getRequests()) {
+      if (isEmpty(request.getName())) {
+        addReports.accept(
+            new ErrorReport(AggregateDataExchange.class, ErrorCode.E4000, "source.name"));
+      }
+
+      if (request.getName() != null
+          && request.getName().length() > SOURCE_REQUEST_NAME_MAX_LENGTH) {
+        addReports.accept(
+            new ErrorReport(
+                AggregateDataExchange.class,
+                ErrorCode.E4001,
+                "source.name",
+                SOURCE_REQUEST_NAME_MAX_LENGTH,
+                request.getName().length()));
+      }
+
+      if (isEmpty(request.getDx()) || isEmpty(request.getPe()) || isEmpty(request.getOu())) {
+        addReports.accept(new ErrorReport(AggregateDataExchange.class, ErrorCode.E6303));
+      }
+
+      validateSourceDxItemTypes(request, addReports);
+      validatePeriods(request, addReports);
+    }
+  }
+
+  /**
+   * Validates that source request data items are of allowed types.
+   *
+   * @param request the {@link SourceRequest}.
+   * @param addReports the list of {@link ErrorReport}.
+   */
+  private void validateSourceDxItemTypes(SourceRequest request, Consumer<ErrorReport> addReports) {
+    IdScheme idScheme =
+        request.getInputIdScheme() != null ? IdScheme.of(request.getInputIdScheme()) : IdScheme.UID;
+
+    for (String item : request.getDx()) {
+      DimensionalItemObject dxObject =
+          dimensionService.getDataDimensionalItemObject(idScheme, item);
+
+      if (dxObject != null
+          && !AggregateDataExchange.ALLOWED_DX_ITEM_TYPES.contains(
+              dxObject.getDimensionItemType())) {
+        addReports.accept(
+            new ErrorReport(
+                AggregateDataExchange.class,
+                ErrorCode.E6307,
+                dxObject.getDimensionItemType(),
+                AggregateDataExchange.ALLOWED_DX_ITEM_TYPES));
+      }
+    }
+  }
+
+  /**
+   * Validates that all periods in the source request are of the same type. Mixed period types (e.g.
+   * quarterly and monthly) will likely fail on versions 2.43+. Therefore, it does not make sense to
+   * allow for requests to contain mixed period types, as the data exchange is broken by
+   * construction.
+   *
+   * @param request the {@link SourceRequest}.
+   * @param addReports the list of {@link ErrorReport}.
+   */
+  private void validatePeriods(SourceRequest request, Consumer<ErrorReport> addReports) {
+    List<String> periods = request.getPe();
+    if (isEmpty(periods)) {
+      return;
+    }
+
+    Set<String> periodTypeNames = new HashSet<>();
+    String firstPeriod = null;
+    String firstPeriodTypeName = null;
+
+    for (String period : periods) {
+      PeriodType periodType;
+      if (RelativePeriodEnum.contains(period)) {
+        periodType =
+            RelativePeriods.getRelativePeriodsFromEnum(RelativePeriodEnum.valueOf(period), null)
+                .stream()
+                .findFirst()
+                .map(PeriodDimension::getPeriodType)
+                .orElse(null);
+      } else {
+        periodType = PeriodType.getPeriodTypeFromIsoString(period);
+      }
+
+      if (periodType == null) {
+        continue;
+      }
+
+      periodTypeNames.add(periodType.getName());
+
+      if (firstPeriod == null) {
+        firstPeriod = period;
+        firstPeriodTypeName = periodType.getName();
+      } else if (periodTypeNames.size() > 1) {
+        addReports.accept(
+            new ErrorReport(
+                AggregateDataExchange.class,
+                ErrorCode.E6306,
+                firstPeriod,
+                firstPeriodTypeName,
+                period));
+        return;
+      }
+    }
+  }
+
+  /**
+   * Validates the data exchange target.
+   *
+   * @param exchange the {@link AggregateDataExchange}.
+   * @param addReports the list of {@link ErrorReport}.
+   */
+  private void validateTarget(AggregateDataExchange exchange, Consumer<ErrorReport> addReports) {
+    if (exchange.getTarget().getType() == null) {
+      addReports.accept(
+          new ErrorReport(AggregateDataExchange.class, ErrorCode.E4000, "target.type"));
+    }
+
+    if (exchange.getTarget().getType() == TargetType.EXTERNAL
+        && exchange.getTarget().getApi() == null) {
+      addReports.accept(new ErrorReport(AggregateDataExchange.class, ErrorCode.E6304));
+    }
+
+    Api api = exchange.getTarget().getApi();
+
+    if (api != null && isEmpty(api.getUrl())) {
+      addReports.accept(
+          new ErrorReport(AggregateDataExchange.class, ErrorCode.E4000, "target.api.url"));
+    }
+
+    if (exchange.getId() == 0 && api != null && !(api.isAccessTokenAuth() || api.isBasicAuth())) {
+      addReports.accept(new ErrorReport(AggregateDataExchange.class, ErrorCode.E6305));
+    }
+  }
+
+  /**
+   * Encrypts target API secrets.
+   *
+   * @param exchange the {@link AggregateDataExchange}.
+   */
+  private void encryptApiSecrets(AggregateDataExchange exchange) {
+    if (exchange.getTarget().getApi() != null) {
+      Api api = exchange.getTarget().getApi();
+
+      if (api != null && StringUtils.isNotBlank(api.getPassword())) {
+        api.setPassword(encryptor.encrypt(api.getPassword()));
+      }
+
+      if (api != null && StringUtils.isNotBlank(api.getAccessToken())) {
+        api.setAccessToken(encryptor.encrypt(api.getAccessToken()));
+      }
+    }
+  }
+}

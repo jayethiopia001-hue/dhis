@@ -1,0 +1,1012 @@
+/*
+ * Copyright (c) 2004-2023, University of Oslo
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors 
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.hisp.dhis.analytics.event.aggregate;
+
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hisp.dhis.analytics.ValidationHelper.assertJsonMetadata;
+import static org.hisp.dhis.analytics.ValidationHelper.validateHeader;
+import static org.hisp.dhis.analytics.ValidationHelper.validateRow;
+import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
+
+import java.util.List;
+import java.util.Map;
+import org.hisp.dhis.AnalyticsApiTest;
+import org.hisp.dhis.test.e2e.actions.analytics.AnalyticsEventActions;
+import org.hisp.dhis.test.e2e.dto.ApiResponse;
+import org.hisp.dhis.test.e2e.helpers.QueryParamsBuilder;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.junit.jupiter.api.Test;
+
+/** Groups e2e tests for "/events/aggregate" endpoint. */
+public class EventsAggregate1AutoTest extends AnalyticsApiTest {
+  private final AnalyticsEventActions actions = new AnalyticsEventActions();
+
+  @Test
+  public void queryActiveStatusCasesByGenderLast12Months() throws JSONException {
+    // Given
+    QueryParamsBuilder params =
+        new QueryParamsBuilder()
+            .add("stage=A03MvHHogjR")
+            .add("displayProperty=NAME")
+            .add("sortOrder=desc")
+            .add("totalPages=false")
+            .add("outputType=EVENT")
+            .add(
+                "dimension=pe:LAST_12_MONTHS,cejWyOfXge6,ou:O6uvpzGd5pu;fdc6uOvgoji;lc3eMKXaEfw;jUb8gELQApl;PMa2VCrupOd;kJq2mPyFEHo;qhqAxPSTUXp;Vth0fbpFcsO;jmIPBj66vD6;TEQlaapDQoK;bL4ooGhyHRQ;eIQbndfxQMb;at6UHUQatSo")
+            .add("programStatus=ACTIVE")
+            .add("relativePeriodDate=2023-07-01");
+
+    // When
+    ApiResponse response = actions.aggregate().get("IpHINAT79UW", JSON, JSON, params);
+
+    // Then
+    response
+        .validate()
+        .statusCode(200)
+        .body("headers", hasSize(equalTo(5)))
+        .body("rows", hasSize(equalTo(156)))
+        .body("height", equalTo(156))
+        .body("width", equalTo(5))
+        .body("headerWidth", equalTo(5));
+
+    // Assert metaData.
+    String expectedMetaData =
+        "{\"items\":{\"jUb8gELQApl\":{\"name\":\"Kailahun\"},\"eIQbndfxQMb\":{\"name\":\"Tonkolili\"},\"ACTIVE\":{\"name\":\"Active\"},\"Vth0fbpFcsO\":{\"name\":\"Kono\"},\"202208\":{\"name\":\"August 2022\"},\"202209\":{\"name\":\"September 2022\"},\"O6uvpzGd5pu\":{\"name\":\"Bo\"},\"bL4ooGhyHRQ\":{\"name\":\"Pujehun\"},\"202305\":{\"name\":\"May 2023\"},\"kJq2mPyFEHo\":{\"name\":\"Kenema\"},\"202207\":{\"name\":\"July 2022\"},\"202306\":{\"name\":\"June 2023\"},\"202303\":{\"name\":\"March 2023\"},\"202304\":{\"name\":\"April 2023\"},\"202301\":{\"name\":\"January 2023\"},\"202302\":{\"name\":\"February 2023\"},\"LAST_12_MONTHS\":{\"name\":\"Last 12 months\"},\"202211\":{\"name\":\"November 2022\"},\"202212\":{\"name\":\"December 2022\"},\"202210\":{\"name\":\"October 2022\"},\"at6UHUQatSo\":{\"name\":\"Western Area\"},\"A03MvHHogjR\":{\"name\":\"Birth\"},\"Mnp3oXrpAbK\":{\"code\":\"Female\",\"name\":\"Female\"},\"TEQlaapDQoK\":{\"name\":\"Port Loko\"},\"rBvjJYbMCVx\":{\"code\":\"Male\",\"name\":\"Male\"},\"IpHINAT79UW\":{\"name\":\"Child Programme\"},\"PMa2VCrupOd\":{\"name\":\"Kambia\"},\"ou\":{\"name\":\"Organisation unit\"},\"fdc6uOvgoji\":{\"name\":\"Bombali\"},\"cejWyOfXge6\":{\"name\":\"Gender\"},\"programstatus\":{\"name\":\"Program status\"},\"pe\":{\"name\":\"Period\"},\"lc3eMKXaEfw\":{\"name\":\"Bonthe\"},\"qhqAxPSTUXp\":{\"name\":\"Koinadugu\"},\"jmIPBj66vD6\":{\"name\":\"Moyamba\"}},\"dimensions\":{\"programstatus\":[\"ACTIVE\"],\"pe\":[\"202207\",\"202208\",\"202209\",\"202210\",\"202211\",\"202212\",\"202301\",\"202302\",\"202303\",\"202304\",\"202305\",\"202306\"],\"ou\":[\"O6uvpzGd5pu\",\"fdc6uOvgoji\",\"lc3eMKXaEfw\",\"jUb8gELQApl\",\"PMa2VCrupOd\",\"kJq2mPyFEHo\",\"qhqAxPSTUXp\",\"Vth0fbpFcsO\",\"jmIPBj66vD6\",\"TEQlaapDQoK\",\"bL4ooGhyHRQ\",\"eIQbndfxQMb\",\"at6UHUQatSo\"],\"cejWyOfXge6\":[\"rBvjJYbMCVx\",\"Mnp3oXrpAbK\"]}}";
+    String actualMetaData = new JSONObject((Map) response.extract("metaData")).toString();
+    // assertEquals(expectedMetaData, actualMetaData, false);
+    assertJsonMetadata(expectedMetaData, actualMetaData);
+
+    // Assert headers.
+    validateHeader(response, 0, "cejWyOfXge6", "Gender", "TEXT", "java.lang.String", false, true);
+    validateHeader(response, 1, "pe", "Period", "TEXT", "java.lang.String", false, true);
+    validateHeader(response, 2, "ou", "Organisation unit", "TEXT", "java.lang.String", false, true);
+    validateHeader(
+        response, 3, "programstatus", "Program status", "TEXT", "java.lang.String", false, true);
+    validateHeader(response, 4, "value", "Value", "NUMBER", "java.lang.Double", false, false);
+
+    // Assert rows.
+    validateRow(response, List.of("Male", "202210", "TEQlaapDQoK", "ACTIVE", "51"));
+    validateRow(response, List.of("Male", "202212", "at6UHUQatSo", "ACTIVE", "46"));
+    validateRow(response, List.of("Male", "202212", "kJq2mPyFEHo", "ACTIVE", "45"));
+    validateRow(response, List.of("Male", "202208", "TEQlaapDQoK", "ACTIVE", "45"));
+    validateRow(response, List.of("Male", "202207", "kJq2mPyFEHo", "ACTIVE", "43"));
+    validateRow(response, List.of("Male", "202210", "kJq2mPyFEHo", "ACTIVE", "41"));
+    validateRow(response, List.of("Male", "202212", "O6uvpzGd5pu", "ACTIVE", "39"));
+    validateRow(response, List.of("Male", "202209", "O6uvpzGd5pu", "ACTIVE", "37"));
+    validateRow(response, List.of("Male", "202207", "O6uvpzGd5pu", "ACTIVE", "37"));
+    validateRow(response, List.of("Male", "202211", "O6uvpzGd5pu", "ACTIVE", "37"));
+    validateRow(response, List.of("Male", "202211", "kJq2mPyFEHo", "ACTIVE", "36"));
+    validateRow(response, List.of("Male", "202208", "O6uvpzGd5pu", "ACTIVE", "35"));
+    validateRow(response, List.of("Male", "202208", "kJq2mPyFEHo", "ACTIVE", "35"));
+    validateRow(response, List.of("Male", "202207", "at6UHUQatSo", "ACTIVE", "35"));
+    validateRow(response, List.of("Male", "202207", "TEQlaapDQoK", "ACTIVE", "35"));
+    validateRow(response, List.of("Male", "202210", "eIQbndfxQMb", "ACTIVE", "35"));
+    validateRow(response, List.of("Male", "202211", "TEQlaapDQoK", "ACTIVE", "34"));
+    validateRow(response, List.of("Male", "202209", "kJq2mPyFEHo", "ACTIVE", "33"));
+    validateRow(response, List.of("Male", "202210", "O6uvpzGd5pu", "ACTIVE", "32"));
+    validateRow(response, List.of("Male", "202209", "eIQbndfxQMb", "ACTIVE", "31"));
+    validateRow(response, List.of("Male", "202209", "TEQlaapDQoK", "ACTIVE", "31"));
+    validateRow(response, List.of("Male", "202211", "eIQbndfxQMb", "ACTIVE", "30"));
+    validateRow(response, List.of("Male", "202210", "jmIPBj66vD6", "ACTIVE", "30"));
+    validateRow(response, List.of("Male", "202207", "Vth0fbpFcsO", "ACTIVE", "29"));
+    validateRow(response, List.of("Male", "202207", "bL4ooGhyHRQ", "ACTIVE", "28"));
+    validateRow(response, List.of("Male", "202208", "jmIPBj66vD6", "ACTIVE", "28"));
+    validateRow(response, List.of("Male", "202208", "eIQbndfxQMb", "ACTIVE", "28"));
+    validateRow(response, List.of("Male", "202208", "at6UHUQatSo", "ACTIVE", "28"));
+    validateRow(response, List.of("Male", "202209", "fdc6uOvgoji", "ACTIVE", "27"));
+    validateRow(response, List.of("Male", "202211", "jmIPBj66vD6", "ACTIVE", "27"));
+    validateRow(response, List.of("Male", "202212", "jUb8gELQApl", "ACTIVE", "27"));
+    validateRow(response, List.of("Male", "202209", "Vth0fbpFcsO", "ACTIVE", "27"));
+    validateRow(response, List.of("Male", "202208", "Vth0fbpFcsO", "ACTIVE", "27"));
+    validateRow(response, List.of("Male", "202210", "at6UHUQatSo", "ACTIVE", "26"));
+    validateRow(response, List.of("Male", "202208", "jUb8gELQApl", "ACTIVE", "26"));
+    validateRow(response, List.of("Male", "202208", "qhqAxPSTUXp", "ACTIVE", "26"));
+    validateRow(response, List.of("Male", "202211", "fdc6uOvgoji", "ACTIVE", "25"));
+    validateRow(response, List.of("Male", "202212", "eIQbndfxQMb", "ACTIVE", "25"));
+    validateRow(response, List.of("Male", "202210", "qhqAxPSTUXp", "ACTIVE", "25"));
+    validateRow(response, List.of("Male", "202211", "at6UHUQatSo", "ACTIVE", "25"));
+    validateRow(response, List.of("Male", "202207", "jmIPBj66vD6", "ACTIVE", "25"));
+    validateRow(response, List.of("Male", "202212", "fdc6uOvgoji", "ACTIVE", "24"));
+    validateRow(response, List.of("Male", "202210", "Vth0fbpFcsO", "ACTIVE", "24"));
+    validateRow(response, List.of("Male", "202212", "qhqAxPSTUXp", "ACTIVE", "24"));
+    validateRow(response, List.of("Male", "202207", "eIQbndfxQMb", "ACTIVE", "24"));
+    validateRow(response, List.of("Male", "202209", "jmIPBj66vD6", "ACTIVE", "24"));
+    validateRow(response, List.of("Male", "202209", "at6UHUQatSo", "ACTIVE", "24"));
+    validateRow(response, List.of("Male", "202207", "fdc6uOvgoji", "ACTIVE", "23"));
+    validateRow(response, List.of("Male", "202212", "PMa2VCrupOd", "ACTIVE", "23"));
+    validateRow(response, List.of("Male", "202210", "bL4ooGhyHRQ", "ACTIVE", "23"));
+    validateRow(response, List.of("Male", "202208", "fdc6uOvgoji", "ACTIVE", "23"));
+    validateRow(response, List.of("Male", "202212", "lc3eMKXaEfw", "ACTIVE", "23"));
+    validateRow(response, List.of("Male", "202211", "jUb8gELQApl", "ACTIVE", "22"));
+    validateRow(response, List.of("Male", "202212", "jmIPBj66vD6", "ACTIVE", "22"));
+    validateRow(response, List.of("Male", "202211", "qhqAxPSTUXp", "ACTIVE", "22"));
+    validateRow(response, List.of("Male", "202212", "TEQlaapDQoK", "ACTIVE", "20"));
+    validateRow(response, List.of("Male", "202211", "bL4ooGhyHRQ", "ACTIVE", "20"));
+    validateRow(response, List.of("Male", "202210", "fdc6uOvgoji", "ACTIVE", "20"));
+    validateRow(response, List.of("Male", "202208", "bL4ooGhyHRQ", "ACTIVE", "20"));
+    validateRow(response, List.of("Male", "202207", "jUb8gELQApl", "ACTIVE", "20"));
+    validateRow(response, List.of("Male", "202208", "PMa2VCrupOd", "ACTIVE", "19"));
+    validateRow(response, List.of("Male", "202211", "Vth0fbpFcsO", "ACTIVE", "19"));
+    validateRow(response, List.of("Male", "202212", "Vth0fbpFcsO", "ACTIVE", "19"));
+    validateRow(response, List.of("Male", "202209", "jUb8gELQApl", "ACTIVE", "19"));
+    validateRow(response, List.of("Male", "202209", "qhqAxPSTUXp", "ACTIVE", "18"));
+    validateRow(response, List.of("Male", "202209", "bL4ooGhyHRQ", "ACTIVE", "18"));
+    validateRow(response, List.of("Male", "202209", "PMa2VCrupOd", "ACTIVE", "18"));
+    validateRow(response, List.of("Male", "202212", "bL4ooGhyHRQ", "ACTIVE", "17"));
+    validateRow(response, List.of("Male", "202211", "lc3eMKXaEfw", "ACTIVE", "17"));
+    validateRow(response, List.of("Male", "202210", "PMa2VCrupOd", "ACTIVE", "17"));
+    validateRow(response, List.of("Male", "202207", "lc3eMKXaEfw", "ACTIVE", "16"));
+    validateRow(response, List.of("Male", "202208", "lc3eMKXaEfw", "ACTIVE", "15"));
+    validateRow(response, List.of("Male", "202210", "jUb8gELQApl", "ACTIVE", "14"));
+    validateRow(response, List.of("Male", "202210", "lc3eMKXaEfw", "ACTIVE", "13"));
+    validateRow(response, List.of("Male", "202207", "PMa2VCrupOd", "ACTIVE", "11"));
+    validateRow(response, List.of("Male", "202207", "qhqAxPSTUXp", "ACTIVE", "10"));
+    validateRow(response, List.of("Male", "202209", "lc3eMKXaEfw", "ACTIVE", "9"));
+    validateRow(response, List.of("Male", "202211", "PMa2VCrupOd", "ACTIVE", "9"));
+    validateRow(response, List.of("Female", "202209", "kJq2mPyFEHo", "ACTIVE", "47"));
+    validateRow(response, List.of("Female", "202212", "O6uvpzGd5pu", "ACTIVE", "46"));
+    validateRow(response, List.of("Female", "202211", "TEQlaapDQoK", "ACTIVE", "44"));
+    validateRow(response, List.of("Female", "202207", "TEQlaapDQoK", "ACTIVE", "39"));
+    validateRow(response, List.of("Female", "202208", "at6UHUQatSo", "ACTIVE", "39"));
+    validateRow(response, List.of("Female", "202211", "kJq2mPyFEHo", "ACTIVE", "38"));
+    validateRow(response, List.of("Female", "202208", "O6uvpzGd5pu", "ACTIVE", "37"));
+    validateRow(response, List.of("Female", "202208", "TEQlaapDQoK", "ACTIVE", "36"));
+    validateRow(response, List.of("Female", "202209", "TEQlaapDQoK", "ACTIVE", "35"));
+    validateRow(response, List.of("Female", "202210", "kJq2mPyFEHo", "ACTIVE", "35"));
+    validateRow(response, List.of("Female", "202208", "jmIPBj66vD6", "ACTIVE", "35"));
+    validateRow(response, List.of("Female", "202207", "O6uvpzGd5pu", "ACTIVE", "35"));
+    validateRow(response, List.of("Female", "202210", "at6UHUQatSo", "ACTIVE", "33"));
+    validateRow(response, List.of("Female", "202211", "O6uvpzGd5pu", "ACTIVE", "33"));
+    validateRow(response, List.of("Female", "202209", "Vth0fbpFcsO", "ACTIVE", "32"));
+    validateRow(response, List.of("Female", "202210", "fdc6uOvgoji", "ACTIVE", "32"));
+    validateRow(response, List.of("Female", "202208", "jUb8gELQApl", "ACTIVE", "32"));
+    validateRow(response, List.of("Female", "202210", "TEQlaapDQoK", "ACTIVE", "31"));
+    validateRow(response, List.of("Female", "202210", "O6uvpzGd5pu", "ACTIVE", "31"));
+    validateRow(response, List.of("Female", "202208", "kJq2mPyFEHo", "ACTIVE", "31"));
+    validateRow(response, List.of("Female", "202212", "fdc6uOvgoji", "ACTIVE", "30"));
+    validateRow(response, List.of("Female", "202211", "eIQbndfxQMb", "ACTIVE", "30"));
+    validateRow(response, List.of("Female", "202210", "jmIPBj66vD6", "ACTIVE", "30"));
+    validateRow(response, List.of("Female", "202212", "at6UHUQatSo", "ACTIVE", "30"));
+    validateRow(response, List.of("Female", "202207", "jmIPBj66vD6", "ACTIVE", "30"));
+    validateRow(response, List.of("Female", "202212", "TEQlaapDQoK", "ACTIVE", "29"));
+    validateRow(response, List.of("Female", "202209", "fdc6uOvgoji", "ACTIVE", "29"));
+    validateRow(response, List.of("Female", "202212", "kJq2mPyFEHo", "ACTIVE", "28"));
+    validateRow(response, List.of("Female", "202211", "fdc6uOvgoji", "ACTIVE", "28"));
+    validateRow(response, List.of("Female", "202210", "eIQbndfxQMb", "ACTIVE", "28"));
+    validateRow(response, List.of("Female", "202207", "kJq2mPyFEHo", "ACTIVE", "28"));
+    validateRow(response, List.of("Female", "202207", "fdc6uOvgoji", "ACTIVE", "27"));
+    validateRow(response, List.of("Female", "202207", "at6UHUQatSo", "ACTIVE", "27"));
+    validateRow(response, List.of("Female", "202208", "eIQbndfxQMb", "ACTIVE", "26"));
+    validateRow(response, List.of("Female", "202211", "qhqAxPSTUXp", "ACTIVE", "26"));
+    validateRow(response, List.of("Female", "202207", "Vth0fbpFcsO", "ACTIVE", "26"));
+    validateRow(response, List.of("Female", "202209", "O6uvpzGd5pu", "ACTIVE", "26"));
+    validateRow(response, List.of("Female", "202211", "at6UHUQatSo", "ACTIVE", "25"));
+    validateRow(response, List.of("Female", "202208", "bL4ooGhyHRQ", "ACTIVE", "25"));
+    validateRow(response, List.of("Female", "202212", "jmIPBj66vD6", "ACTIVE", "24"));
+    validateRow(response, List.of("Female", "202209", "qhqAxPSTUXp", "ACTIVE", "24"));
+    validateRow(response, List.of("Female", "202207", "jUb8gELQApl", "ACTIVE", "24"));
+    validateRow(response, List.of("Female", "202209", "eIQbndfxQMb", "ACTIVE", "24"));
+    validateRow(response, List.of("Female", "202207", "eIQbndfxQMb", "ACTIVE", "24"));
+    validateRow(response, List.of("Female", "202210", "Vth0fbpFcsO", "ACTIVE", "24"));
+    validateRow(response, List.of("Female", "202211", "jmIPBj66vD6", "ACTIVE", "24"));
+    validateRow(response, List.of("Female", "202211", "Vth0fbpFcsO", "ACTIVE", "23"));
+    validateRow(response, List.of("Female", "202209", "jmIPBj66vD6", "ACTIVE", "23"));
+    validateRow(response, List.of("Female", "202211", "bL4ooGhyHRQ", "ACTIVE", "23"));
+    validateRow(response, List.of("Female", "202208", "Vth0fbpFcsO", "ACTIVE", "23"));
+    validateRow(response, List.of("Female", "202208", "fdc6uOvgoji", "ACTIVE", "23"));
+    validateRow(response, List.of("Female", "202210", "PMa2VCrupOd", "ACTIVE", "22"));
+    validateRow(response, List.of("Female", "202209", "at6UHUQatSo", "ACTIVE", "20"));
+    validateRow(response, List.of("Female", "202210", "bL4ooGhyHRQ", "ACTIVE", "20"));
+    validateRow(response, List.of("Female", "202208", "PMa2VCrupOd", "ACTIVE", "20"));
+    validateRow(response, List.of("Female", "202210", "qhqAxPSTUXp", "ACTIVE", "19"));
+    validateRow(response, List.of("Female", "202207", "bL4ooGhyHRQ", "ACTIVE", "19"));
+    validateRow(response, List.of("Female", "202212", "Vth0fbpFcsO", "ACTIVE", "19"));
+    validateRow(response, List.of("Female", "202212", "jUb8gELQApl", "ACTIVE", "19"));
+    validateRow(response, List.of("Female", "202208", "qhqAxPSTUXp", "ACTIVE", "19"));
+    validateRow(response, List.of("Female", "202209", "bL4ooGhyHRQ", "ACTIVE", "18"));
+    validateRow(response, List.of("Female", "202209", "jUb8gELQApl", "ACTIVE", "18"));
+    validateRow(response, List.of("Female", "202210", "jUb8gELQApl", "ACTIVE", "18"));
+    validateRow(response, List.of("Female", "202211", "PMa2VCrupOd", "ACTIVE", "18"));
+    validateRow(response, List.of("Female", "202212", "PMa2VCrupOd", "ACTIVE", "18"));
+    validateRow(response, List.of("Female", "202212", "eIQbndfxQMb", "ACTIVE", "17"));
+    validateRow(response, List.of("Female", "202209", "lc3eMKXaEfw", "ACTIVE", "16"));
+    validateRow(response, List.of("Female", "202207", "qhqAxPSTUXp", "ACTIVE", "16"));
+    validateRow(response, List.of("Female", "202209", "PMa2VCrupOd", "ACTIVE", "15"));
+    validateRow(response, List.of("Female", "202212", "qhqAxPSTUXp", "ACTIVE", "15"));
+    validateRow(response, List.of("Female", "202210", "lc3eMKXaEfw", "ACTIVE", "15"));
+    validateRow(response, List.of("Female", "202212", "bL4ooGhyHRQ", "ACTIVE", "15"));
+    validateRow(response, List.of("Female", "202211", "lc3eMKXaEfw", "ACTIVE", "14"));
+    validateRow(response, List.of("Female", "202207", "lc3eMKXaEfw", "ACTIVE", "13"));
+    validateRow(response, List.of("Female", "202207", "PMa2VCrupOd", "ACTIVE", "13"));
+    validateRow(response, List.of("Female", "202212", "lc3eMKXaEfw", "ACTIVE", "12"));
+    validateRow(response, List.of("Female", "202208", "lc3eMKXaEfw", "ACTIVE", "12"));
+    validateRow(response, List.of("Female", "202211", "jUb8gELQApl", "ACTIVE", "9"));
+  }
+
+  @Test
+  public void queryActiveStatusCasesByGenderLast12MonthsDim() {
+    // Given
+    QueryParamsBuilder params =
+        new QueryParamsBuilder()
+            .add("stage=A03MvHHogjR")
+            .add("displayProperty=NAME")
+            .add("sortOrder=desc")
+            .add("totalPages=false")
+            .add("outputType=EVENT")
+            .add(
+                "dimension=PROGRAM_STATUS:ACTIVE,pe:LAST_12_MONTHS,cejWyOfXge6,ou:O6uvpzGd5pu;fdc6uOvgoji;lc3eMKXaEfw;jUb8gELQApl;PMa2VCrupOd;kJq2mPyFEHo;qhqAxPSTUXp;Vth0fbpFcsO;jmIPBj66vD6;TEQlaapDQoK;bL4ooGhyHRQ;eIQbndfxQMb;at6UHUQatSo")
+            // .add("programStatus=ACTIVE")
+            .add("relativePeriodDate=2023-07-01");
+
+    // When
+    ApiResponse response = actions.aggregate().get("IpHINAT79UW", JSON, JSON, params);
+
+    // Then
+    response
+        .validate()
+        .statusCode(200)
+        .body("headers", hasSize(equalTo(5)))
+        .body("rows", hasSize(equalTo(156)))
+        .body("height", equalTo(156))
+        .body("width", equalTo(5))
+        .body("headerWidth", equalTo(5));
+
+    // Assert metaData.
+    String expectedMetaData =
+        "{\"items\":{\"jUb8gELQApl\":{\"name\":\"Kailahun\"},\"eIQbndfxQMb\":{\"name\":\"Tonkolili\"},\"ACTIVE\":{\"name\":\"Active\"},\"Vth0fbpFcsO\":{\"name\":\"Kono\"},\"202208\":{\"name\":\"August 2022\"},\"202209\":{\"name\":\"September 2022\"},\"O6uvpzGd5pu\":{\"name\":\"Bo\"},\"bL4ooGhyHRQ\":{\"name\":\"Pujehun\"},\"202305\":{\"name\":\"May 2023\"},\"kJq2mPyFEHo\":{\"name\":\"Kenema\"},\"202207\":{\"name\":\"July 2022\"},\"202306\":{\"name\":\"June 2023\"},\"202303\":{\"name\":\"March 2023\"},\"202304\":{\"name\":\"April 2023\"},\"202301\":{\"name\":\"January 2023\"},\"202302\":{\"name\":\"February 2023\"},\"LAST_12_MONTHS\":{\"name\":\"Last 12 months\"},\"202211\":{\"name\":\"November 2022\"},\"202212\":{\"name\":\"December 2022\"},\"202210\":{\"name\":\"October 2022\"},\"at6UHUQatSo\":{\"name\":\"Western Area\"},\"A03MvHHogjR\":{\"name\":\"Birth\"},\"Mnp3oXrpAbK\":{\"code\":\"Female\",\"name\":\"Female\"},\"TEQlaapDQoK\":{\"name\":\"Port Loko\"},\"rBvjJYbMCVx\":{\"code\":\"Male\",\"name\":\"Male\"},\"IpHINAT79UW\":{\"name\":\"Child Programme\"},\"PMa2VCrupOd\":{\"name\":\"Kambia\"},\"ou\":{\"name\":\"Organisation unit\"},\"fdc6uOvgoji\":{\"name\":\"Bombali\"},\"cejWyOfXge6\":{\"name\":\"Gender\"},\"programstatus\":{\"name\":\"Program status\"},\"pe\":{\"name\":\"Period\"},\"lc3eMKXaEfw\":{\"name\":\"Bonthe\"},\"qhqAxPSTUXp\":{\"name\":\"Koinadugu\"},\"jmIPBj66vD6\":{\"name\":\"Moyamba\"}},\"dimensions\":{\"programstatus\":[\"ACTIVE\"],\"pe\":[\"202207\",\"202208\",\"202209\",\"202210\",\"202211\",\"202212\",\"202301\",\"202302\",\"202303\",\"202304\",\"202305\",\"202306\"],\"ou\":[\"O6uvpzGd5pu\",\"fdc6uOvgoji\",\"lc3eMKXaEfw\",\"jUb8gELQApl\",\"PMa2VCrupOd\",\"kJq2mPyFEHo\",\"qhqAxPSTUXp\",\"Vth0fbpFcsO\",\"jmIPBj66vD6\",\"TEQlaapDQoK\",\"bL4ooGhyHRQ\",\"eIQbndfxQMb\",\"at6UHUQatSo\"],\"cejWyOfXge6\":[\"rBvjJYbMCVx\",\"Mnp3oXrpAbK\"]}}";
+    String actualMetaData = new JSONObject((Map) response.extract("metaData")).toString();
+    // assertEquals(expectedMetaData, actualMetaData, false);
+    assertJsonMetadata(expectedMetaData, actualMetaData);
+
+    // Assert headers.
+    validateHeader(response, 0, "cejWyOfXge6", "Gender", "TEXT", "java.lang.String", false, true);
+    validateHeader(response, 1, "pe", "Period", "TEXT", "java.lang.String", false, true);
+    validateHeader(response, 2, "ou", "Organisation unit", "TEXT", "java.lang.String", false, true);
+    validateHeader(
+        response, 3, "programstatus", "Program status", "TEXT", "java.lang.String", false, true);
+    validateHeader(response, 4, "value", "Value", "NUMBER", "java.lang.Double", false, false);
+
+    // Assert rows.
+    validateRow(response, List.of("Male", "202210", "TEQlaapDQoK", "ACTIVE", "51"));
+    validateRow(response, List.of("Male", "202212", "at6UHUQatSo", "ACTIVE", "46"));
+    validateRow(response, List.of("Male", "202212", "kJq2mPyFEHo", "ACTIVE", "45"));
+    validateRow(response, List.of("Male", "202208", "TEQlaapDQoK", "ACTIVE", "45"));
+    validateRow(response, List.of("Male", "202207", "kJq2mPyFEHo", "ACTIVE", "43"));
+    validateRow(response, List.of("Male", "202210", "kJq2mPyFEHo", "ACTIVE", "41"));
+    validateRow(response, List.of("Male", "202212", "O6uvpzGd5pu", "ACTIVE", "39"));
+    validateRow(response, List.of("Male", "202209", "O6uvpzGd5pu", "ACTIVE", "37"));
+    validateRow(response, List.of("Male", "202207", "O6uvpzGd5pu", "ACTIVE", "37"));
+    validateRow(response, List.of("Male", "202211", "O6uvpzGd5pu", "ACTIVE", "37"));
+    validateRow(response, List.of("Male", "202211", "kJq2mPyFEHo", "ACTIVE", "36"));
+    validateRow(response, List.of("Male", "202208", "O6uvpzGd5pu", "ACTIVE", "35"));
+    validateRow(response, List.of("Male", "202208", "kJq2mPyFEHo", "ACTIVE", "35"));
+    validateRow(response, List.of("Male", "202207", "at6UHUQatSo", "ACTIVE", "35"));
+    validateRow(response, List.of("Male", "202207", "TEQlaapDQoK", "ACTIVE", "35"));
+    validateRow(response, List.of("Male", "202210", "eIQbndfxQMb", "ACTIVE", "35"));
+    validateRow(response, List.of("Male", "202211", "TEQlaapDQoK", "ACTIVE", "34"));
+    validateRow(response, List.of("Male", "202209", "kJq2mPyFEHo", "ACTIVE", "33"));
+    validateRow(response, List.of("Male", "202210", "O6uvpzGd5pu", "ACTIVE", "32"));
+    validateRow(response, List.of("Male", "202209", "eIQbndfxQMb", "ACTIVE", "31"));
+    validateRow(response, List.of("Male", "202209", "TEQlaapDQoK", "ACTIVE", "31"));
+    validateRow(response, List.of("Male", "202211", "eIQbndfxQMb", "ACTIVE", "30"));
+    validateRow(response, List.of("Male", "202210", "jmIPBj66vD6", "ACTIVE", "30"));
+    validateRow(response, List.of("Male", "202207", "Vth0fbpFcsO", "ACTIVE", "29"));
+    validateRow(response, List.of("Male", "202207", "bL4ooGhyHRQ", "ACTIVE", "28"));
+    validateRow(response, List.of("Male", "202208", "jmIPBj66vD6", "ACTIVE", "28"));
+    validateRow(response, List.of("Male", "202208", "eIQbndfxQMb", "ACTIVE", "28"));
+    validateRow(response, List.of("Male", "202208", "at6UHUQatSo", "ACTIVE", "28"));
+    validateRow(response, List.of("Male", "202209", "fdc6uOvgoji", "ACTIVE", "27"));
+    validateRow(response, List.of("Male", "202211", "jmIPBj66vD6", "ACTIVE", "27"));
+    validateRow(response, List.of("Male", "202212", "jUb8gELQApl", "ACTIVE", "27"));
+    validateRow(response, List.of("Male", "202209", "Vth0fbpFcsO", "ACTIVE", "27"));
+    validateRow(response, List.of("Male", "202208", "Vth0fbpFcsO", "ACTIVE", "27"));
+    validateRow(response, List.of("Male", "202210", "at6UHUQatSo", "ACTIVE", "26"));
+    validateRow(response, List.of("Male", "202208", "jUb8gELQApl", "ACTIVE", "26"));
+    validateRow(response, List.of("Male", "202208", "qhqAxPSTUXp", "ACTIVE", "26"));
+    validateRow(response, List.of("Male", "202211", "fdc6uOvgoji", "ACTIVE", "25"));
+    validateRow(response, List.of("Male", "202212", "eIQbndfxQMb", "ACTIVE", "25"));
+    validateRow(response, List.of("Male", "202210", "qhqAxPSTUXp", "ACTIVE", "25"));
+    validateRow(response, List.of("Male", "202211", "at6UHUQatSo", "ACTIVE", "25"));
+    validateRow(response, List.of("Male", "202207", "jmIPBj66vD6", "ACTIVE", "25"));
+    validateRow(response, List.of("Male", "202212", "fdc6uOvgoji", "ACTIVE", "24"));
+    validateRow(response, List.of("Male", "202210", "Vth0fbpFcsO", "ACTIVE", "24"));
+    validateRow(response, List.of("Male", "202212", "qhqAxPSTUXp", "ACTIVE", "24"));
+    validateRow(response, List.of("Male", "202207", "eIQbndfxQMb", "ACTIVE", "24"));
+    validateRow(response, List.of("Male", "202209", "jmIPBj66vD6", "ACTIVE", "24"));
+    validateRow(response, List.of("Male", "202209", "at6UHUQatSo", "ACTIVE", "24"));
+    validateRow(response, List.of("Male", "202207", "fdc6uOvgoji", "ACTIVE", "23"));
+    validateRow(response, List.of("Male", "202212", "PMa2VCrupOd", "ACTIVE", "23"));
+    validateRow(response, List.of("Male", "202210", "bL4ooGhyHRQ", "ACTIVE", "23"));
+    validateRow(response, List.of("Male", "202208", "fdc6uOvgoji", "ACTIVE", "23"));
+    validateRow(response, List.of("Male", "202212", "lc3eMKXaEfw", "ACTIVE", "23"));
+    validateRow(response, List.of("Male", "202211", "jUb8gELQApl", "ACTIVE", "22"));
+    validateRow(response, List.of("Male", "202212", "jmIPBj66vD6", "ACTIVE", "22"));
+    validateRow(response, List.of("Male", "202211", "qhqAxPSTUXp", "ACTIVE", "22"));
+    validateRow(response, List.of("Male", "202212", "TEQlaapDQoK", "ACTIVE", "20"));
+    validateRow(response, List.of("Male", "202211", "bL4ooGhyHRQ", "ACTIVE", "20"));
+    validateRow(response, List.of("Male", "202210", "fdc6uOvgoji", "ACTIVE", "20"));
+    validateRow(response, List.of("Male", "202208", "bL4ooGhyHRQ", "ACTIVE", "20"));
+    validateRow(response, List.of("Male", "202207", "jUb8gELQApl", "ACTIVE", "20"));
+    validateRow(response, List.of("Male", "202208", "PMa2VCrupOd", "ACTIVE", "19"));
+    validateRow(response, List.of("Male", "202211", "Vth0fbpFcsO", "ACTIVE", "19"));
+    validateRow(response, List.of("Male", "202212", "Vth0fbpFcsO", "ACTIVE", "19"));
+    validateRow(response, List.of("Male", "202209", "jUb8gELQApl", "ACTIVE", "19"));
+    validateRow(response, List.of("Male", "202209", "qhqAxPSTUXp", "ACTIVE", "18"));
+    validateRow(response, List.of("Male", "202209", "bL4ooGhyHRQ", "ACTIVE", "18"));
+    validateRow(response, List.of("Male", "202209", "PMa2VCrupOd", "ACTIVE", "18"));
+    validateRow(response, List.of("Male", "202212", "bL4ooGhyHRQ", "ACTIVE", "17"));
+    validateRow(response, List.of("Male", "202211", "lc3eMKXaEfw", "ACTIVE", "17"));
+    validateRow(response, List.of("Male", "202210", "PMa2VCrupOd", "ACTIVE", "17"));
+    validateRow(response, List.of("Male", "202207", "lc3eMKXaEfw", "ACTIVE", "16"));
+    validateRow(response, List.of("Male", "202208", "lc3eMKXaEfw", "ACTIVE", "15"));
+    validateRow(response, List.of("Male", "202210", "jUb8gELQApl", "ACTIVE", "14"));
+    validateRow(response, List.of("Male", "202210", "lc3eMKXaEfw", "ACTIVE", "13"));
+    validateRow(response, List.of("Male", "202207", "PMa2VCrupOd", "ACTIVE", "11"));
+    validateRow(response, List.of("Male", "202207", "qhqAxPSTUXp", "ACTIVE", "10"));
+    validateRow(response, List.of("Male", "202209", "lc3eMKXaEfw", "ACTIVE", "9"));
+    validateRow(response, List.of("Male", "202211", "PMa2VCrupOd", "ACTIVE", "9"));
+    validateRow(response, List.of("Female", "202209", "kJq2mPyFEHo", "ACTIVE", "47"));
+    validateRow(response, List.of("Female", "202212", "O6uvpzGd5pu", "ACTIVE", "46"));
+    validateRow(response, List.of("Female", "202211", "TEQlaapDQoK", "ACTIVE", "44"));
+    validateRow(response, List.of("Female", "202207", "TEQlaapDQoK", "ACTIVE", "39"));
+    validateRow(response, List.of("Female", "202208", "at6UHUQatSo", "ACTIVE", "39"));
+    validateRow(response, List.of("Female", "202211", "kJq2mPyFEHo", "ACTIVE", "38"));
+    validateRow(response, List.of("Female", "202208", "O6uvpzGd5pu", "ACTIVE", "37"));
+    validateRow(response, List.of("Female", "202208", "TEQlaapDQoK", "ACTIVE", "36"));
+    validateRow(response, List.of("Female", "202209", "TEQlaapDQoK", "ACTIVE", "35"));
+    validateRow(response, List.of("Female", "202210", "kJq2mPyFEHo", "ACTIVE", "35"));
+    validateRow(response, List.of("Female", "202208", "jmIPBj66vD6", "ACTIVE", "35"));
+    validateRow(response, List.of("Female", "202207", "O6uvpzGd5pu", "ACTIVE", "35"));
+    validateRow(response, List.of("Female", "202210", "at6UHUQatSo", "ACTIVE", "33"));
+    validateRow(response, List.of("Female", "202211", "O6uvpzGd5pu", "ACTIVE", "33"));
+    validateRow(response, List.of("Female", "202209", "Vth0fbpFcsO", "ACTIVE", "32"));
+    validateRow(response, List.of("Female", "202210", "fdc6uOvgoji", "ACTIVE", "32"));
+    validateRow(response, List.of("Female", "202208", "jUb8gELQApl", "ACTIVE", "32"));
+    validateRow(response, List.of("Female", "202210", "TEQlaapDQoK", "ACTIVE", "31"));
+    validateRow(response, List.of("Female", "202210", "O6uvpzGd5pu", "ACTIVE", "31"));
+    validateRow(response, List.of("Female", "202208", "kJq2mPyFEHo", "ACTIVE", "31"));
+    validateRow(response, List.of("Female", "202212", "fdc6uOvgoji", "ACTIVE", "30"));
+    validateRow(response, List.of("Female", "202211", "eIQbndfxQMb", "ACTIVE", "30"));
+    validateRow(response, List.of("Female", "202210", "jmIPBj66vD6", "ACTIVE", "30"));
+    validateRow(response, List.of("Female", "202212", "at6UHUQatSo", "ACTIVE", "30"));
+    validateRow(response, List.of("Female", "202207", "jmIPBj66vD6", "ACTIVE", "30"));
+    validateRow(response, List.of("Female", "202212", "TEQlaapDQoK", "ACTIVE", "29"));
+    validateRow(response, List.of("Female", "202209", "fdc6uOvgoji", "ACTIVE", "29"));
+    validateRow(response, List.of("Female", "202212", "kJq2mPyFEHo", "ACTIVE", "28"));
+    validateRow(response, List.of("Female", "202211", "fdc6uOvgoji", "ACTIVE", "28"));
+    validateRow(response, List.of("Female", "202210", "eIQbndfxQMb", "ACTIVE", "28"));
+    validateRow(response, List.of("Female", "202207", "kJq2mPyFEHo", "ACTIVE", "28"));
+    validateRow(response, List.of("Female", "202207", "fdc6uOvgoji", "ACTIVE", "27"));
+    validateRow(response, List.of("Female", "202207", "at6UHUQatSo", "ACTIVE", "27"));
+    validateRow(response, List.of("Female", "202208", "eIQbndfxQMb", "ACTIVE", "26"));
+    validateRow(response, List.of("Female", "202211", "qhqAxPSTUXp", "ACTIVE", "26"));
+    validateRow(response, List.of("Female", "202207", "Vth0fbpFcsO", "ACTIVE", "26"));
+    validateRow(response, List.of("Female", "202209", "O6uvpzGd5pu", "ACTIVE", "26"));
+    validateRow(response, List.of("Female", "202211", "at6UHUQatSo", "ACTIVE", "25"));
+    validateRow(response, List.of("Female", "202208", "bL4ooGhyHRQ", "ACTIVE", "25"));
+    validateRow(response, List.of("Female", "202212", "jmIPBj66vD6", "ACTIVE", "24"));
+    validateRow(response, List.of("Female", "202209", "qhqAxPSTUXp", "ACTIVE", "24"));
+    validateRow(response, List.of("Female", "202207", "jUb8gELQApl", "ACTIVE", "24"));
+    validateRow(response, List.of("Female", "202209", "eIQbndfxQMb", "ACTIVE", "24"));
+    validateRow(response, List.of("Female", "202207", "eIQbndfxQMb", "ACTIVE", "24"));
+    validateRow(response, List.of("Female", "202210", "Vth0fbpFcsO", "ACTIVE", "24"));
+    validateRow(response, List.of("Female", "202211", "jmIPBj66vD6", "ACTIVE", "24"));
+    validateRow(response, List.of("Female", "202211", "Vth0fbpFcsO", "ACTIVE", "23"));
+    validateRow(response, List.of("Female", "202209", "jmIPBj66vD6", "ACTIVE", "23"));
+    validateRow(response, List.of("Female", "202211", "bL4ooGhyHRQ", "ACTIVE", "23"));
+    validateRow(response, List.of("Female", "202208", "Vth0fbpFcsO", "ACTIVE", "23"));
+    validateRow(response, List.of("Female", "202208", "fdc6uOvgoji", "ACTIVE", "23"));
+    validateRow(response, List.of("Female", "202210", "PMa2VCrupOd", "ACTIVE", "22"));
+    validateRow(response, List.of("Female", "202209", "at6UHUQatSo", "ACTIVE", "20"));
+    validateRow(response, List.of("Female", "202210", "bL4ooGhyHRQ", "ACTIVE", "20"));
+    validateRow(response, List.of("Female", "202208", "PMa2VCrupOd", "ACTIVE", "20"));
+    validateRow(response, List.of("Female", "202210", "qhqAxPSTUXp", "ACTIVE", "19"));
+    validateRow(response, List.of("Female", "202207", "bL4ooGhyHRQ", "ACTIVE", "19"));
+    validateRow(response, List.of("Female", "202212", "Vth0fbpFcsO", "ACTIVE", "19"));
+    validateRow(response, List.of("Female", "202212", "jUb8gELQApl", "ACTIVE", "19"));
+    validateRow(response, List.of("Female", "202208", "qhqAxPSTUXp", "ACTIVE", "19"));
+    validateRow(response, List.of("Female", "202209", "bL4ooGhyHRQ", "ACTIVE", "18"));
+    validateRow(response, List.of("Female", "202209", "jUb8gELQApl", "ACTIVE", "18"));
+    validateRow(response, List.of("Female", "202210", "jUb8gELQApl", "ACTIVE", "18"));
+    validateRow(response, List.of("Female", "202211", "PMa2VCrupOd", "ACTIVE", "18"));
+    validateRow(response, List.of("Female", "202212", "PMa2VCrupOd", "ACTIVE", "18"));
+    validateRow(response, List.of("Female", "202212", "eIQbndfxQMb", "ACTIVE", "17"));
+    validateRow(response, List.of("Female", "202209", "lc3eMKXaEfw", "ACTIVE", "16"));
+    validateRow(response, List.of("Female", "202207", "qhqAxPSTUXp", "ACTIVE", "16"));
+    validateRow(response, List.of("Female", "202209", "PMa2VCrupOd", "ACTIVE", "15"));
+    validateRow(response, List.of("Female", "202212", "qhqAxPSTUXp", "ACTIVE", "15"));
+    validateRow(response, List.of("Female", "202210", "lc3eMKXaEfw", "ACTIVE", "15"));
+    validateRow(response, List.of("Female", "202212", "bL4ooGhyHRQ", "ACTIVE", "15"));
+    validateRow(response, List.of("Female", "202211", "lc3eMKXaEfw", "ACTIVE", "14"));
+    validateRow(response, List.of("Female", "202207", "lc3eMKXaEfw", "ACTIVE", "13"));
+    validateRow(response, List.of("Female", "202207", "PMa2VCrupOd", "ACTIVE", "13"));
+    validateRow(response, List.of("Female", "202212", "lc3eMKXaEfw", "ACTIVE", "12"));
+    validateRow(response, List.of("Female", "202208", "lc3eMKXaEfw", "ACTIVE", "12"));
+    validateRow(response, List.of("Female", "202211", "jUb8gELQApl", "ACTIVE", "9"));
+  }
+
+  @Test
+  public void queryArvAtBirthByGenderActiveCasesLast12Months() throws JSONException {
+    // Given
+    QueryParamsBuilder params =
+        new QueryParamsBuilder()
+            .add("stage=A03MvHHogjR")
+            .add("displayProperty=NAME")
+            .add("eventStatus=ACTIVE")
+            .add("sortOrder=desc")
+            .add("totalPages=false")
+            .add("outputType=EVENT")
+            .add(
+                "dimension=pe:LAST_12_MONTHS,A03MvHHogjR.cejWyOfXge6,A03MvHHogjR.wQLfBvPrXqq,ou:jUb8gELQApl;TEQlaapDQoK;eIQbndfxQMb;Vth0fbpFcsO;PMa2VCrupOd;O6uvpzGd5pu;bL4ooGhyHRQ;kJq2mPyFEHo;fdc6uOvgoji;at6UHUQatSo;lc3eMKXaEfw;qhqAxPSTUXp;jmIPBj66vD6")
+            .add("programStatus=ACTIVE")
+            .add("relativePeriodDate=2023-07-01");
+
+    // When
+    ApiResponse response = actions.aggregate().get("IpHINAT79UW", JSON, JSON, params);
+
+    // Then
+    response
+        .validate()
+        .statusCode(200)
+        .body("headers", hasSize(equalTo(6)))
+        .body("rows", hasSize(equalTo(313)))
+        .body("height", equalTo(313))
+        .body("width", equalTo(6))
+        .body("headerWidth", equalTo(6));
+
+    // Assert metaData.
+    String expectedMetaData =
+        "{\"items\":{\"jUb8gELQApl\":{\"name\":\"Kailahun\"},\"eIQbndfxQMb\":{\"name\":\"Tonkolili\"},\"Vth0fbpFcsO\":{\"name\":\"Kono\"},\"202208\":{\"name\":\"August 2022\"},\"O6uvpzGd5pu\":{\"name\":\"Bo\"},\"bL4ooGhyHRQ\":{\"name\":\"Pujehun\"},\"202209\":{\"name\":\"September 2022\"},\"kJq2mPyFEHo\":{\"name\":\"Kenema\"},\"202305\":{\"name\":\"May 2023\"},\"202207\":{\"name\":\"July 2022\"},\"202306\":{\"name\":\"June 2023\"},\"202303\":{\"name\":\"March 2023\"},\"202304\":{\"name\":\"April 2023\"},\"202301\":{\"name\":\"January 2023\"},\"202302\":{\"name\":\"February 2023\"},\"LAST_12_MONTHS\":{\"name\":\"Last 12 months\"},\"202211\":{\"name\":\"November 2022\"},\"ww8JVblo4SI\":{\"code\":\"Others\",\"name\":\"Others\"},\"202212\":{\"name\":\"December 2022\"},\"Cd0gtHGmlwS\":{\"code\":\"NVP only\",\"name\":\"NVP only\"},\"at6UHUQatSo\":{\"name\":\"Western Area\"},\"202210\":{\"name\":\"October 2022\"},\"A03MvHHogjR\":{\"name\":\"Birth\"},\"Mnp3oXrpAbK\":{\"code\":\"Female\",\"name\":\"Female\"},\"TEQlaapDQoK\":{\"name\":\"Port Loko\"},\"rBvjJYbMCVx\":{\"code\":\"Male\",\"name\":\"Male\"},\"IpHINAT79UW\":{\"name\":\"Child Programme\"},\"PMa2VCrupOd\":{\"name\":\"Kambia\"},\"ou\":{\"name\":\"Organisation unit\"},\"fdc6uOvgoji\":{\"name\":\"Bombali\"},\"pe\":{\"name\":\"Period\"},\"A03MvHHogjR.cejWyOfXge6\":{\"name\":\"Gender\"},\"lc3eMKXaEfw\":{\"name\":\"Bonthe\"},\"A03MvHHogjR.wQLfBvPrXqq\":{\"name\":\"MCH ARV at birth\"},\"qhqAxPSTUXp\":{\"name\":\"Koinadugu\"},\"jmIPBj66vD6\":{\"name\":\"Moyamba\"}},\"dimensions\":{\"pe\":[\"202207\",\"202208\",\"202209\",\"202210\",\"202211\",\"202212\",\"202301\",\"202302\",\"202303\",\"202304\",\"202305\",\"202306\"],\"ou\":[\"jUb8gELQApl\",\"TEQlaapDQoK\",\"eIQbndfxQMb\",\"Vth0fbpFcsO\",\"PMa2VCrupOd\",\"O6uvpzGd5pu\",\"bL4ooGhyHRQ\",\"kJq2mPyFEHo\",\"fdc6uOvgoji\",\"at6UHUQatSo\",\"lc3eMKXaEfw\",\"qhqAxPSTUXp\",\"jmIPBj66vD6\"],\"A03MvHHogjR.wQLfBvPrXqq\":[\"Cd0gtHGmlwS\",\"ww8JVblo4SI\"],\"A03MvHHogjR.cejWyOfXge6\":[\"rBvjJYbMCVx\",\"Mnp3oXrpAbK\"]}}";
+    String actualMetaData = new JSONObject((Map) response.extract("metaData")).toString();
+    assertEquals(expectedMetaData, actualMetaData, false);
+
+    // Assert headers.
+    validateHeader(
+        response, 0, "A03MvHHogjR.cejWyOfXge6", "Gender", "TEXT", "java.lang.String", false, true);
+    validateHeader(
+        response,
+        1,
+        "A03MvHHogjR.wQLfBvPrXqq",
+        "MCH ARV at birth",
+        "TEXT",
+        "java.lang.String",
+        false,
+        true);
+    validateHeader(response, 2, "ou", "Organisation unit", "TEXT", "java.lang.String", false, true);
+    validateHeader(response, 3, "pe", "Period", "TEXT", "java.lang.String", false, true);
+    validateHeader(
+        response, 4, "programstatus", "Program status", "TEXT", "java.lang.String", false, true);
+    validateHeader(response, 5, "value", "Value", "NUMBER", "java.lang.Double", false, false);
+
+    // Assert rows.
+    validateRow(response, List.of("Male", "NVP only", "TEQlaapDQoK", "202210", "ACTIVE", "32"));
+    validateRow(response, List.of("Male", "NVP only", "kJq2mPyFEHo", "202212", "ACTIVE", "31"));
+    validateRow(response, List.of("Male", "Others", "O6uvpzGd5pu", "202211", "ACTIVE", "26"));
+    validateRow(response, List.of("Male", "NVP only", "at6UHUQatSo", "202212", "ACTIVE", "23"));
+    validateRow(response, List.of("Male", "Others", "at6UHUQatSo", "202212", "ACTIVE", "23"));
+    validateRow(response, List.of("Male", "Others", "TEQlaapDQoK", "202208", "ACTIVE", "23"));
+    validateRow(response, List.of("Male", "NVP only", "kJq2mPyFEHo", "202207", "ACTIVE", "22"));
+    validateRow(response, List.of("Male", "NVP only", "TEQlaapDQoK", "202208", "ACTIVE", "22"));
+    validateRow(response, List.of("Male", "Others", "kJq2mPyFEHo", "202211", "ACTIVE", "21"));
+    validateRow(response, List.of("Male", "Others", "at6UHUQatSo", "202207", "ACTIVE", "21"));
+    validateRow(response, List.of("Male", "NVP only", "kJq2mPyFEHo", "202210", "ACTIVE", "21"));
+    validateRow(response, List.of("Male", "Others", "kJq2mPyFEHo", "202207", "ACTIVE", "21"));
+    validateRow(response, List.of("Male", "NVP only", "O6uvpzGd5pu", "202212", "ACTIVE", "21"));
+    validateRow(response, List.of("Male", "Others", "kJq2mPyFEHo", "202208", "ACTIVE", "20"));
+    validateRow(response, List.of("Male", "Others", "kJq2mPyFEHo", "202210", "ACTIVE", "20"));
+    validateRow(response, List.of("Male", "Others", "TEQlaapDQoK", "202209", "ACTIVE", "19"));
+    validateRow(response, List.of("Male", "NVP only", "O6uvpzGd5pu", "202207", "ACTIVE", "19"));
+    validateRow(response, List.of("Male", "Others", "kJq2mPyFEHo", "202209", "ACTIVE", "19"));
+    validateRow(response, List.of("Male", "Others", "TEQlaapDQoK", "202210", "ACTIVE", "19"));
+    validateRow(response, List.of("Male", "NVP only", "O6uvpzGd5pu", "202209", "ACTIVE", "19"));
+    validateRow(response, List.of("Male", "NVP only", "eIQbndfxQMb", "202210", "ACTIVE", "19"));
+    validateRow(response, List.of("Male", "Others", "TEQlaapDQoK", "202207", "ACTIVE", "19"));
+    validateRow(response, List.of("Male", "Others", "Vth0fbpFcsO", "202209", "ACTIVE", "19"));
+    validateRow(response, List.of("Male", "Others", "O6uvpzGd5pu", "202207", "ACTIVE", "18"));
+    validateRow(response, List.of("Male", "Others", "O6uvpzGd5pu", "202212", "ACTIVE", "18"));
+    validateRow(response, List.of("Male", "NVP only", "O6uvpzGd5pu", "202208", "ACTIVE", "18"));
+    validateRow(response, List.of("Male", "NVP only", "jmIPBj66vD6", "202207", "ACTIVE", "18"));
+    validateRow(response, List.of("Male", "NVP only", "eIQbndfxQMb", "202208", "ACTIVE", "18"));
+    validateRow(response, List.of("Male", "Others", "TEQlaapDQoK", "202211", "ACTIVE", "17"));
+    validateRow(response, List.of("Male", "Others", "O6uvpzGd5pu", "202210", "ACTIVE", "17"));
+    validateRow(response, List.of("Male", "Others", "jUb8gELQApl", "202212", "ACTIVE", "17"));
+    validateRow(response, List.of("Male", "NVP only", "TEQlaapDQoK", "202211", "ACTIVE", "17"));
+    validateRow(response, List.of("Male", "Others", "O6uvpzGd5pu", "202209", "ACTIVE", "17"));
+    validateRow(response, List.of("Male", "Others", "Vth0fbpFcsO", "202210", "ACTIVE", "17"));
+    validateRow(response, List.of("Male", "Others", "eIQbndfxQMb", "202212", "ACTIVE", "16"));
+    validateRow(response, List.of("Male", "Others", "eIQbndfxQMb", "202210", "ACTIVE", "16"));
+    validateRow(response, List.of("Male", "Others", "at6UHUQatSo", "202208", "ACTIVE", "16"));
+    validateRow(response, List.of("Male", "Others", "jUb8gELQApl", "202208", "ACTIVE", "16"));
+    validateRow(response, List.of("Male", "Others", "O6uvpzGd5pu", "202208", "ACTIVE", "16"));
+    validateRow(response, List.of("Male", "NVP only", "jmIPBj66vD6", "202208", "ACTIVE", "16"));
+    validateRow(response, List.of("Male", "NVP only", "TEQlaapDQoK", "202207", "ACTIVE", "16"));
+    validateRow(response, List.of("Male", "NVP only", "jmIPBj66vD6", "202211", "ACTIVE", "16"));
+    validateRow(response, List.of("Male", "Others", "eIQbndfxQMb", "202209", "ACTIVE", "16"));
+    validateRow(response, List.of("Male", "NVP only", "lc3eMKXaEfw", "202212", "ACTIVE", "16"));
+    validateRow(response, List.of("Male", "Others", "jmIPBj66vD6", "202210", "ACTIVE", "16"));
+    validateRow(response, List.of("Male", "Others", "Vth0fbpFcsO", "202207", "ACTIVE", "15"));
+    validateRow(response, List.of("Male", "NVP only", "Vth0fbpFcsO", "202208", "ACTIVE", "15"));
+    validateRow(response, List.of("Male", "NVP only", "at6UHUQatSo", "202209", "ACTIVE", "15"));
+    validateRow(response, List.of("Male", "NVP only", "eIQbndfxQMb", "202211", "ACTIVE", "15"));
+    validateRow(response, List.of("Male", "NVP only", "jUb8gELQApl", "202207", "ACTIVE", "15"));
+    validateRow(response, List.of("Male", "NVP only", "O6uvpzGd5pu", "202210", "ACTIVE", "15"));
+    validateRow(response, List.of("Male", "NVP only", "jUb8gELQApl", "202211", "ACTIVE", "15"));
+    validateRow(response, List.of("Male", "NVP only", "fdc6uOvgoji", "202210", "ACTIVE", "15"));
+    validateRow(response, List.of("Male", "NVP only", "kJq2mPyFEHo", "202208", "ACTIVE", "15"));
+    validateRow(response, List.of("Male", "Others", "PMa2VCrupOd", "202212", "ACTIVE", "15"));
+    validateRow(response, List.of("Male", "NVP only", "kJq2mPyFEHo", "202211", "ACTIVE", "15"));
+    validateRow(response, List.of("Male", "NVP only", "eIQbndfxQMb", "202209", "ACTIVE", "15"));
+    validateRow(response, List.of("Male", "Others", "eIQbndfxQMb", "202211", "ACTIVE", "15"));
+    validateRow(response, List.of("Male", "NVP only", "bL4ooGhyHRQ", "202207", "ACTIVE", "15"));
+    validateRow(response, List.of("Male", "NVP only", "fdc6uOvgoji", "202209", "ACTIVE", "14"));
+    validateRow(response, List.of("Male", "NVP only", "kJq2mPyFEHo", "202209", "ACTIVE", "14"));
+    validateRow(response, List.of("Male", "Others", "fdc6uOvgoji", "202208", "ACTIVE", "14"));
+    validateRow(response, List.of("Male", "Others", "at6UHUQatSo", "202211", "ACTIVE", "14"));
+    validateRow(response, List.of("Male", "Others", "fdc6uOvgoji", "202212", "ACTIVE", "14"));
+    validateRow(response, List.of("Male", "NVP only", "at6UHUQatSo", "202210", "ACTIVE", "14"));
+    validateRow(response, List.of("Male", "Others", "kJq2mPyFEHo", "202212", "ACTIVE", "14"));
+    validateRow(response, List.of("Male", "Others", "jmIPBj66vD6", "202212", "ACTIVE", "14"));
+    validateRow(response, List.of("Male", "NVP only", "jmIPBj66vD6", "202210", "ACTIVE", "14"));
+    validateRow(response, List.of("Male", "NVP only", "Vth0fbpFcsO", "202207", "ACTIVE", "14"));
+    validateRow(response, List.of("Male", "NVP only", "at6UHUQatSo", "202207", "ACTIVE", "14"));
+    validateRow(response, List.of("Male", "NVP only", "bL4ooGhyHRQ", "202210", "ACTIVE", "13"));
+    validateRow(response, List.of("Male", "NVP only", "qhqAxPSTUXp", "202210", "ACTIVE", "13"));
+    validateRow(response, List.of("Male", "Others", "qhqAxPSTUXp", "202208", "ACTIVE", "13"));
+    validateRow(response, List.of("Male", "Others", "fdc6uOvgoji", "202209", "ACTIVE", "13"));
+    validateRow(response, List.of("Male", "NVP only", "jmIPBj66vD6", "202209", "ACTIVE", "13"));
+    validateRow(response, List.of("Male", "Others", "bL4ooGhyHRQ", "202207", "ACTIVE", "13"));
+    validateRow(response, List.of("Male", "NVP only", "eIQbndfxQMb", "202207", "ACTIVE", "13"));
+    validateRow(response, List.of("Male", "NVP only", "fdc6uOvgoji", "202211", "ACTIVE", "13"));
+    validateRow(response, List.of("Male", "NVP only", "qhqAxPSTUXp", "202212", "ACTIVE", "13"));
+    validateRow(response, List.of("Male", "NVP only", "qhqAxPSTUXp", "202208", "ACTIVE", "13"));
+    validateRow(response, List.of("Male", "NVP only", "qhqAxPSTUXp", "202211", "ACTIVE", "13"));
+    validateRow(response, List.of("Male", "Others", "bL4ooGhyHRQ", "202211", "ACTIVE", "13"));
+    validateRow(response, List.of("Male", "Others", "jUb8gELQApl", "202209", "ACTIVE", "12"));
+    validateRow(response, List.of("Male", "Others", "jmIPBj66vD6", "202208", "ACTIVE", "12"));
+    validateRow(response, List.of("Male", "NVP only", "TEQlaapDQoK", "202209", "ACTIVE", "12"));
+    validateRow(response, List.of("Male", "Others", "at6UHUQatSo", "202210", "ACTIVE", "12"));
+    validateRow(response, List.of("Male", "Others", "Vth0fbpFcsO", "202208", "ACTIVE", "12"));
+    validateRow(response, List.of("Male", "Others", "qhqAxPSTUXp", "202210", "ACTIVE", "12"));
+    validateRow(response, List.of("Male", "NVP only", "at6UHUQatSo", "202208", "ACTIVE", "12"));
+    validateRow(response, List.of("Male", "NVP only", "fdc6uOvgoji", "202207", "ACTIVE", "12"));
+    validateRow(response, List.of("Male", "Others", "fdc6uOvgoji", "202211", "ACTIVE", "12"));
+    validateRow(response, List.of("Male", "NVP only", "at6UHUQatSo", "202211", "ACTIVE", "11"));
+    validateRow(response, List.of("Male", "Others", "jmIPBj66vD6", "202209", "ACTIVE", "11"));
+    validateRow(response, List.of("Male", "Others", "Vth0fbpFcsO", "202212", "ACTIVE", "11"));
+    validateRow(response, List.of("Male", "NVP only", "O6uvpzGd5pu", "202211", "ACTIVE", "11"));
+    validateRow(response, List.of("Male", "Others", "bL4ooGhyHRQ", "202209", "ACTIVE", "11"));
+    validateRow(response, List.of("Male", "NVP only", "Vth0fbpFcsO", "202211", "ACTIVE", "11"));
+    validateRow(response, List.of("Male", "Others", "jmIPBj66vD6", "202211", "ACTIVE", "11"));
+    validateRow(response, List.of("Male", "NVP only", "qhqAxPSTUXp", "202209", "ACTIVE", "11"));
+    validateRow(response, List.of("Male", "Others", "fdc6uOvgoji", "202207", "ACTIVE", "11"));
+    validateRow(response, List.of("Male", "NVP only", "PMa2VCrupOd", "202208", "ACTIVE", "11"));
+    validateRow(response, List.of("Male", "Others", "qhqAxPSTUXp", "202212", "ACTIVE", "11"));
+    validateRow(response, List.of("Male", "Others", "eIQbndfxQMb", "202207", "ACTIVE", "11"));
+    validateRow(response, List.of("Male", "Others", "lc3eMKXaEfw", "202208", "ACTIVE", "11"));
+    validateRow(response, List.of("Male", "Others", "TEQlaapDQoK", "202212", "ACTIVE", "10"));
+    validateRow(response, List.of("Male", "NVP only", "TEQlaapDQoK", "202212", "ACTIVE", "10"));
+    validateRow(response, List.of("Male", "Others", "eIQbndfxQMb", "202208", "ACTIVE", "10"));
+    validateRow(response, List.of("Male", "NVP only", "fdc6uOvgoji", "202212", "ACTIVE", "10"));
+    validateRow(response, List.of("Male", "Others", "bL4ooGhyHRQ", "202210", "ACTIVE", "10"));
+    validateRow(response, List.of("Male", "NVP only", "bL4ooGhyHRQ", "202208", "ACTIVE", "10"));
+    validateRow(response, List.of("Male", "Others", "bL4ooGhyHRQ", "202208", "ACTIVE", "10"));
+    validateRow(response, List.of("Male", "NVP only", "lc3eMKXaEfw", "202207", "ACTIVE", "10"));
+    validateRow(response, List.of("Male", "NVP only", "jUb8gELQApl", "202212", "ACTIVE", "10"));
+    validateRow(response, List.of("Male", "NVP only", "jUb8gELQApl", "202208", "ACTIVE", "10"));
+    validateRow(response, List.of("Male", "Others", "qhqAxPSTUXp", "202211", "ACTIVE", "9"));
+    validateRow(response, List.of("Male", "NVP only", "PMa2VCrupOd", "202209", "ACTIVE", "9"));
+    validateRow(response, List.of("Male", "NVP only", "lc3eMKXaEfw", "202211", "ACTIVE", "9"));
+    validateRow(response, List.of("Male", "NVP only", "fdc6uOvgoji", "202208", "ACTIVE", "9"));
+    validateRow(response, List.of("Male", "NVP only", "eIQbndfxQMb", "202212", "ACTIVE", "9"));
+    validateRow(response, List.of("Male", "Others", "PMa2VCrupOd", "202210", "ACTIVE", "9"));
+    validateRow(response, List.of("Male", "Others", "bL4ooGhyHRQ", "202212", "ACTIVE", "9"));
+    validateRow(response, List.of("Male", "Others", "at6UHUQatSo", "202209", "ACTIVE", "9"));
+    validateRow(response, List.of("Male", "Others", "PMa2VCrupOd", "202209", "ACTIVE", "9"));
+    validateRow(response, List.of("Male", "NVP only", "Vth0fbpFcsO", "202209", "ACTIVE", "8"));
+    validateRow(response, List.of("Male", "Others", "Vth0fbpFcsO", "202211", "ACTIVE", "8"));
+    validateRow(response, List.of("Male", "NVP only", "Vth0fbpFcsO", "202212", "ACTIVE", "8"));
+    validateRow(response, List.of("Male", "Others", "lc3eMKXaEfw", "202211", "ACTIVE", "8"));
+    validateRow(response, List.of("Male", "NVP only", "PMa2VCrupOd", "202212", "ACTIVE", "8"));
+    validateRow(response, List.of("Male", "NVP only", "jmIPBj66vD6", "202212", "ACTIVE", "8"));
+    validateRow(response, List.of("Male", "Others", "PMa2VCrupOd", "202208", "ACTIVE", "8"));
+    validateRow(response, List.of("Male", "NVP only", "bL4ooGhyHRQ", "202212", "ACTIVE", "8"));
+    validateRow(response, List.of("Male", "NVP only", "PMa2VCrupOd", "202210", "ACTIVE", "8"));
+    validateRow(response, List.of("Male", "NVP only", "jUb8gELQApl", "202209", "ACTIVE", "7"));
+    validateRow(response, List.of("Male", "Others", "jUb8gELQApl", "202210", "ACTIVE", "7"));
+    validateRow(response, List.of("Male", "Others", "lc3eMKXaEfw", "202212", "ACTIVE", "7"));
+    validateRow(response, List.of("Male", "Others", "PMa2VCrupOd", "202207", "ACTIVE", "7"));
+    validateRow(response, List.of("Male", "Others", "jUb8gELQApl", "202211", "ACTIVE", "7"));
+    validateRow(response, List.of("Male", "Others", "jmIPBj66vD6", "202207", "ACTIVE", "7"));
+    validateRow(response, List.of("Male", "NVP only", "jUb8gELQApl", "202210", "ACTIVE", "7"));
+    validateRow(response, List.of("Male", "NVP only", "Vth0fbpFcsO", "202210", "ACTIVE", "7"));
+    validateRow(response, List.of("Male", "NVP only", "lc3eMKXaEfw", "202210", "ACTIVE", "7"));
+    validateRow(response, List.of("Male", "NVP only", "bL4ooGhyHRQ", "202211", "ACTIVE", "7"));
+    validateRow(response, List.of("Male", "NVP only", "bL4ooGhyHRQ", "202209", "ACTIVE", "7"));
+    validateRow(response, List.of("Male", "Others", "qhqAxPSTUXp", "202207", "ACTIVE", "7"));
+    validateRow(response, List.of("Male", "Others", "qhqAxPSTUXp", "202209", "ACTIVE", "7"));
+    validateRow(response, List.of("Male", "Others", "lc3eMKXaEfw", "202210", "ACTIVE", "6"));
+    validateRow(response, List.of("Male", "Others", "lc3eMKXaEfw", "202207", "ACTIVE", "6"));
+    validateRow(response, List.of("Male", "Others", "PMa2VCrupOd", "202211", "ACTIVE", "6"));
+    validateRow(response, List.of("Male", "Others", "jUb8gELQApl", "202207", "ACTIVE", "5"));
+    validateRow(response, List.of("Male", "Others", "fdc6uOvgoji", "202210", "ACTIVE", "5"));
+    validateRow(response, List.of("Male", "Others", "lc3eMKXaEfw", "202209", "ACTIVE", "5"));
+    validateRow(response, List.of("Male", "NVP only", "lc3eMKXaEfw", "202208", "ACTIVE", "4"));
+    validateRow(response, List.of("Male", "NVP only", "lc3eMKXaEfw", "202209", "ACTIVE", "4"));
+    validateRow(response, List.of("Male", "NVP only", "PMa2VCrupOd", "202207", "ACTIVE", "4"));
+    validateRow(response, List.of("Male", "NVP only", "PMa2VCrupOd", "202211", "ACTIVE", "3"));
+    validateRow(response, List.of("Male", "NVP only", "qhqAxPSTUXp", "202207", "ACTIVE", "3"));
+    validateRow(response, List.of("Male", "", "O6uvpzGd5pu", "202208", "ACTIVE", "1"));
+    validateRow(response, List.of("Female", "Others", "kJq2mPyFEHo", "202209", "ACTIVE", "27"));
+    validateRow(response, List.of("Female", "Others", "O6uvpzGd5pu", "202212", "ACTIVE", "26"));
+    validateRow(response, List.of("Female", "NVP only", "at6UHUQatSo", "202212", "ACTIVE", "24"));
+    validateRow(response, List.of("Female", "Others", "TEQlaapDQoK", "202211", "ACTIVE", "23"));
+    validateRow(response, List.of("Female", "NVP only", "kJq2mPyFEHo", "202211", "ACTIVE", "22"));
+    validateRow(response, List.of("Female", "NVP only", "TEQlaapDQoK", "202208", "ACTIVE", "22"));
+    validateRow(response, List.of("Female", "Others", "TEQlaapDQoK", "202207", "ACTIVE", "22"));
+    validateRow(response, List.of("Female", "NVP only", "at6UHUQatSo", "202208", "ACTIVE", "22"));
+    validateRow(response, List.of("Female", "NVP only", "TEQlaapDQoK", "202211", "ACTIVE", "21"));
+    validateRow(response, List.of("Female", "Others", "kJq2mPyFEHo", "202210", "ACTIVE", "21"));
+    validateRow(response, List.of("Female", "NVP only", "O6uvpzGd5pu", "202207", "ACTIVE", "21"));
+    validateRow(response, List.of("Female", "Others", "fdc6uOvgoji", "202210", "ACTIVE", "20"));
+    validateRow(response, List.of("Female", "NVP only", "O6uvpzGd5pu", "202212", "ACTIVE", "20"));
+    validateRow(response, List.of("Female", "NVP only", "kJq2mPyFEHo", "202209", "ACTIVE", "20"));
+    validateRow(response, List.of("Female", "Others", "jmIPBj66vD6", "202208", "ACTIVE", "20"));
+    validateRow(response, List.of("Female", "NVP only", "kJq2mPyFEHo", "202208", "ACTIVE", "20"));
+    validateRow(response, List.of("Female", "Others", "jmIPBj66vD6", "202210", "ACTIVE", "19"));
+    validateRow(response, List.of("Female", "NVP only", "qhqAxPSTUXp", "202211", "ACTIVE", "19"));
+    validateRow(response, List.of("Female", "NVP only", "O6uvpzGd5pu", "202208", "ACTIVE", "19"));
+    validateRow(response, List.of("Female", "NVP only", "eIQbndfxQMb", "202208", "ACTIVE", "18"));
+    validateRow(response, List.of("Female", "Others", "O6uvpzGd5pu", "202208", "ACTIVE", "18"));
+    validateRow(response, List.of("Female", "Others", "at6UHUQatSo", "202210", "ACTIVE", "18"));
+    validateRow(response, List.of("Female", "NVP only", "fdc6uOvgoji", "202209", "ACTIVE", "18"));
+    validateRow(response, List.of("Female", "Others", "TEQlaapDQoK", "202209", "ACTIVE", "18"));
+    validateRow(response, List.of("Female", "NVP only", "O6uvpzGd5pu", "202211", "ACTIVE", "18"));
+    validateRow(response, List.of("Female", "Others", "jUb8gELQApl", "202208", "ACTIVE", "17"));
+    validateRow(response, List.of("Female", "NVP only", "TEQlaapDQoK", "202207", "ACTIVE", "17"));
+    validateRow(response, List.of("Female", "NVP only", "jmIPBj66vD6", "202207", "ACTIVE", "17"));
+    validateRow(response, List.of("Female", "NVP only", "Vth0fbpFcsO", "202209", "ACTIVE", "17"));
+    validateRow(response, List.of("Female", "Others", "at6UHUQatSo", "202208", "ACTIVE", "17"));
+    validateRow(response, List.of("Female", "NVP only", "eIQbndfxQMb", "202211", "ACTIVE", "17"));
+    validateRow(response, List.of("Female", "NVP only", "TEQlaapDQoK", "202209", "ACTIVE", "17"));
+    validateRow(response, List.of("Female", "Others", "Vth0fbpFcsO", "202210", "ACTIVE", "17"));
+    validateRow(response, List.of("Female", "NVP only", "at6UHUQatSo", "202207", "ACTIVE", "17"));
+    validateRow(response, List.of("Female", "NVP only", "O6uvpzGd5pu", "202210", "ACTIVE", "16"));
+    validateRow(response, List.of("Female", "NVP only", "fdc6uOvgoji", "202212", "ACTIVE", "16"));
+    validateRow(response, List.of("Female", "NVP only", "TEQlaapDQoK", "202212", "ACTIVE", "16"));
+    validateRow(response, List.of("Female", "Others", "kJq2mPyFEHo", "202212", "ACTIVE", "16"));
+    validateRow(response, List.of("Female", "Others", "kJq2mPyFEHo", "202211", "ACTIVE", "16"));
+    validateRow(response, List.of("Female", "NVP only", "Vth0fbpFcsO", "202211", "ACTIVE", "16"));
+    validateRow(response, List.of("Female", "Others", "TEQlaapDQoK", "202210", "ACTIVE", "16"));
+    validateRow(response, List.of("Female", "Others", "eIQbndfxQMb", "202210", "ACTIVE", "15"));
+    validateRow(response, List.of("Female", "NVP only", "O6uvpzGd5pu", "202209", "ACTIVE", "15"));
+    validateRow(response, List.of("Female", "Others", "PMa2VCrupOd", "202210", "ACTIVE", "15"));
+    validateRow(response, List.of("Female", "Others", "Vth0fbpFcsO", "202209", "ACTIVE", "15"));
+    validateRow(response, List.of("Female", "Others", "O6uvpzGd5pu", "202210", "ACTIVE", "15"));
+    validateRow(response, List.of("Female", "NVP only", "at6UHUQatSo", "202210", "ACTIVE", "15"));
+    validateRow(response, List.of("Female", "Others", "jUb8gELQApl", "202207", "ACTIVE", "15"));
+    validateRow(response, List.of("Female", "Others", "fdc6uOvgoji", "202207", "ACTIVE", "15"));
+    validateRow(response, List.of("Female", "Others", "O6uvpzGd5pu", "202211", "ACTIVE", "15"));
+    validateRow(response, List.of("Female", "NVP only", "TEQlaapDQoK", "202210", "ACTIVE", "15"));
+    validateRow(response, List.of("Female", "NVP only", "jUb8gELQApl", "202208", "ACTIVE", "15"));
+    validateRow(response, List.of("Female", "NVP only", "jmIPBj66vD6", "202208", "ACTIVE", "15"));
+    validateRow(response, List.of("Female", "Others", "kJq2mPyFEHo", "202207", "ACTIVE", "15"));
+    validateRow(response, List.of("Female", "Others", "Vth0fbpFcsO", "202207", "ACTIVE", "15"));
+    validateRow(response, List.of("Female", "NVP only", "at6UHUQatSo", "202211", "ACTIVE", "14"));
+    validateRow(response, List.of("Female", "Others", "fdc6uOvgoji", "202208", "ACTIVE", "14"));
+    validateRow(response, List.of("Female", "Others", "TEQlaapDQoK", "202208", "ACTIVE", "14"));
+    validateRow(response, List.of("Female", "NVP only", "eIQbndfxQMb", "202207", "ACTIVE", "14"));
+    validateRow(response, List.of("Female", "Others", "fdc6uOvgoji", "202212", "ACTIVE", "14"));
+    validateRow(response, List.of("Female", "NVP only", "kJq2mPyFEHo", "202210", "ACTIVE", "14"));
+    validateRow(response, List.of("Female", "NVP only", "fdc6uOvgoji", "202211", "ACTIVE", "14"));
+    validateRow(response, List.of("Female", "Others", "fdc6uOvgoji", "202211", "ACTIVE", "14"));
+    validateRow(response, List.of("Female", "Others", "O6uvpzGd5pu", "202207", "ACTIVE", "14"));
+    validateRow(response, List.of("Female", "Others", "eIQbndfxQMb", "202209", "ACTIVE", "13"));
+    validateRow(response, List.of("Female", "Others", "TEQlaapDQoK", "202212", "ACTIVE", "13"));
+    validateRow(response, List.of("Female", "Others", "jmIPBj66vD6", "202211", "ACTIVE", "13"));
+    validateRow(response, List.of("Female", "NVP only", "qhqAxPSTUXp", "202209", "ACTIVE", "13"));
+    validateRow(response, List.of("Female", "Others", "Vth0fbpFcsO", "202208", "ACTIVE", "13"));
+    validateRow(response, List.of("Female", "NVP only", "kJq2mPyFEHo", "202207", "ACTIVE", "13"));
+    validateRow(response, List.of("Female", "Others", "eIQbndfxQMb", "202211", "ACTIVE", "13"));
+    validateRow(response, List.of("Female", "NVP only", "eIQbndfxQMb", "202210", "ACTIVE", "13"));
+    validateRow(response, List.of("Female", "NVP only", "bL4ooGhyHRQ", "202208", "ACTIVE", "13"));
+    validateRow(response, List.of("Female", "NVP only", "jmIPBj66vD6", "202212", "ACTIVE", "13"));
+    validateRow(response, List.of("Female", "Others", "jmIPBj66vD6", "202207", "ACTIVE", "13"));
+    validateRow(response, List.of("Female", "Others", "bL4ooGhyHRQ", "202208", "ACTIVE", "12"));
+    validateRow(response, List.of("Female", "NVP only", "jUb8gELQApl", "202210", "ACTIVE", "12"));
+    validateRow(response, List.of("Female", "NVP only", "bL4ooGhyHRQ", "202211", "ACTIVE", "12"));
+    validateRow(response, List.of("Female", "NVP only", "fdc6uOvgoji", "202210", "ACTIVE", "12"));
+    validateRow(response, List.of("Female", "NVP only", "PMa2VCrupOd", "202211", "ACTIVE", "12"));
+    validateRow(response, List.of("Female", "NVP only", "bL4ooGhyHRQ", "202207", "ACTIVE", "12"));
+    validateRow(response, List.of("Female", "NVP only", "jmIPBj66vD6", "202209", "ACTIVE", "12"));
+    validateRow(response, List.of("Female", "NVP only", "Vth0fbpFcsO", "202212", "ACTIVE", "12"));
+    validateRow(response, List.of("Female", "NVP only", "kJq2mPyFEHo", "202212", "ACTIVE", "12"));
+    validateRow(response, List.of("Female", "Others", "bL4ooGhyHRQ", "202210", "ACTIVE", "12"));
+    validateRow(response, List.of("Female", "NVP only", "fdc6uOvgoji", "202207", "ACTIVE", "12"));
+    validateRow(response, List.of("Female", "Others", "kJq2mPyFEHo", "202208", "ACTIVE", "11"));
+    validateRow(response, List.of("Female", "Others", "jmIPBj66vD6", "202209", "ACTIVE", "11"));
+    validateRow(response, List.of("Female", "Others", "bL4ooGhyHRQ", "202211", "ACTIVE", "11"));
+    validateRow(response, List.of("Female", "Others", "at6UHUQatSo", "202211", "ACTIVE", "11"));
+    validateRow(response, List.of("Female", "NVP only", "jUb8gELQApl", "202212", "ACTIVE", "11"));
+    validateRow(response, List.of("Female", "NVP only", "Vth0fbpFcsO", "202207", "ACTIVE", "11"));
+    validateRow(response, List.of("Female", "Others", "qhqAxPSTUXp", "202210", "ACTIVE", "11"));
+    validateRow(response, List.of("Female", "Others", "fdc6uOvgoji", "202209", "ACTIVE", "11"));
+    validateRow(response, List.of("Female", "NVP only", "jmIPBj66vD6", "202211", "ACTIVE", "11"));
+    validateRow(response, List.of("Female", "NVP only", "bL4ooGhyHRQ", "202209", "ACTIVE", "11"));
+    validateRow(response, List.of("Female", "NVP only", "jmIPBj66vD6", "202210", "ACTIVE", "11"));
+    validateRow(response, List.of("Female", "Others", "lc3eMKXaEfw", "202209", "ACTIVE", "11"));
+    validateRow(response, List.of("Female", "Others", "qhqAxPSTUXp", "202209", "ACTIVE", "11"));
+    validateRow(response, List.of("Female", "NVP only", "eIQbndfxQMb", "202209", "ACTIVE", "11"));
+    validateRow(response, List.of("Female", "Others", "O6uvpzGd5pu", "202209", "ACTIVE", "11"));
+    validateRow(response, List.of("Female", "Others", "jmIPBj66vD6", "202212", "ACTIVE", "11"));
+    validateRow(response, List.of("Female", "Others", "at6UHUQatSo", "202207", "ACTIVE", "10"));
+    validateRow(response, List.of("Female", "Others", "qhqAxPSTUXp", "202208", "ACTIVE", "10"));
+    validateRow(response, List.of("Female", "Others", "eIQbndfxQMb", "202207", "ACTIVE", "10"));
+    validateRow(response, List.of("Female", "Others", "jUb8gELQApl", "202209", "ACTIVE", "10"));
+    validateRow(response, List.of("Female", "Others", "at6UHUQatSo", "202209", "ACTIVE", "10"));
+    validateRow(response, List.of("Female", "Others", "eIQbndfxQMb", "202212", "ACTIVE", "10"));
+    validateRow(response, List.of("Female", "Others", "qhqAxPSTUXp", "202212", "ACTIVE", "10"));
+    validateRow(response, List.of("Female", "Others", "qhqAxPSTUXp", "202207", "ACTIVE", "10"));
+    validateRow(response, List.of("Female", "Others", "lc3eMKXaEfw", "202210", "ACTIVE", "10"));
+    validateRow(response, List.of("Female", "Others", "PMa2VCrupOd", "202208", "ACTIVE", "10"));
+    validateRow(response, List.of("Female", "NVP only", "PMa2VCrupOd", "202208", "ACTIVE", "10"));
+    validateRow(response, List.of("Female", "NVP only", "Vth0fbpFcsO", "202208", "ACTIVE", "10"));
+    validateRow(response, List.of("Female", "NVP only", "at6UHUQatSo", "202209", "ACTIVE", "10"));
+    validateRow(response, List.of("Female", "Others", "PMa2VCrupOd", "202212", "ACTIVE", "9"));
+    validateRow(response, List.of("Female", "NVP only", "lc3eMKXaEfw", "202207", "ACTIVE", "9"));
+    validateRow(response, List.of("Female", "NVP only", "jUb8gELQApl", "202207", "ACTIVE", "9"));
+    validateRow(response, List.of("Female", "NVP only", "PMa2VCrupOd", "202212", "ACTIVE", "9"));
+    validateRow(response, List.of("Female", "NVP only", "fdc6uOvgoji", "202208", "ACTIVE", "9"));
+    validateRow(response, List.of("Female", "Others", "PMa2VCrupOd", "202207", "ACTIVE", "9"));
+    validateRow(response, List.of("Female", "Others", "PMa2VCrupOd", "202209", "ACTIVE", "9"));
+    validateRow(response, List.of("Female", "NVP only", "qhqAxPSTUXp", "202208", "ACTIVE", "9"));
+    validateRow(response, List.of("Female", "Others", "eIQbndfxQMb", "202208", "ACTIVE", "8"));
+    validateRow(response, List.of("Female", "NVP only", "jUb8gELQApl", "202209", "ACTIVE", "8"));
+    validateRow(response, List.of("Female", "NVP only", "bL4ooGhyHRQ", "202210", "ACTIVE", "8"));
+    validateRow(response, List.of("Female", "Others", "lc3eMKXaEfw", "202212", "ACTIVE", "8"));
+    validateRow(response, List.of("Female", "NVP only", "bL4ooGhyHRQ", "202212", "ACTIVE", "8"));
+    validateRow(response, List.of("Female", "NVP only", "qhqAxPSTUXp", "202210", "ACTIVE", "8"));
+    validateRow(response, List.of("Female", "Others", "jUb8gELQApl", "202212", "ACTIVE", "8"));
+    validateRow(response, List.of("Female", "NVP only", "PMa2VCrupOd", "202210", "ACTIVE", "7"));
+    validateRow(response, List.of("Female", "NVP only", "lc3eMKXaEfw", "202211", "ACTIVE", "7"));
+    validateRow(response, List.of("Female", "Others", "Vth0fbpFcsO", "202212", "ACTIVE", "7"));
+    validateRow(response, List.of("Female", "Others", "bL4ooGhyHRQ", "202212", "ACTIVE", "7"));
+    validateRow(response, List.of("Female", "Others", "Vth0fbpFcsO", "202211", "ACTIVE", "7"));
+    validateRow(response, List.of("Female", "Others", "lc3eMKXaEfw", "202211", "ACTIVE", "7"));
+    validateRow(response, List.of("Female", "Others", "bL4ooGhyHRQ", "202207", "ACTIVE", "7"));
+    validateRow(response, List.of("Female", "NVP only", "eIQbndfxQMb", "202212", "ACTIVE", "7"));
+    validateRow(response, List.of("Female", "NVP only", "Vth0fbpFcsO", "202210", "ACTIVE", "7"));
+    validateRow(response, List.of("Female", "Others", "qhqAxPSTUXp", "202211", "ACTIVE", "7"));
+    validateRow(response, List.of("Female", "Others", "bL4ooGhyHRQ", "202209", "ACTIVE", "7"));
+    validateRow(response, List.of("Female", "NVP only", "qhqAxPSTUXp", "202207", "ACTIVE", "6"));
+    validateRow(response, List.of("Female", "NVP only", "PMa2VCrupOd", "202209", "ACTIVE", "6"));
+    validateRow(response, List.of("Female", "Others", "at6UHUQatSo", "202212", "ACTIVE", "6"));
+    validateRow(response, List.of("Female", "Others", "PMa2VCrupOd", "202211", "ACTIVE", "6"));
+    validateRow(response, List.of("Female", "NVP only", "lc3eMKXaEfw", "202208", "ACTIVE", "6"));
+    validateRow(response, List.of("Female", "Others", "jUb8gELQApl", "202210", "ACTIVE", "6"));
+    validateRow(response, List.of("Female", "Others", "lc3eMKXaEfw", "202208", "ACTIVE", "6"));
+    validateRow(response, List.of("Female", "NVP only", "qhqAxPSTUXp", "202212", "ACTIVE", "5"));
+    validateRow(response, List.of("Female", "NVP only", "lc3eMKXaEfw", "202210", "ACTIVE", "5"));
+    validateRow(response, List.of("Female", "NVP only", "lc3eMKXaEfw", "202209", "ACTIVE", "5"));
+    validateRow(response, List.of("Female", "NVP only", "jUb8gELQApl", "202211", "ACTIVE", "5"));
+    validateRow(response, List.of("Female", "Others", "lc3eMKXaEfw", "202207", "ACTIVE", "4"));
+    validateRow(response, List.of("Female", "NVP only", "PMa2VCrupOd", "202207", "ACTIVE", "4"));
+    validateRow(response, List.of("Female", "Others", "jUb8gELQApl", "202211", "ACTIVE", "4"));
+    validateRow(response, List.of("Female", "NVP only", "lc3eMKXaEfw", "202212", "ACTIVE", "4"));
+  }
+
+  @Test
+  public void queryPentaAndMeaslesDoseActiveEventsLast12Months() throws JSONException {
+    // Given
+    QueryParamsBuilder params =
+        new QueryParamsBuilder()
+            .add("stage=ZzYYXq4fJie")
+            .add("displayProperty=NAME")
+            .add("eventStatus=ACTIVE")
+            .add("sortOrder=desc")
+            .add("totalPages=false")
+            .add("outputType=EVENT")
+            .add(
+                "dimension=ou:ImspTQPwCqd,pe:LAST_12_MONTHS,ZzYYXq4fJie.vTUhAUZFoys,ZzYYXq4fJie.FqlgKAG8HOu")
+            .add("relativePeriodDate=2023-07-01");
+
+    // When
+    ApiResponse response = actions.aggregate().get("IpHINAT79UW", JSON, JSON, params);
+
+    // Then
+    response
+        .validate()
+        .statusCode(200)
+        .body("headers", hasSize(equalTo(5)))
+        .body("rows", hasSize(equalTo(56)))
+        .body("height", equalTo(56))
+        .body("width", equalTo(5))
+        .body("headerWidth", equalTo(5));
+
+    // Assert metaData.
+    String expectedMetaData =
+        "{\"items\":{\"sXfZuRdvhl5\":{\"code\":\"0\",\"name\":\"Dose 0\"},\"ZzYYXq4fJie\":{\"name\":\"Baby Postnatal\"},\"ZzYYXq4fJie.vTUhAUZFoys\":{\"name\":\"MCH Penta dose\"},\"IpHINAT79UW\":{\"name\":\"Child Programme\"},\"VBGXfSXgJzv\":{\"code\":\"3\",\"name\":\"Dose 3\"},\"ou\":{\"name\":\"Organisation unit\"},\"202208\":{\"name\":\"August 2022\"},\"202209\":{\"name\":\"September 2022\"},\"202305\":{\"name\":\"May 2023\"},\"202207\":{\"name\":\"July 2022\"},\"202306\":{\"name\":\"June 2023\"},\"202303\":{\"name\":\"March 2023\"},\"202304\":{\"name\":\"April 2023\"},\"202301\":{\"name\":\"January 2023\"},\"ZzYYXq4fJie.FqlgKAG8HOu\":{\"name\":\"MCH Measles dose\"},\"202302\":{\"name\":\"February 2023\"},\"LAST_12_MONTHS\":{\"name\":\"Last 12 months\"},\"202211\":{\"name\":\"November 2022\"},\"ImspTQPwCqd\":{\"name\":\"Sierra Leone\"},\"202212\":{\"name\":\"December 2022\"},\"202210\":{\"name\":\"October 2022\"},\"pe\":{\"name\":\"Period\"},\"Xr0M5yEhtpT\":{\"code\":\"2\",\"name\":\"Dose 2\"},\"lFFqylGiWLk\":{\"code\":\"1\",\"name\":\"Dose 1\"}},\"dimensions\":{\"pe\":[\"202207\",\"202208\",\"202209\",\"202210\",\"202211\",\"202212\",\"202301\",\"202302\",\"202303\",\"202304\",\"202305\",\"202306\"],\"ZzYYXq4fJie.vTUhAUZFoys\":[\"sXfZuRdvhl5\",\"lFFqylGiWLk\",\"Xr0M5yEhtpT\",\"VBGXfSXgJzv\"],\"ou\":[\"ImspTQPwCqd\"],\"ZzYYXq4fJie.FqlgKAG8HOu\":[]}}";
+    String actualMetaData = new JSONObject((Map) response.extract("metaData")).toString();
+    assertEquals(expectedMetaData, actualMetaData, false);
+
+    // Assert headers.
+    validateHeader(
+        response,
+        0,
+        "ZzYYXq4fJie.vTUhAUZFoys",
+        "MCH Penta dose",
+        "TEXT",
+        "java.lang.String",
+        false,
+        true);
+    validateHeader(
+        response,
+        1,
+        "ZzYYXq4fJie.FqlgKAG8HOu",
+        "MCH Measles dose",
+        "BOOLEAN",
+        "java.lang.Boolean",
+        false,
+        true);
+    validateHeader(response, 2, "ou", "Organisation unit", "TEXT", "java.lang.String", false, true);
+    validateHeader(response, 3, "pe", "Period", "TEXT", "java.lang.String", false, true);
+    validateHeader(response, 4, "value", "Value", "NUMBER", "java.lang.Double", false, false);
+
+    // Assert rows.
+    validateRow(response, List.of("3", "1", "ImspTQPwCqd", "202208", "101"));
+    validateRow(response, List.of("3", "0", "ImspTQPwCqd", "202210", "92"));
+    validateRow(response, List.of("3", "1", "ImspTQPwCqd", "202209", "89"));
+    validateRow(response, List.of("3", "1", "ImspTQPwCqd", "202211", "89"));
+    validateRow(response, List.of("3", "1", "ImspTQPwCqd", "202212", "86"));
+    validateRow(response, List.of("3", "0", "ImspTQPwCqd", "202208", "86"));
+    validateRow(response, List.of("3", "0", "ImspTQPwCqd", "202209", "83"));
+    validateRow(response, List.of("3", "1", "ImspTQPwCqd", "202207", "81"));
+    validateRow(response, List.of("3", "0", "ImspTQPwCqd", "202212", "78"));
+    validateRow(response, List.of("3", "0", "ImspTQPwCqd", "202211", "77"));
+    validateRow(response, List.of("3", "1", "ImspTQPwCqd", "202210", "77"));
+    validateRow(response, List.of("3", "0", "ImspTQPwCqd", "202207", "71"));
+    validateRow(response, List.of("3", "0", "ImspTQPwCqd", "202301", "3"));
+    validateRow(response, List.of("3", "1", "ImspTQPwCqd", "202301", "2"));
+    validateRow(response, List.of("2", "0", "ImspTQPwCqd", "202210", "99"));
+    validateRow(response, List.of("2", "0", "ImspTQPwCqd", "202212", "99"));
+    validateRow(response, List.of("2", "0", "ImspTQPwCqd", "202208", "94"));
+    validateRow(response, List.of("2", "0", "ImspTQPwCqd", "202209", "91"));
+    validateRow(response, List.of("2", "1", "ImspTQPwCqd", "202211", "84"));
+    validateRow(response, List.of("2", "1", "ImspTQPwCqd", "202210", "84"));
+    validateRow(response, List.of("2", "1", "ImspTQPwCqd", "202209", "83"));
+    validateRow(response, List.of("2", "1", "ImspTQPwCqd", "202212", "83"));
+    validateRow(response, List.of("2", "0", "ImspTQPwCqd", "202211", "78"));
+    validateRow(response, List.of("2", "1", "ImspTQPwCqd", "202207", "75"));
+    validateRow(response, List.of("2", "0", "ImspTQPwCqd", "202207", "71"));
+    validateRow(response, List.of("2", "1", "ImspTQPwCqd", "202208", "69"));
+    validateRow(response, List.of("2", "0", "ImspTQPwCqd", "202301", "4"));
+    validateRow(response, List.of("1", "0", "ImspTQPwCqd", "202212", "101"));
+    validateRow(response, List.of("1", "1", "ImspTQPwCqd", "202207", "101"));
+    validateRow(response, List.of("1", "1", "ImspTQPwCqd", "202212", "97"));
+    validateRow(response, List.of("1", "0", "ImspTQPwCqd", "202211", "93"));
+    validateRow(response, List.of("1", "1", "ImspTQPwCqd", "202209", "92"));
+    validateRow(response, List.of("1", "0", "ImspTQPwCqd", "202208", "92"));
+    validateRow(response, List.of("1", "1", "ImspTQPwCqd", "202210", "84"));
+    validateRow(response, List.of("1", "0", "ImspTQPwCqd", "202210", "83"));
+    validateRow(response, List.of("1", "0", "ImspTQPwCqd", "202207", "81"));
+    validateRow(response, List.of("1", "1", "ImspTQPwCqd", "202208", "74"));
+    validateRow(response, List.of("1", "0", "ImspTQPwCqd", "202209", "74"));
+    validateRow(response, List.of("1", "1", "ImspTQPwCqd", "202211", "72"));
+    validateRow(response, List.of("1", "0", "ImspTQPwCqd", "202301", "4"));
+    validateRow(response, List.of("1", "1", "ImspTQPwCqd", "202301", "2"));
+    validateRow(response, List.of("0", "1", "ImspTQPwCqd", "202208", "91"));
+    validateRow(response, List.of("0", "0", "ImspTQPwCqd", "202210", "88"));
+    validateRow(response, List.of("0", "1", "ImspTQPwCqd", "202212", "86"));
+    validateRow(response, List.of("0", "1", "ImspTQPwCqd", "202209", "85"));
+    validateRow(response, List.of("0", "0", "ImspTQPwCqd", "202208", "82"));
+    validateRow(response, List.of("0", "0", "ImspTQPwCqd", "202212", "80"));
+    validateRow(response, List.of("0", "1", "ImspTQPwCqd", "202210", "78"));
+    validateRow(response, List.of("0", "1", "ImspTQPwCqd", "202207", "73"));
+    validateRow(response, List.of("0", "0", "ImspTQPwCqd", "202209", "71"));
+    validateRow(response, List.of("0", "0", "ImspTQPwCqd", "202211", "70"));
+    validateRow(response, List.of("0", "1", "ImspTQPwCqd", "202211", "70"));
+    validateRow(response, List.of("0", "0", "ImspTQPwCqd", "202207", "66"));
+    validateRow(response, List.of("0", "0", "ImspTQPwCqd", "202301", "3"));
+    validateRow(response, List.of("0", "1", "ImspTQPwCqd", "202301", "1"));
+    validateRow(response, List.of("", "", "ImspTQPwCqd", "202208", "1"));
+  }
+
+  @Test
+  public void queryAverageWeightByModeOfDischargeAndGenderLast4Q() throws JSONException {
+    // Given
+    QueryParamsBuilder params =
+        new QueryParamsBuilder()
+            .add("aggregationType=AVERAGE")
+            .add("stage=Zj7UnCAulEk")
+            .add("displayProperty=NAME")
+            .add("sortOrder=desc")
+            .add("totalPages=false")
+            .add("outputType=EVENT")
+            .add(
+                "dimension=ou:ImspTQPwCqd,pe:LAST_4_QUARTERS,Zj7UnCAulEk.fWIAEtYVEGk,Zj7UnCAulEk.oZg33kd9taw")
+            .add("value=vV9UWAZohSf")
+            .add("relativePeriodDate=2023-07-01");
+
+    // When
+    ApiResponse response = actions.aggregate().get("eBAyeGv0exc", JSON, JSON, params);
+
+    // Then
+    response
+        .validate()
+        .statusCode(200)
+        .body("headers", hasSize(equalTo(5)))
+        .body("rows", hasSize(equalTo(17)))
+        .body("height", equalTo(17))
+        .body("width", equalTo(5))
+        .body("headerWidth", equalTo(5));
+
+    // Assert metaData.
+    String expectedMetaData =
+        "{\"items\":{\"Mnp3oXrpAbK\":{\"code\":\"Female\",\"name\":\"Female\"},\"Zj7UnCAulEk.oZg33kd9taw\":{\"name\":\"Gender\"},\"rBvjJYbMCVx\":{\"code\":\"Male\",\"name\":\"Male\"},\"ou\":{\"name\":\"Organisation unit\"},\"Fhbf4aKpZmZ\":{\"code\":\"MODABSC\",\"name\":\"Absconded\"},\"vV9UWAZohSf\":{\"code\":\"DE_240795\",\"name\":\"Weight in kg\"},\"gj2fKKyp8OH\":{\"code\":\"MODDIED\",\"name\":\"Died\"},\"2022Q3\":{\"name\":\"July - September 2022\"},\"2023Q2\":{\"name\":\"April - June 2023\"},\"2022Q4\":{\"name\":\"October - December 2022\"},\"Zj7UnCAulEk\":{\"name\":\"Inpatient morbidity and mortality\"},\"2023Q1\":{\"name\":\"January - March 2023\"},\"ImspTQPwCqd\":{\"name\":\"Sierra Leone\"},\"Zj7UnCAulEk.fWIAEtYVEGk\":{\"name\":\"Mode of Discharge\"},\"eBAyeGv0exc\":{\"name\":\"Inpatient morbidity and mortality\"},\"pe\":{\"name\":\"Period\"},\"LAST_4_QUARTERS\":{\"name\":\"Last 4 quarters\"},\"fShHdgT7XGb\":{\"code\":\"MODTRANS\",\"name\":\"Transferred\"},\"yeod5tOXpkP\":{\"code\":\"MODDISCH\",\"name\":\"Discharged\"}},\"dimensions\":{\"pe\":[\"2022Q3\",\"2022Q4\",\"2023Q1\",\"2023Q2\"],\"ou\":[\"ImspTQPwCqd\"],\"Zj7UnCAulEk.fWIAEtYVEGk\":[\"yeod5tOXpkP\",\"gj2fKKyp8OH\",\"fShHdgT7XGb\",\"Fhbf4aKpZmZ\"],\"Zj7UnCAulEk.oZg33kd9taw\":[\"rBvjJYbMCVx\",\"Mnp3oXrpAbK\"]}}";
+    String actualMetaData = new JSONObject((Map) response.extract("metaData")).toString();
+    assertEquals(expectedMetaData, actualMetaData, false);
+
+    // Assert headers.
+    validateHeader(
+        response,
+        0,
+        "Zj7UnCAulEk.fWIAEtYVEGk",
+        "Mode of Discharge",
+        "TEXT",
+        "java.lang.String",
+        false,
+        true);
+    validateHeader(
+        response, 1, "Zj7UnCAulEk.oZg33kd9taw", "Gender", "TEXT", "java.lang.String", false, true);
+    validateHeader(response, 2, "pe", "Period", "TEXT", "java.lang.String", false, true);
+    validateHeader(response, 3, "ou", "Organisation unit", "TEXT", "java.lang.String", false, true);
+    validateHeader(response, 4, "value", "Value", "NUMBER", "java.lang.Double", false, false);
+
+    // Assert rows.
+    validateRow(response, List.of("MODTRANS", "", "2022Q3", "ImspTQPwCqd", "55.0"));
+    validateRow(response, List.of("MODTRANS", "Female", "2022Q4", "ImspTQPwCqd", "49.55"));
+    validateRow(response, List.of("MODTRANS", "Male", "2022Q4", "ImspTQPwCqd", "49.54"));
+    validateRow(response, List.of("MODTRANS", "Male", "2022Q3", "ImspTQPwCqd", "49.01"));
+    validateRow(response, List.of("MODTRANS", "Female", "2022Q3", "ImspTQPwCqd", "48.96"));
+    validateRow(response, List.of("MODDISCH", "Male", "2022Q3", "ImspTQPwCqd", "49.65"));
+    validateRow(response, List.of("MODDISCH", "Female", "2022Q3", "ImspTQPwCqd", "49.51"));
+    validateRow(response, List.of("MODDISCH", "Female", "2022Q4", "ImspTQPwCqd", "49.37"));
+    validateRow(response, List.of("MODDISCH", "Male", "2022Q4", "ImspTQPwCqd", "49.04"));
+    validateRow(response, List.of("MODDIED", "Male", "2022Q3", "ImspTQPwCqd", "50.29"));
+    validateRow(response, List.of("MODDIED", "Male", "2022Q4", "ImspTQPwCqd", "50.06"));
+    validateRow(response, List.of("MODDIED", "Female", "2022Q3", "ImspTQPwCqd", "49.85"));
+    validateRow(response, List.of("MODDIED", "Female", "2022Q4", "ImspTQPwCqd", "49.47"));
+    validateRow(response, List.of("MODABSC", "Male", "2022Q4", "ImspTQPwCqd", "49.46"));
+    validateRow(response, List.of("MODABSC", "Male", "2022Q3", "ImspTQPwCqd", "49.45"));
+    validateRow(response, List.of("MODABSC", "Female", "2022Q4", "ImspTQPwCqd", "49.23"));
+    validateRow(response, List.of("MODABSC", "Female", "2022Q3", "ImspTQPwCqd", "49.06"));
+  }
+}

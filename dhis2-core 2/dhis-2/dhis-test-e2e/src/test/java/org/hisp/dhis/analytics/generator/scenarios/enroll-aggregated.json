@@ -1,0 +1,158 @@
+{
+  "scenarios": [
+    {
+      "name": "lastUpdatedWithFinancialSep",
+      "query": "/api/analytics/enrollments/aggregate/IpHINAT79UW.json?includeMetadataDetails=true&lastUpdated=2018Sep&displayProperty=NAME&totalPages=false&rowContext=true&pageSize=100&outputType=ENROLLMENT&page=1&dimension=ou:USER_ORGUNIT,GxdhnY5wmHq",
+      "version": {
+        "min": 42
+      }
+    },
+    {
+      "name": "dataElementOrgUnitTypeFilterDimensionAndOrgUnitAsFilter",
+      "query": "/api/analytics/enrollments/aggregate/WSGAb5XwJ3Y.json?dimension=PFDfvmGpsR3.n1rtSHYf6O6:IN:g8upMTyEZGZ;USER_ORGUNIT;USER_ORGUNIT_GRANDCHILDREN&filter=ou:USER_ORGUNIT,pe:202202&totalPages=false&displayProperty=NAME&pageSize=100&page=1&includeMetadataDetails=true",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "orgUnitFilter",
+      "query": "/api/analytics/enrollments/aggregate/IpHINAT79UW.json?dimension=pe:LAST_10_YEARS&dimension=A03MvHHogjR.a3kGcGDCuk6&dimension=ZzYYXq4fJie.pOe0ogW4OWd&displayProperty=NAME&totalPages=false&filter=ou:ImspTQPwCqd&relativePeriodDate=2025-07-01",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "dataElementOrgUnitTypeFilter",
+      "query": "/api/analytics/enrollments/aggregate/WSGAb5XwJ3Y.json?dimension=ou:ImspTQPwCqd&dimension=pe:LAST_5_YEARS&filter=PFDfvmGpsR3.n1rtSHYf6O6:IN:ImspTQPwCqd&displayProperty=NAME&totalPages=false&relativePeriodDate=2025-07-01",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndEventDateSpecificMonth",
+      "query": "/api/analytics/enrollments/aggregate/IpHINAT79UW.json?includeMetadataDetails=true&displayProperty=NAME&totalPages=false&pageSize=100&outputType=ENROLLMENT&page=1&dimension=ou:USER_ORGUNIT,A03MvHHogjR.EVENT_DATE:202205",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndEventDateWithRange",
+      "query": "/api/analytics/enrollments/aggregate/IpHINAT79UW.json?includeMetadataDetails=true&displayProperty=NAME&totalPages=false&pageSize=100&outputType=ENROLLMENT&page=1&dimension=ou:USER_ORGUNIT,A03MvHHogjR.EVENT_DATE:2022-05-01_2022-05-10",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndSimpleOu",
+      "query": "/api/analytics/enrollments/aggregate/IpHINAT79UW.json?includeMetadataDetails=true&displayProperty=NAME&totalPages=false&pageSize=100&outputType=ENROLLMENT&page=1&dimension=pe:2022&dimension=A03MvHHogjR.ou:Qr41Mw2MSjo",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndOuUserOrgUnit",
+      "query": "/api/analytics/enrollments/aggregate/IpHINAT79UW.json?includeMetadataDetails=true&displayProperty=NAME&totalPages=false&pageSize=100&outputType=ENROLLMENT&page=1&dimension=pe:2022,A03MvHHogjR.ou:USER_ORGUNIT",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndOuLevel",
+      "query": "/api/analytics/enrollments/aggregate/IpHINAT79UW.json?includeMetadataDetails=true&displayProperty=NAME&totalPages=false&pageSize=100&outputType=ENROLLMENT&page=1&dimension=pe:202212,A03MvHHogjR.ou:LEVEL-H1KlN4QIauv",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndMultipleOus",
+      "query": "/api/analytics/enrollments/aggregate/IpHINAT79UW.json?includeMetadataDetails=true&displayProperty=NAME&totalPages=false&pageSize=100&outputType=ENROLLMENT&page=1&dimension=pe:202212,A03MvHHogjR.ou:O6uvpzGd5pu;DiszpKrYNg8",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndScheduledDate",
+      "query": "/api/analytics/enrollments/aggregate/IpHINAT79UW.json?includeMetadataDetails=true&displayProperty=NAME&totalPages=false&pageSize=100&outputType=ENROLLMENT&page=1&dimension=ou:USER_ORGUNIT,A03MvHHogjR.SCHEDULED_DATE:202107",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndEventStatus",
+      "query": "/api/analytics/enrollments/aggregate/IpHINAT79UW.json?includeMetadataDetails=true&displayProperty=NAME&totalPages=false&pageSize=100&outputType=ENROLLMENT&page=1&dimension=pe:202212&dimension=A03MvHHogjR.EVENT_STATUS:ACTIVE",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndMultipleStages",
+      "query": "/api/analytics/enrollments/aggregate/WSGAb5XwJ3Y.json?includeMetadataDetails=true&totalPages=false&pageSize=100&page=1&dimension=ou:USER_ORGUNIT&dimension=PUZaKR0Jh2k.EVENT_DATE:202205&dimension=edqlbukwRfQ.EVENT_STATUS:COMPLETED;ACTIVE",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndMultipleStagesSameStage",
+      "query": "/api/analytics/enrollments/aggregate/WSGAb5XwJ3Y.json?includeMetadataDetails=true&totalPages=false&pageSize=100&page=1&dimension=ou:USER_ORGUNIT&dimension=edqlbukwRfQ.EVENT_DATE:202205&dimension=edqlbukwRfQ.EVENT_STATUS:COMPLETED;ACTIVE",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "financialYear2022WithEventDate",
+      "query": "/api/analytics/enrollments/aggregate/IpHINAT79UW.json?includeMetadataDetails=true&displayProperty=NAME&totalPages=false&rowContext=true&pageSize=100&outputType=ENROLLMENT&page=1&dimension=ou:USER_ORGUNIT,GxdhnY5wmHq&eventDate=2022Sep",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "financialYear2022WithIncidentDate",
+      "query": "/api/analytics/enrollments/aggregate/IpHINAT79UW.json?includeMetadataDetails=true&displayProperty=NAME&totalPages=false&rowContext=true&pageSize=100&outputType=ENROLLMENT&page=1&dimension=ou:USER_ORGUNIT,GxdhnY5wmHq&incidentDate=2022Sep",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "financialYear2022WithCreated",
+      "query": "/api/analytics/enrollments/aggregate/IpHINAT79UW.json?includeMetadataDetails=true&displayProperty=NAME&totalPages=false&rowContext=true&pageSize=100&outputType=ENROLLMENT&page=1&dimension=CREATED:2016Sep,ou:USER_ORGUNIT,GxdhnY5wmHq",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "financialYear2022WithEnrollmentDate",
+      "query": "/api/analytics/enrollments/aggregate/IpHINAT79UW.json?includeMetadataDetails=true&displayProperty=NAME&totalPages=false&rowContext=true&pageSize=100&outputType=ENROLLMENT&page=1&dimension=ou:USER_ORGUNIT,GxdhnY5wmHq&enrollmentDate=2022Sep",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "financialYear2022WithCompleted",
+      "query": "/api/analytics/enrollments/aggregate/IpHINAT79UW.json?includeMetadataDetails=true&displayProperty=NAME&totalPages=false&rowContext=true&pageSize=100&outputType=ENROLLMENT&page=1&dimension=COMPLETED:2022Sep,ou:USER_ORGUNIT,GxdhnY5wmHq",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "withStatusActiveOnly",
+      "query": "/api/analytics/enrollments/aggregate/IpHINAT79UW.json?dimension=ou:USER_ORGUNIT,PROGRAM_STATUS:ACTIVE,pe:202211",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "financialYear2022WithEventDateAsDimension",
+      "query": "/api/analytics/enrollments/aggregate/IpHINAT79UW.json?includeMetadataDetails=true&displayProperty=NAME&totalPages=false&rowContext=true&pageSize=100&page=1&dimension=ou:USER_ORGUNIT,GxdhnY5wmHq,EVENT_DATE:2022Sep",
+      "version": {
+        "min": 43
+      }
+    },
+    {
+      "name": "stageAndStaticTimeField",
+      "query": "/api/analytics/enrollments/aggregate/WSGAb5XwJ3Y.json?includeMetadataDetails=true&totalPages=false&pageSize=100&page=1&dimension=ou:USER_ORGUNIT,PUZaKR0Jh2k.EVENT_DATE:202205,LAST_UPDATED:2018",
+      "version": {
+        "min": 43
+      }
+    }
+  ]
+}

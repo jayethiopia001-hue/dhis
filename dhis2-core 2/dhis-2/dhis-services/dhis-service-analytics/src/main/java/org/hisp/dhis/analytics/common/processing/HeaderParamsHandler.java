@@ -1,0 +1,163 @@
+/*
+ * Copyright (c) 2004-2023, University of Oslo
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors 
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.hisp.dhis.analytics.common.processing;
+
+import static org.apache.commons.collections4.CollectionUtils.isEmpty;
+import static org.hisp.dhis.analytics.trackedentity.query.TrackedEntityFields.getGridHeaders;
+import static org.hisp.dhis.feedback.ErrorCode.E7230;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import org.hisp.dhis.analytics.common.CommonRequestParams;
+import org.hisp.dhis.analytics.common.ContextParams;
+import org.hisp.dhis.analytics.common.query.Field;
+import org.hisp.dhis.analytics.trackedentity.TrackedEntityQueryParams;
+import org.hisp.dhis.analytics.trackedentity.TrackedEntityRequestParams;
+import org.hisp.dhis.common.Grid;
+import org.hisp.dhis.common.GridHeader;
+import org.hisp.dhis.common.IllegalQueryException;
+import org.hisp.dhis.common.RepeatableStageParams;
+import org.hisp.dhis.feedback.ErrorMessage;
+import org.springframework.stereotype.Component;
+
+/**
+ * Analytics component responsible for processing flags and data related to the "headers" param.
+ *
+ * @author maikel arabori
+ */
+@Component
+public class HeaderParamsHandler {
+  /**
+   * Adds the correct headers into the given {@Grid}. It takes into consideration the header params,
+   * if any.
+   *
+   * @param grid the {@link Grid}.
+   * @param contextParams the {@link ContextParams} where to extract headers from.
+   * @param fields the columns to retain, represented by {@link Field}.
+   * @throws IllegalQueryException if header requested does not exist.
+   */
+  public void handle(
+      Grid grid,
+      ContextParams<TrackedEntityRequestParams, TrackedEntityQueryParams> contextParams,
+      List<Field> fields) {
+    CommonRequestParams requestParams = contextParams.getCommonRaw();
+
+    Set<GridHeader> headers = getGridHeaders(contextParams, fields);
+    Set<String> paramHeaders = requestParams.getHeaders();
+
+    if (isEmpty(paramHeaders)) {
+      // Adds all headers.
+      headers.forEach(grid::addHeader);
+    } else {
+      List<GridHeader> gridHeaders = new ArrayList<>(headers);
+
+      // Adds only the headers present in params, in the same order.
+      paramHeaders.forEach(
+          header ->
+              findMatchingHeader(gridHeaders, header)
+                  .map(matched -> withRequestedNameIfNeeded(matched, header))
+                  .ifPresent(grid::addHeader));
+    }
+
+    checkHeaders(headers, paramHeaders);
+  }
+
+  /**
+   * Simply checks if the headers requested are valid ones.
+   *
+   * @param gridHeaders the set of {@link GridHeader}.
+   * @param paramHeaders the set of param headers.
+   * @throws IllegalQueryException if any header in "paramHeaders" is not present in the given
+   *     "gridHeaders".
+   */
+  private void checkHeaders(Set<GridHeader> gridHeaders, Set<String> paramHeaders) {
+    List<GridHeader> requestedGridHeaders = new ArrayList<>(gridHeaders);
+    paramHeaders.forEach(
+        header -> {
+          if (findMatchingHeader(requestedGridHeaders, header).isEmpty()) {
+            throw new IllegalQueryException(new ErrorMessage(E7230, header));
+          }
+        });
+  }
+
+  /**
+   * Finds a matching header by exact name or supported short/full stage-scoped alias:
+   * programUid.stageUid.dimension <-> stageUid.dimension.
+   */
+  private Optional<GridHeader> findMatchingHeader(List<GridHeader> gridHeaders, String header) {
+    GridHeader requested = new GridHeader(header);
+
+    if (gridHeaders.contains(requested)) {
+      return Optional.of(gridHeaders.get(gridHeaders.indexOf(requested)));
+    }
+
+    return gridHeaders.stream().filter(h -> isStageScopedAlias(h.getName(), header)).findFirst();
+  }
+
+  private boolean isStageScopedAlias(String existingHeaderName, String requestedHeaderName) {
+    long existingDots = existingHeaderName.chars().filter(c -> c == '.').count();
+    long requestedDots = requestedHeaderName.chars().filter(c -> c == '.').count();
+
+    if (existingDots == 2 && requestedDots == 1) {
+      return existingHeaderName.endsWith("." + requestedHeaderName);
+    }
+
+    if (existingDots == 1 && requestedDots == 2) {
+      return requestedHeaderName.endsWith("." + existingHeaderName);
+    }
+
+    return false;
+  }
+
+  private GridHeader withRequestedNameIfNeeded(GridHeader gridHeader, String requestedHeaderName) {
+    if (requestedHeaderName.equals(gridHeader.getName())) {
+      return gridHeader;
+    }
+
+    GridHeader renamed =
+        new GridHeader(
+            requestedHeaderName,
+            gridHeader.getColumn(),
+            gridHeader.getValueType(),
+            gridHeader.isHidden(),
+            gridHeader.isMeta(),
+            gridHeader.getOptionSetObject(),
+            gridHeader.getLegendSetObject());
+
+    if (gridHeader.getStageOffset() != null) {
+      renamed =
+          renamed.withRepeatableStageParams(RepeatableStageParams.of(gridHeader.getStageOffset()));
+    }
+
+    return renamed;
+  }
+}
