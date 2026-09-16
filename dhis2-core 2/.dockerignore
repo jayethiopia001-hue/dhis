@@ -2,6 +2,7 @@
 !Dockerfile
 !docker/
 !docker/dhis.conf
+!docker/start-dhis.sh
 !dhis2-ai-backend/
 !dhis2-ai-backend/dhis2-app/
 !dhis2-ai-backend/dhis2-app/**
