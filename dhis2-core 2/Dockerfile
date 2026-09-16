@@ -10,3 +10,4 @@ RUN chmod 0555 /opt/dhis2/start-dhis.sh
 EXPOSE 8080
 
 ENTRYPOINT ["/opt/dhis2/start-dhis.sh"]
+CMD ["catalina.sh", "run"]
