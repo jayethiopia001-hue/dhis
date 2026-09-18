@@ -23,7 +23,7 @@ config="/tmp/dhis.conf"
     'tracker.import.preheat.cache.enabled=off' \
     '' \
     'server.base.url = https://dhis-frontend-v3-644288607802.africa-south1.run.app' \
-    'server.https = off'
+    'server.https = on'
 } > "$config"
 
 cp "$config" /opt/dhis2/dhis.conf
