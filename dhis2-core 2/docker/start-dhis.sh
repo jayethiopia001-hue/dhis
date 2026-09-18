@@ -18,6 +18,8 @@ config="/tmp/dhis.conf"
   printf 'connection.password = %s\n' "$DB_PASSWORD"
   printf '%s\n' \
     '' \
+    'flyway.repair_before_migration=on' \
+    '' \
     'tracker.import.preheat.cache.enabled=off' \
     '' \
     'server.https = off'
